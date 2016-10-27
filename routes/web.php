@@ -1,9 +1,15 @@
 <?php
 
-Route::group(['middleware'  =>  ['auth']], function(){
+Route::group(['middleware'  =>  ['auth', 'isVerified']], function(){
     Route::get('/', 'HomeController@index');
+});
 
-    Route::get('/logout', 'AuthController@logout');
+Route::group(['middleware'   =>  ['auth']], function(){
+    Route::get('/verify/student', 'AuthController@getStudentVerification');
+    Route::get('/verify/teacher', 'AuthController@getTeacherVerification');
+
+    Route::post('/verify/student', 'AuthController@verifyStudent');
+    Route::post('/verify/teacher', 'AuthController@verifyTeacher');
 });
 
 Route::group(['middleware'  =>  ['guest']], function(){
@@ -13,3 +19,5 @@ Route::group(['middleware'  =>  ['guest']], function(){
     Route::post('/login', 'AuthController@postLogin');
     Route::post('/register', 'AuthController@postRegister');
 });
+
+Route::get('/logout', 'AuthController@logout');

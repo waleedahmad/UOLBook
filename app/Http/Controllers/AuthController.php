@@ -3,22 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Verification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use App\Http\Requests;
 
 class AuthController extends Controller
 {
+    /**
+     * Return login form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getLogin(){
         return view('auth.login');
     }
 
+    /**
+     * Return register form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getRegister(){
         return view('auth.register');
     }
 
+    /**
+     * Process login form
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function postLogin(Request $request){
         $validator = Validator::make($request->all(), [
             'email' =>  'required|email',
@@ -38,6 +54,11 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Process register form
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function postRegister(Request $request){
         $validator = Validator::make($request->all(), [
             'firstName' =>  'required',
@@ -61,6 +82,11 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Creates a new user
+     * @param $request
+     * @return bool
+     */
     public function createUser($request){
         $user = new User();
 
@@ -71,6 +97,7 @@ class AuthController extends Controller
         $user->gender = $request->gender;
         $user->type = $request->usertype;
         $user->image_uri = '/assets/img/default_image.png';
+        $user->verified = 0;
 
         if($user->save()){
             return true;
@@ -79,6 +106,11 @@ class AuthController extends Controller
         return false;
     }
 
+    /**
+     * Authenticates a user
+     * @param $request
+     * @return mixed
+     */
     private function authenticateUser($request){
         return Auth::attempt([
             'email' =>  $request->email,
@@ -86,8 +118,68 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Logout as user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function logout(){
         Auth::logout();
         return redirect('/login');
+    }
+
+
+    public function getStudentVerification(){
+        return view('verify.student');
+    }
+
+    public function getTeacherVerification(){
+        return view('verify.teacher');
+    }
+
+    public function verifyStudent(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'registration_no' => 'required|min:10',
+            'id_card' => 'required|file|mimes:jpeg,bmp,png,jpg'
+        ]);
+
+        if ($validator->passes()) {
+            $file = $request->file('id_card');
+            $ext = $file->extension();
+            $path = '/requests/'.str_random(10).'.'.$ext;
+            if($this->uploadFile($path, $file)){
+                $verify_request = new Verification();
+                $verify_request->user_id = Auth::user()->id;
+                $verify_request->registration_no = $request->registration_no;
+                $verify_request->card_uri = $path;
+
+                if($verify_request->save()){
+                    $request->session()->flash('message','Verification Request Submitted');
+                    return redirect('/verify/student');
+                }
+
+            }
+        }
+        return redirect('/verify/student')->withErrors($validator);
+    }
+
+    public function verifyTeacher(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_card' => 'required|file|mimes:jpeg,bmp,png,jpg'
+        ]);
+
+        if ($validator->passes()) {
+
+        }
+
+        return redirect('/verify/teacher')->withErrors($validator);
+    }
+
+    public function getFileExtension($file){
+        return strtolower(File::extension($file));
+    }
+
+    public function uploadFile($path, $file){
+        return Storage::disk('public')->put($path,  File::get($file));
     }
 }
