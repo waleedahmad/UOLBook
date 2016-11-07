@@ -10,7 +10,7 @@ use App\Http\Requests;
 class AdminController extends Controller
 {
     public function getIndex(){
-        $requests = Verification::all();
+        $requests = Verification::join('users', 'verification_requests.user_id', '=', 'users.id')->get();
         return view('admin.index')->with('v_requests', $requests);
     }
 
