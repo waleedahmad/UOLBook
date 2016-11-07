@@ -2,6 +2,12 @@
 
 Route::group(['middleware'  =>  ['auth', 'isVerified']], function(){
     Route::get('/', 'HomeController@index');
+
+    Route::get('/admin', 'AdminController@getIndex');
+    Route::get('/admin/users', 'AdminController@getUsers');
+    Route::get('/admin/messages', 'AdminController@getMessages');
+    Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
+
 });
 
 Route::group(['middleware'   =>  ['auth']], function(){

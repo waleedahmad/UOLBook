@@ -27,9 +27,6 @@
             <div class="form-group @if($errors->has('id_card')) has-error @endif">
                 <label for="registration_no" class="col-sm-3 control-label">Upload Photo</label>
                 <div class="col-sm-9">
-                    @if(Session::has('message'))
-                        <div class="alert alert-info" role="alert">{{Session::get('message')}}</div>
-                    @endif
                     <input type="file" name="id_card">
                     <p class="help-block">Please upload a photo or scan of your university card.</p>
                     @if($errors->has('id_card'))

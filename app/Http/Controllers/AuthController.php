@@ -43,6 +43,9 @@ class AuthController extends Controller
 
         if($validator->passes()){
             if($this->authenticateUser($request)){
+                if(Auth::user()->type === 'admin'){
+                    return redirect('/admin');
+                }
                 return redirect('/');
             }
             $request->session()->flash('message', 'Invalid email or password');
@@ -97,6 +100,8 @@ class AuthController extends Controller
         $user->gender = $request->gender;
         $user->type = $request->usertype;
         $user->image_uri = '/assets/img/default_image.png';
+        $user->card_uri = '';
+        $user->registration_id = '';
         $user->verified = 0;
 
         if($user->save()){
@@ -144,21 +149,31 @@ class AuthController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $file = $request->file('id_card');
-            $ext = $file->extension();
-            $path = '/requests/'.str_random(10).'.'.$ext;
-            if($this->uploadFile($path, $file)){
-                $verify_request = new Verification();
-                $verify_request->user_id = Auth::user()->id;
-                $verify_request->registration_no = $request->registration_no;
-                $verify_request->card_uri = $path;
 
-                if($verify_request->save()){
-                    $request->session()->flash('message','Verification Request Submitted');
-                    return redirect('/verify/student');
+            if($this->validationRequestExist(Auth::user())){
+                $request->session()->flash('message', 'Validation Request Pending');
+                return redirect('/verify/student');
+            }else{
+                $file = $request->file('id_card');
+                $ext = $file->extension();
+                $path = '/requests/'.str_random(10).'.'.$ext;
+                if($this->uploadFile($path, $file)){
+                    $verify_request = new Verification();
+                    $verify_request->user_id = Auth::user()->id;
+
+                    $user_update = User::where('id','=', Auth::user()->id)->update([
+                        'registration_id'   => $request->registration_no,
+                        'card_uri'  =>  $path
+                    ]);
+
+                    if($verify_request->save() && $user_update){
+                        $request->session()->flash('message','Verification Request Submitted');
+                        return redirect('/verify/student');
+                    }
+
                 }
-
             }
+
         }
         return redirect('/verify/student')->withErrors($validator);
     }
@@ -169,7 +184,29 @@ class AuthController extends Controller
         ]);
 
         if ($validator->passes()) {
+            if($this->validationRequestExist(Auth::user())){
+                $request->session()->flash('message', 'Validation Request Pending');
+                return redirect('/verify/teacher');
+            }else{
+                $file = $request->file('id_card');
+                $ext = $file->extension();
+                $path = '/requests/'.str_random(10).'.'.$ext;
+                if($this->uploadFile($path, $file)){
+                    $verify_request = new Verification();
+                    $verify_request->user_id = Auth::user()->id;
 
+                    $user_update = User::where('id','=', Auth::user()->id)->update([
+                        'registration_id'   => '',
+                        'card_uri'  =>  $path
+                    ]);
+
+                    if($verify_request->save() && $user_update){
+                        $request->session()->flash('message','Verification Request Submitted');
+                        return redirect('/verify/teacher');
+                    }
+
+                }
+            }
         }
 
         return redirect('/verify/teacher')->withErrors($validator);
@@ -181,5 +218,14 @@ class AuthController extends Controller
 
     public function uploadFile($path, $file){
         return Storage::disk('public')->put($path,  File::get($file));
+    }
+
+    private function validationRequestExist($user){
+        $user = Verification::where('user_id','=', $user->id);
+
+        if($user->count()){
+            return true;
+        }
+        return false;
     }
 }

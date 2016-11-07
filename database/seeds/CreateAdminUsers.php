@@ -22,6 +22,8 @@ class CreateAdminUsers extends Seeder
         $user->gender = 'male';
         $user->type = 'admin';
         $user->image_uri = '/assets/img/default_image.png';
+        $user->card_uri = '';
+        $user->registration_id = '';
         $user->save();
 
         $user = new User();
@@ -33,6 +35,8 @@ class CreateAdminUsers extends Seeder
         $user->gender = 'male';
         $user->type = 'admin';
         $user->image_uri = '/assets/img/default_image.png';
+        $user->card_uri = '';
+        $user->registration_id = '';
         $user->save();
 
         $user = new User();
@@ -44,6 +48,8 @@ class CreateAdminUsers extends Seeder
         $user->gender = 'male';
         $user->type = 'admin';
         $user->image_uri = '/assets/img/default_image.png';
+        $user->card_uri = '';
+        $user->registration_id = '';
 
         $user->save();
     }
