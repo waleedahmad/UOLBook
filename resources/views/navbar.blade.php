@@ -18,6 +18,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name .' ' .Auth::user()->last_name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li><a href="/profile/{{Auth::user()->id}}">Profile</a></li>
                         <li><a href="/user/settings">Setting</a></li>
                         <li>
                             <a href="/logout">Logout</a>

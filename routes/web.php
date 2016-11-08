@@ -6,7 +6,10 @@ Route::group(['middleware'  =>  ['auth', 'isVerified']], function(){
     Route::get('/admin', 'AdminController@getIndex');
     Route::get('/admin/users', 'AdminController@getUsers');
     Route::get('/admin/messages', 'AdminController@getMessages');
+    Route::post('/admin/approve', 'AdminController@approveUser');
     Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
+
+    Route::get('/profile/{id}', 'ProfileController@getUserProfile');
 
 });
 
