@@ -1,7 +1,11 @@
 <?php
 
 Route::group(['middleware'  =>  ['auth', 'isVerified']], function(){
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'FeedController@index');
+    Route::get('/teacher/addClass', 'TeacherController@showAddClassForm');
+    Route::post('/teacher/saveClass', 'TeacherController@saveClass');
+    Route::get('/teacher/class/{id}', 'TeacherController@showClass');
+
 
     Route::get('/admin', 'AdminController@getIndex');
     Route::get('/admin/users', 'AdminController@getUsers');
