@@ -27,7 +27,7 @@ class TeacherController extends Controller
     public function  saveClass(Request $request){
         $validator = Validator::make($request->all(), [
             'subject_code'  =>  'required',
-            'subject_name'  =>  'required',
+            'subject_name'  =>  'required|alpha',
             'subject_semester'  => 'required'
         ]);
 

@@ -25,6 +25,7 @@ class FeedController extends Controller
         $post = new Posts();
         $post->post_text = $post_text;
         $post->user_id = Auth::user()->id;
+        $post->type = 'text';
 
         if($post->save()){
             return response()->json([
