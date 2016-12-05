@@ -7,6 +7,7 @@ use App\Verification;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -41,18 +42,24 @@ class AdminController extends Controller
 
     public function approveUser(Request $request){
         $id = $request->id;
+        $old_file_path = basename(User::where('id','=',$id)->first()->card_uri);
 
         $user_update = User::where('id','=', $id)->update([
-            'verified'  =>  1
+            'verified'  =>  1,
+            'card_uri'  =>  '/id_card/'.$old_file_path
         ]);
 
         if($user_update){
             $v_request = Verification::where('user_id','=',$id);
 
             if($v_request->delete()){
-                return response()->json([
-                    'approved'  => true
-                ]);
+
+                if(Storage::disk('public')->move('requests/'.$old_file_path,  'id_card/'.$old_file_path)){
+                    return response()->json([
+                        'approved'  => true
+                    ]);
+                }
+
             }
         }
 

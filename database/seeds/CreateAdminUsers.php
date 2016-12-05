@@ -31,9 +31,9 @@ class CreateAdminUsers extends Seeder
         $user->last_name = "Ahmad";
         $user->email = "waqasaajkal@gmail.com";
         $user->password = Hash::make('binarystar');
-        $user->verified = 1;
+        $user->verified = 0;
         $user->gender = 'male';
-        $user->type = 'admin';
+        $user->type = 'student';
         $user->image_uri = '/assets/img/default_image.png';
         $user->card_uri = '';
         $user->registration_id = '';
@@ -44,9 +44,9 @@ class CreateAdminUsers extends Seeder
         $user->last_name = "Munawar";
         $user->email = "gulfammunawar313@gmail.com";
         $user->password = Hash::make('binarystar');
-        $user->verified = 1;
+        $user->verified = 0;
         $user->gender = 'male';
-        $user->type = 'admin';
+        $user->type = 'teacher';
         $user->image_uri = '/assets/img/default_image.png';
         $user->card_uri = '';
         $user->registration_id = '';

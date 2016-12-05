@@ -12,3 +12,7 @@ html,body{
 .add-class{
     margin-top: 50px;
 }
+
+.create-post .post-now{
+    margin-top: 20px;
+}

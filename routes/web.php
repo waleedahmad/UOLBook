@@ -15,6 +15,9 @@ Route::group(['middleware'  =>  ['auth', 'isVerified']], function(){
 
     Route::get('/profile/{id}', 'ProfileController@getUserProfile');
 
+
+    Route::post('/posts/create', 'FeedController@createPost');
+
 });
 
 Route::group(['middleware'   =>  ['auth']], function(){

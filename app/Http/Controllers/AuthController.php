@@ -212,14 +212,30 @@ class AuthController extends Controller
         return redirect('/verify/teacher')->withErrors($validator);
     }
 
+    /**
+     * Returns file extension from path
+     * @param $file
+     * @return string
+     */
     public function getFileExtension($file){
         return strtolower(File::extension($file));
     }
 
+    /**
+     * Upload file to path
+     * @param $path
+     * @param $file
+     * @return mixed
+     */
     public function uploadFile($path, $file){
         return Storage::disk('public')->put($path,  File::get($file));
     }
 
+    /**
+     * Check if validation request already exists
+     * @param $user
+     * @return bool
+     */
     private function validationRequestExist($user){
         $user = Verification::where('user_id','=', $user->id);
 
