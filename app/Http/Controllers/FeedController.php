@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes;
-use App\Posts;
+use App\Models\Classes;
+use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

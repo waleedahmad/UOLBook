@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div class="auth row col-sm-12 col-xs-12 col-md-4 col-lg-4 center-block" style="float: none">
+    <div class="auth row col-sm-12 col-xs-12 col-md-5 col-lg-5 center-block" style="float: none">
         <form class="form-horizontal" method="post" action="/login">
 
             <div class="form-group @if($errors->has('email')) has-error @endif">

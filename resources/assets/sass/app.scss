@@ -1,9 +1,17 @@
+html,body{
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+.auth{
+  margin-top: 50px;
+}
 
-// Variables
-@import "variables";
+.add-class{
+  margin-top: 50px;
+}
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+.create-post .post-now{
+  margin-top: 20px;
+}

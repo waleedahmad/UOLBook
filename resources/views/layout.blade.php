@@ -9,7 +9,7 @@
     <title>@yield('title')</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="/assets/libs/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
 </head>
 <body>
 @include('navbar')

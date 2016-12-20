@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
-class UserIsVerified
+class UserIsAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class UserIsVerified
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->verified){
-            return redirect('/');
+        if(Auth::user()->type === 'admin'){
+            return redirect('/admin');
         }
         return $next($request);
     }

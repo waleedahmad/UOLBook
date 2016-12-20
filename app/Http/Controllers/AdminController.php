@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Verification;
+use App\Models\User;
+use App\Models\Verification;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,6 +22,14 @@ class AdminController extends Controller
 
     public function getMessages(){
         return view('admin.messages');
+    }
+
+    public function getAllSocieties(){
+        return view('admin.societies');
+    }
+
+    public function getSocietyRequests(){
+        return view('admin.society_requests');
     }
 
     public function getFilteredRequests($type){

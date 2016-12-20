@@ -1,26 +1,28 @@
 <?php
 
-Route::group(['middleware'  =>  ['auth', 'isVerified']], function(){
+Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin']], function(){
     Route::get('/', 'FeedController@index');
     Route::get('/teacher/addClass', 'TeacherController@showAddClassForm');
     Route::post('/teacher/saveClass', 'TeacherController@saveClass');
     Route::get('/teacher/class/{id}', 'TeacherController@showClass');
 
-
-    Route::get('/admin', 'AdminController@getIndex');
-    Route::get('/admin/users', 'AdminController@getUsers');
-    Route::get('/admin/messages', 'AdminController@getMessages');
-    Route::post('/admin/approve', 'AdminController@approveUser');
-    Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
-
     Route::get('/profile/{id}', 'ProfileController@getUserProfile');
-
-
     Route::post('/posts/create', 'FeedController@createPost');
+
 
 });
 
-Route::group(['middleware'   =>  ['auth']], function(){
+Route::group(['middleware'   =>  ['auth', 'isNotAdmin']], function(){
+    Route::get('/admin', 'AdminController@getIndex');
+    Route::get('/admin/users', 'AdminController@getUsers');
+    Route::get('/admin/messages', 'AdminController@getMessages');
+    Route::get('/admin/societies', 'AdminController@getAllSocieties');
+    Route::get('/admin/society/requests', 'AdminController@getSocietyRequests');
+    Route::post('/admin/approve', 'AdminController@approveUser');
+    Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
+});
+
+Route::group(['middleware'   =>  ['auth', 'isVerified']], function(){
     Route::get('/verify/student', 'AuthController@getStudentVerification');
     Route::get('/verify/teacher', 'AuthController@getTeacherVerification');
 

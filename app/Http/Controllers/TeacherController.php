@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes;
+use App\Models\Classes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -27,7 +27,7 @@ class TeacherController extends Controller
     public function  saveClass(Request $request){
         $validator = Validator::make($request->all(), [
             'subject_code'  =>  'required',
-            'subject_name'  =>  'required|alpha',
+            'subject_name'  =>  'required',
             'subject_semester'  => 'required'
         ]);
 

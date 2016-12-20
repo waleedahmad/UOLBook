@@ -64,7 +64,7 @@
                            {{$v_request->email}}
                            @else
                            {{$v_request->registration_id}}
-                           @endif</h4>
+                           @endif
                        </td>
 
                        <td>

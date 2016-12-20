@@ -1,20 +1,43 @@
+$('.approve-user').on('click', function(e){
+    var id = $(this).attr('data-id'),
+        token = $("meta[name=token]").attr('content'),
+        _this = this;
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
+    $.ajax({
+        type : 'POST',
+        url : '/admin/approve',
+        data : {
+            id : id,
+            _token : token
+        },
+        success : function(res){
+            if(res.approved === true){
+                $(_this).parents('.request').slideUp(function(){
+                    $(this).remove();
+                });
+            }
+        }
+    })
+});
 
-require('./bootstrap');
+$(".create-post .post-now").on('click', function(e){
+    var text = $("#post-text").val(),
+        token = $("meta[name=token]").attr('content');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the body of the page. From here, you may begin adding components to
- * the application, or feel free to tweak this setup for your needs.
- */
-
-Vue.component('example', require('./components/Example.vue'));
-
-const app = new Vue({
-    el: '#app'
+    console.log(text);
+    if(text.length > 0){
+        $.ajax({
+            type : 'POST',
+            url : '/posts/create',
+            data : {
+                post_text : text,
+                _token : token
+            },
+            success : function(res){
+                if(res.created){
+                    $("#post-text").val('');
+                }
+            }
+        });
+    }
 });

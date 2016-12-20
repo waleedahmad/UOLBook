@@ -5,4 +5,5 @@
 Homestead.json
 Homestead.yaml
 .env
-/public/assets/libs
+/public/assets
+.sass-cache

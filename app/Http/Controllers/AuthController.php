@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Verification;
+use App\Models\User;
+use App\Models\Verification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -99,7 +99,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->gender = $request->gender;
         $user->type = $request->usertype;
-        $user->image_uri = '/assets/img/default_image.png';
+        $user->image_uri = ($request->gender == 'male') ? '/default/img/default_img_male.jpg' : '/default/img/default_img_female.jpg';
         $user->card_uri = '';
         $user->registration_id = '';
         $user->verified = 0;
@@ -160,6 +160,7 @@ class AuthController extends Controller
                 if($this->uploadFile($path, $file)){
                     $verify_request = new Verification();
                     $verify_request->user_id = Auth::user()->id;
+                    $verify_request->type = 'user';
 
                     $user_update = User::where('id','=', Auth::user()->id)->update([
                         'registration_id'   => $request->registration_no,
@@ -194,6 +195,7 @@ class AuthController extends Controller
                 if($this->uploadFile($path, $file)){
                     $verify_request = new Verification();
                     $verify_request->user_id = Auth::user()->id;
+                    $verify_request->type = 'user';
 
                     $user_update = User::where('id','=', Auth::user()->id)->update([
                         'registration_id'   => '',

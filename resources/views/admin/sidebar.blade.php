@@ -7,5 +7,7 @@
         </li>
         <li role="presentation" @if(Request::path() === 'admin/users') class="active" @endif><a href="/admin/users">Users</a></li>
         <li role="presentation" @if(Request::path() === 'admin/messages') class="active" @endif><a href="/admin/messages">Messages</a></li>
+        <li role="presentation" @if(Request::path() === 'admin/societies') class="active" @endif><a href="/admin/societies">Societies</a></li>
+        <li role="presentation" @if(Request::path() === 'admin/society/requests') class="active" @endif><a href="/admin/society/requests">Society Requests</a></li>
     </ul>
 </div>
