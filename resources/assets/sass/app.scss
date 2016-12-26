@@ -2,6 +2,12 @@ html,body{
   margin: 0px;
   padding: 0px;
   font-family: 'Source Sans Pro', sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+.navbar-default{
+  margin: 0px;
 }
 
 .auth{
@@ -12,6 +18,7 @@ html,body{
   margin-top: 50px;
 }
 
-.create-post .post-now{
-  margin-top: 20px;
-}
+
+@import "imports/feed";
+
+@import "imports/profile";

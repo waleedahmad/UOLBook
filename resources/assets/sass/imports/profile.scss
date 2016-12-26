@@ -1,0 +1,40 @@
+/* CSS used here will be applied after bootstrap.css */
+
+.profile-header {
+  background: url('/default/img/profile_header.png') repeat ;
+  padding-top:110px;
+  padding-bottom:20px;
+  vertical-align: bottom;
+}
+.profile-header h2 , .profile-header a , .profile-header i {
+  color:#fff !important;
+  text-shadow: 1px 1px 1px #000;
+}
+.profile-header-content {
+  display: table;
+
+}
+.profile-pic {
+  float: none;
+  display: table-cell;
+}
+.profile-pic img {
+  width:120px;
+}
+.profile-about {
+  float: none;
+  display: table-cell;
+  vertical-align: bottom;
+  margin-bottom:20px;
+}
+
+@media (min-width: 768px) {
+  .profile-pic {
+    width:120px;
+  }
+}
+@media (min-width: 992px) {
+  .profile-pic img {
+    width:200px;
+  }
+}

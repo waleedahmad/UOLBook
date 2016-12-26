@@ -7,7 +7,7 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin']], function
     Route::get('/teacher/class/{id}', 'TeacherController@showClass');
 
     Route::get('/profile/{id}', 'ProfileController@getUserProfile');
-    Route::post('/posts/create', 'FeedController@createPost');
+    Route::post('/posts/text/create', 'FeedController@createTextPost');
 
 
 });

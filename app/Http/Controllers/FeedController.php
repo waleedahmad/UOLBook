@@ -16,20 +16,26 @@ class FeedController extends Controller
             return view('teachers.dashboard')->with('classes', $classes)->with('id', NULL);
         }
 
-        return view('index');
+        $posts = Posts::where('source', '=', 'feed')->orderBy('id', 'DESC')->get();
+
+        return view('index')->with('posts', $posts);
     }
 
-    public function createPost(Request $request){
+    public function createTextPost(Request $request){
         $post_text = $request->post_text;
 
         $post = new Posts();
         $post->post_text = $post_text;
         $post->user_id = Auth::user()->id;
         $post->type = 'text';
+        $post->source = 'feed';
 
         if($post->save()){
             return response()->json([
-                'created'   =>  'true'
+                'created'   =>  'true',
+                'name'      =>  Auth::user()->first_name . ' ' . Auth::user()->last_name,
+                'id'        =>  $post->id,
+                'image_uri' =>  Auth::user()->image_uri
             ]);
         }
 
