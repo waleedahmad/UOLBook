@@ -17,7 +17,6 @@ class CreatePhotosTable extends Migration
             $table->increments('id');
             $table->integer('post_id')->unsigned();
             $table->string('image_uri');
-            $table->integer('likes')->unsigned();
             $table->foreign('post_id')->references('id')->on('posts');
             $table->timestamps();
         });

@@ -23,14 +23,13 @@
   margin-top: 30px;
 }
 
-
 .content{
-  height: 100%;
+  height: auto;
   #new_status {
     background-color: #FFF;
     border: 1px solid #DCDCDC;
     padding: 0;
-    height: 160px;
+    height: 170px;
     position:relative;
 
     #post_header {
@@ -96,19 +95,27 @@
 
     #post_footer {
       border-top: solid #E8E8E8 1px;
-      line-height: 3rem;
+      line-height: 4rem;
       padding: 0 2% 0 3%;
+
+      #upload-file{
+        display: none;
+      }
 
       .navbar-nav {
         padding: 0;
 
         li {
-          display: inline-block;
-        }
+          display: none;
 
-        a {
-          display: block;
-          padding: 2rem 1.25rem 2.2rem 1.25rem;
+          a {
+            text-decoration: none;
+            display: block;
+            padding: 2rem 1.25rem 2.2rem 1.25rem;
+            span{
+              margin-right: 10px;
+            }
+          }
         }
 
         .glyphicon {
@@ -153,27 +160,53 @@
         padding: 0 2rem;
       }
     }
-
-    .file-holder{
-      //display: none;
-    }
   }
 
   .posts{
+    height: auto;
+    overflow:hidden;
     margin-top: 30px;
+    padding-bottom: 50px;
+
+    &.post{
+      margin-top: 0px;
+    }
+
+    .post-wrap{
+      position:relative;
+      .dropdown{
+        display: none;
+        z-index: 5;
+        position:absolute;
+        right: 20px;
+        top: 20px;
+
+        .dropdown-toggle{
+          color:grey;
+          font-size: 16px;
+        }
+      }
+
+      &:hover{
+        .dropdown{
+          display: block;
+        }
+      }
+    }
 
     .post{
-      background-color: #FFF;
-      /*box-shadow: 1px 0 5px #AAA;*/
-      border: 1px solid #DCDCDC;
-      min-height: 100px;
       height: auto;
-      position:relative;
-
+      position: relative;
+      display: block;
+      overflow:auto;
+      background-color: #FFF;
+      border: 1px solid #DCDCDC;
       margin-bottom: 20px;
-      padding: 10px;
+      padding: 20px;
 
       .img-holder{
+        height: auto;
+        display:block;
         padding: 0px;
         .user-img{
           border: solid #DDD 1px;
@@ -194,6 +227,22 @@
         .text{
           color:#606060;
           margin-top: 5px;
+          margin-bottom: 10px;
+        }
+
+        .photo img{
+          width: 100%;
+        }
+        .video video{
+          width: 100%;
+        }
+
+        .link{
+          a{
+            color:grey;
+            font-size: 12px;
+            cursor: pointer;
+          }
         }
       }
     }

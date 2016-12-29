@@ -18,7 +18,17 @@ html,body{
   margin-top: 50px;
 }
 
+#message-modal{
+  #message-modal-body{
+    padding: 20px;
+  }
+}
 
-@import "imports/feed";
+.wrapper{
+  margin-top: 50px;
+  @import "imports/feed";
 
-@import "imports/profile";
+  @import "imports/profile";
+}
+
+

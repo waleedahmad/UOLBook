@@ -13,8 +13,22 @@
 </head>
 <body>
 @include('navbar')
-<div class="container">
+<div class="container wrapper">
     @yield('content')
+
+    <div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="message-modal-title"></h4>
+                </div>
+                <div id="message-modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>

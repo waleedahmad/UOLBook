@@ -16,7 +16,7 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('post_id')->unsigned();
-            $table->string('image_uri');
+            $table->string('video_uri');
             $table->foreign('post_id')->references('id')->on('posts');
             $table->timestamps();
         });

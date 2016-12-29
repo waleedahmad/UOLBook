@@ -1,3 +1,7 @@
+let $message_modal = $('#message-modal'),
+    $message_modal_title = $('#message-modal-title'),
+    $message_modal_body = $('#message-modal-body');
+
 $('.approve-user').on('click', function(e){
     var id = $(this).attr('data-id'),
         token = $("meta[name=token]").attr('content'),
@@ -19,4 +23,5 @@ $('.approve-user').on('click', function(e){
         }
     })
 });
+
 

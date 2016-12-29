@@ -2,13 +2,14 @@
 
 Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin']], function(){
     Route::get('/', 'FeedController@index');
+    Route::get('/post/{id}', 'FeedController@viewPost');
     Route::get('/teacher/addClass', 'TeacherController@showAddClassForm');
     Route::post('/teacher/saveClass', 'TeacherController@saveClass');
     Route::get('/teacher/class/{id}', 'TeacherController@showClass');
 
     Route::get('/profile/{id}', 'ProfileController@getUserProfile');
     Route::post('/posts/text/create', 'FeedController@createTextPost');
-
+    Route::post('/posts/file/create', 'FeedController@createFilePost');
 
 });
 
