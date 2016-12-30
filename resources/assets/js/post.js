@@ -8,6 +8,11 @@ let $status = $('#new_status'),
     token = $("meta[name=token]").attr('content'),
     $posts = $(".posts");
 
+
+let $comment = $(".comment-holder"),
+    $comments = $(".comments"),
+    $comment_box = $(".comment-box");
+
 /**
  * Display file icon when Add Photo/Video clicked in status header
  */
@@ -93,6 +98,8 @@ function createTextPost(text){
                 $($post_text).val('');
                 let $postDOM = generateTextPOSTDOM(res.id, text, res.name, res.image_uri, res.user_id, res.time_stamp);
                 $($posts).prepend($postDOM);
+                $('.comment-holder').off('keypress', initComments);
+                $('.comment-holder').on('keypress', initComments);
             }
         }
     });
@@ -116,6 +123,9 @@ function createFilePost(formData, text){
                 $($posts).prepend($postDOM);
                 $($file).val("");
                 $($file_name).text('');
+
+                $('.comment-holder').off('keypress');
+                $('.comment-holder').on('keypress', initComments);
             }
         }
     });
@@ -154,28 +164,42 @@ function fileInputExist(){
  * @returns {string}
  */
 function generateTextPOSTDOM(id, text, name, image_uri, user_id, time_stamp){
-    return `
-        <div class="post" data-post-id="${id}">
-            <div class="col-xs-1 img-holder">
-                <img alt="profile picture" class="user-img" src="${image_uri}">
-            </div>
-    
-            <div class="col-xs-11 post-content">
-                <div class="name">
-                    <a href="/profile/${user_id}">
-                        ${name}
-                    </a>
+    return `<div class="post-wrap" data-post-id="${id}">
+                <div class="post">
+                    <div class="col-xs-1 img-holder">
+                        <img alt="profile picture" class="user-img" src="${image_uri}">
+                    </div>
+            
+                    <div class="col-xs-11 post-content">
+                        <div class="name">
+                            <a href="/profile/${user_id}">
+                                ${name}
+                            </a>
+                        </div>
+                        
+                        <div class="link">
+                            <a href="/post/${id}">${time_stamp}</a>
+                        </div>
+            
+                        <div class="text">
+                            ${text}
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="link">
-                    <a href="/post/${id}">${time_stamp}</a>
+                <div class="comments">
+                    <div class="comment-box">
+                        <div class="comment-box col-xs-12">
+                            <img alt="profile picture" class="col-xs-1" src="${image_uri}">
+                            <input class="col-xs-11 comment-holder" data-post-id="${id}" name="post_text" placeholder="Comment">
+                        </div>
+                    </div>
+                    
+                    <div class="comments-wrapper">
+                    
+                    </div>
                 </div>
-    
-                <div class="text">
-                    ${text}
-                </div>
-            </div>
-        </div>`;
+            </div>`;
 }
 
 function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id, time_stamp){
@@ -192,29 +216,89 @@ function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id,
                     </video>
                 </div>`;
     }
-    return `
-            <div class="post" data-post-id="{{$post->id}}">
-                <div class="col-xs-1 img-holder">
-                    <img alt="profile picture" class="user-img" src="${image_uri}">
-                </div>
 
-                <div class="col-xs-11 post-content">
-                    <div class="name">
-                        <a href="/profile/${user_id}">
-                            ${name}
-                        </a>
+    return `<div class="post-wrap" data-post-id="${id}">
+                <div class="post">
+                    <div class="col-xs-1 img-holder">
+                        <img alt="profile picture" class="user-img" src="${image_uri}">
+                    </div>
+    
+                    <div class="col-xs-11 post-content">
+                        <div class="name">
+                            <a href="/profile/${user_id}">
+                                ${name}
+                            </a>
+                        </div>
+                        
+                        <div class="link">
+                            <a href="/post/${id}">${time_stamp}</a>
+                        </div>
+    
+                        <div class="text">
+                            ${text}
+                        </div>
+    
+                        <div class="photo">
+                            `+media+`
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comments">
+                    <div class="comment-box">
+                        <div class="comment-box col-xs-12">
+                            <img alt="profile picture" class="col-xs-1" src="${image_uri}">
+                            <input class="col-xs-11 comment-holder" data-post-id="${id}" name="post_text" placeholder="Comment">
+                        </div>
                     </div>
                     
-                    <div class="link">
-                        <a href="/post/${id}">${time_stamp}</a>
+                    <div class="comments-wrapper">
+                    
                     </div>
+                </div>
+            </div>`;
+}
 
-                    <div class="text">
-                        ${text}
-                    </div>
+$($comment).on('keypress', initComments);
 
-                    <div class="photo">
-                        `+media+`
+
+function initComments(e){
+    if(e.which === 13){
+        let _this = $(this),
+            comment = $(this).val(),
+            post_id = $(this).attr('data-post-id');
+
+        if(comment.length){
+            $.ajax({
+                type : 'POST',
+                url : '/comment/create',
+                data : {
+                    _token : token,
+                    comment : comment,
+                    post_id : post_id
+                },
+                success: function(res){
+
+                    if(res.created === 'true'){
+                        $(_this).val('');
+                        let $commentDOM = generateCommentDOM(res.image_uri, comment, res.name, res.user_id);
+                        $(_this).parents('.comments').children('.comments-wrapper').prepend($commentDOM);
+                    }
+                }
+            });
+        }
+    }
+}
+
+function generateCommentDOM(image_uri, comment, name, user_id){
+    return `<div class="comment">
+                <div class="col-xs-12">
+                    <img alt="profile picture" class="dp col-xs-1" src="${image_uri}">
+                    
+                    
+                    <div class="text col-xs-11">
+                        <a href="/profile/${user_id}">${name}</a>
+                        ${comment}
                     </div>
                 </div>
             </div>`;

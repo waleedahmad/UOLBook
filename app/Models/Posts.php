@@ -19,4 +19,12 @@ class Posts extends Model
     public function photo(){
         return $this->hasOne('App\Models\Photo', 'post_id', 'id');
     }
+
+    public function comments(){
+        return $this->hasMany('App\Models\Comment', 'post_id', 'id')->orderBy('id', 'DESC');
+    }
+
+    public function firstTwoComments(){
+        return $this->hasMany('App\Models\Comment', 'post_id', 'id')->orderBy('id', 'DESC')->take(2);
+    }
 }

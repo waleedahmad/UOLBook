@@ -23,7 +23,7 @@
     </div>
 
     <div class="content col-xs-12 col-sm-12 col-md-7 col-lg-7">
-        <div class="posts post">
+        <div class="posts single-post">
             <div class="post-wrap">
                 @if(Auth::check())
                     @if(Auth::user()->id == $post->user_id)
@@ -39,7 +39,7 @@
                     @endif
                 @endif
 
-                <div class="post" data-post-id="{{$post->id}}">
+                <div class="post">
                     <div class="col-xs-1 img-holder">
                         <img alt="profile picture" class="user-img" src="{{$post->user->image_uri}}">
                     </div>
@@ -78,6 +78,31 @@
                                 </video>
                             </div>
                         @endif
+                    </div>
+                </div>
+
+                <div class="comments">
+                    @if(Auth::check())
+                        <div class="comment-box">
+                            <div class="comment-box col-xs-12">
+                                <img alt="profile picture" class="col-xs-1" src="{{Auth::user()->image_uri}}">
+                                <input class="col-xs-11 comment-holder" data-post-id="{{$post->id}}" name="post_text" placeholder="Comment">
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="comments-wrapper">
+                        @foreach($post->comments as $comment)
+                            <div class="comment">
+                                <div class="col-xs-12">
+                                    <img alt="profile picture" class="dp col-xs-1" src="{{$comment->user->image_uri}}">
+                                    <div class="text col-xs-11">
+                                        <a href="/profile/{{$comment->user->id}}}">{{$comment->user->first_name . ' ' . $comment->user->last_name}} </a>
+                                        {{$comment->comment}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

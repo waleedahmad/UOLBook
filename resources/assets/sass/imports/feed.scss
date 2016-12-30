@@ -166,13 +166,14 @@
     height: auto;
     overflow:hidden;
     margin-top: 30px;
-    padding-bottom: 50px;
+    padding-bottom: 100px;
 
-    &.post{
+    &.single-post{
       margin-top: 0px;
     }
 
     .post-wrap{
+      margin-bottom: 20px;
       position:relative;
       .dropdown{
         display: none;
@@ -192,7 +193,58 @@
           display: block;
         }
       }
+
+      .comments{
+        border: 1px solid #DCDCDC;
+        height: auto;
+        position: relative;
+        display: block;
+        overflow:auto;
+        background-color:#f8f8f8;
+        .comment-box{
+          height: 60px;
+
+          padding-top: 10px;
+          img{
+            padding: 0px;
+            height: 40px;
+            width: 40px;
+          }
+
+          .comment-holder {
+            margin-left: 10px;
+            border: 1px solid #DCDCDC;
+            height: 40px;
+            padding: 5px;
+          }
+        }
+
+        .comment{
+          .dp, .text{
+            padding : 0px;
+          }
+
+          .dp{
+            height : 40px;
+            width: 40px;
+          }
+
+          .text{
+            margin-left: 10px;
+            height: 40px;
+            padding: 5px;
+            margin-top: 10px;
+          }
+        }
+
+        .more-comment{
+          margin-left: 15px;
+          margin-bottom: 20px;
+        }
+      }
     }
+
+
 
     .post{
       height: auto;
@@ -201,7 +253,8 @@
       overflow:auto;
       background-color: #FFF;
       border: 1px solid #DCDCDC;
-      margin-bottom: 20px;
+      border-bottom: 0px;
+
       padding: 20px;
 
       .img-holder{

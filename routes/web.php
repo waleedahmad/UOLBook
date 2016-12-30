@@ -10,6 +10,7 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin']], function
     Route::get('/profile/{id}', 'ProfileController@getUserProfile');
     Route::post('/posts/text/create', 'FeedController@createTextPost');
     Route::post('/posts/file/create', 'FeedController@createFilePost');
+    Route::post('/comment/create', 'FeedController@createComment');
 
 });
 

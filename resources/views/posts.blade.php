@@ -1,7 +1,7 @@
 <div class="posts">
     @if(count($posts))
         @foreach($posts as $post)
-            <div class="post-wrap">
+            <div class="post-wrap" data-post-id="{{$post->id}}">
                 @if(Auth::check())
                     @if(Auth::user()->id == $post->user_id)
                         <div class="dropdown post-dropdown">
@@ -54,6 +54,36 @@
                                     <source src="/storage/{{$post->video->video_uri}}" type="video/mp4">
                                 </video>
                             </div>
+                        @endif
+                    </div>
+                </div>
+
+
+                <div class="comments">
+                    @if(Auth::check())
+                        <div class="comment-box">
+                            <div class="comment-box col-xs-12">
+                                <img alt="profile picture" class="col-xs-1" src="{{Auth::user()->image_uri}}">
+                                <input class="col-xs-11 comment-holder" data-post-id="{{$post->id}}" name="post_text" placeholder="Comment">
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="comments-wrapper">
+                        @foreach($post->firstTwoComments as $comment)
+                            <div class="comment">
+                                <div class="col-xs-12">
+                                    <img alt="profile picture" class="dp col-xs-1" src="{{$comment->user->image_uri}}">
+                                    <div class="text col-xs-11">
+                                        <a href="/profile/{{$comment->user->id}}}">{{$comment->user->first_name . ' ' . $comment->user->last_name}} </a>
+                                        {{$comment->comment}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        @if(count($post->comments) > 2)
+                            <a class="more-comment" href="/post/{{$post->id}}">More comments</a>
                         @endif
                     </div>
                 </div>

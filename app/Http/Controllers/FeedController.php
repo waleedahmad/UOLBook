@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classes;
+use App\Models\Comment;
 use App\Models\Photo;
 use App\Models\Posts;
 use App\Models\Video;
@@ -123,6 +124,23 @@ class FeedController extends Controller
         }
 
         return '';
+    }
+
+    public function createComment(Request $request){
+        $comment = new Comment();
+        $comment->comment = $request->comment;
+        $comment->post_id = $request->post_id;
+        $comment->user_id = Auth::user()->id;
+
+        if($comment->save()){
+            return response()->json([
+                'created'   =>  'true',
+                'id'    =>  $comment->id,
+                'image_uri' =>  Auth::user()->image_uri,
+                'name'      =>  Auth::user()->first_name . ' ' . Auth::user()->last_name,
+                'user_id'   =>  Auth::user()->id
+            ]);
+        }
     }
 
 
