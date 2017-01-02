@@ -23,8 +23,36 @@
   margin-top: 30px;
 }
 
+.right-sidebar{
+  .suggestions{
+
+    .users{
+      clear:both;
+      display:block;
+      position:relative;
+
+    }
+
+    .header{
+      margin-bottom: 5px;
+      border-bottom: 1px solid #DCDCDC;
+      padding: 5px;
+      font-size: 18px;
+    }
+
+    .img, .name{
+      padding: 5px;
+    }
+    img{
+      width: 100%;
+    }
+  }
+}
+
 .content{
-  height: auto;
+
+  height: 100%;
+
   #new_status {
     background-color: #FFF;
     border: 1px solid #DCDCDC;
@@ -163,13 +191,20 @@
   }
 
   .posts{
-    height: auto;
-    overflow:hidden;
+    height: 100%;
     margin-top: 30px;
     padding-bottom: 100px;
 
+    &.no-margin{
+      margin-top: 0px;
+    }
+
     &.single-post{
       margin-top: 0px;
+    }
+
+    .pagination{
+      display: none;
     }
 
     .post-wrap{
@@ -254,8 +289,12 @@
       background-color: #FFF;
       border: 1px solid #DCDCDC;
       border-bottom: 0px;
-
       padding: 20px;
+
+      .img-holder, .post-content{
+        display: block;
+        position:relative;
+      }
 
       .img-holder{
         height: auto;
@@ -295,6 +334,27 @@
             color:grey;
             font-size: 12px;
             cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .actions{
+      border: 1px solid #DCDCDC;
+      border-bottom: 0px;
+      padding: 10px;
+
+      .post-like{
+        cursor: pointer;
+
+        &.liked{
+          color : #337ab7;
+
+          .glyphicon{
+            background-color: #337ab7;
+            color:white;
+            border-radius: 50%;
+            padding: 2px;
           }
         }
       }

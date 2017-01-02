@@ -5,6 +5,15 @@
   padding-top:110px;
   padding-bottom:20px;
   vertical-align: bottom;
+
+  position: relative;
+
+  .requests{
+    float:right;
+    position : absolute;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 .profile-header h2 , .profile-header a , .profile-header i {
   color:#fff !important;
@@ -37,4 +46,10 @@
   .profile-pic img {
     width:200px;
   }
+}
+
+.no-friend-alert{
+  display: block;
+  margin: 50px auto;
+  width: 600px;
 }

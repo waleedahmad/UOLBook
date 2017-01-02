@@ -2,13 +2,51 @@ html,body{
   margin: 0px;
   padding: 0px;
   font-family: 'Source Sans Pro', sans-serif;
-  height: 100%;
+  height: auto;
   width: 100%;
 }
 
-.navbar-default{
-  margin: 0px;
+.navbar{
+
+  .navbar-default{
+    margin: 0px;
+  }
+
+  .friend-requests{
+    .badge{
+      vertical-align: top;
+    }
+
+    .dropdown-menu{
+      width: 350px;
+
+      .request{
+        .img, .accept, .text{
+          padding: 5px;
+        }
+        img{
+          width: 100%;
+        }
+
+        .accept-request,
+        .delete-request{
+          width: 70px;
+        }
+
+        .delete-request{
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .no-requests{
+      padding: 20px;
+    }
+
+  }
 }
+
+
 
 .auth{
   margin-top: 50px;
@@ -25,6 +63,7 @@ html,body{
 }
 
 .wrapper{
+  height: 100%;
   margin-top: 50px;
   @import "imports/feed";
 

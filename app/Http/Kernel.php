@@ -56,5 +56,6 @@ class Kernel extends HttpKernel
         'isNotVerified' => \App\Http\Middleware\UserIsNotVerified::class,
         'isAdmin'   =>  \App\Http\Middleware\UserIsAdmin::class,
         'isNotAdmin'   =>  \App\Http\Middleware\UserIsNotAdmin::class,
+        'friendRequests'    =>  \App\Http\Middleware\FriendRequestsMiddleware::class
     ];
 }

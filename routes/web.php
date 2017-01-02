@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin']], function(){
+Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin', 'friendRequests']], function(){
     Route::get('/', 'FeedController@index');
     Route::get('/post/{id}', 'FeedController@viewPost');
     Route::get('/teacher/addClass', 'TeacherController@showAddClassForm');
@@ -8,9 +8,25 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin']], function
     Route::get('/teacher/class/{id}', 'TeacherController@showClass');
 
     Route::get('/profile/{id}', 'ProfileController@getUserProfile');
+    Route::get('/profile/{id}/friends', 'ProfileController@getFriends');
+
     Route::post('/posts/text/create', 'FeedController@createTextPost');
     Route::post('/posts/file/create', 'FeedController@createFilePost');
+
     Route::post('/comment/create', 'FeedController@createComment');
+
+    Route::post('/likes/like', 'FeedController@likePost');
+    Route::post('/likes/unlike', 'FeedController@unlikePost');
+
+    Route::post('/user/friend/request','ProfileController@addFriendRequest');
+    Route::post('/user/request/remove', 'ProfileController@removeFriendRequest');
+    Route::post('/user/friend/remove', 'ProfileController@removeFriend');
+
+    Route::post('/user/friend/request/remove', 'ProfileController@deleteFriendRequest');
+    Route::post('/user/friend/request/accept', 'ProfileController@acceptFriendRequest');
+
+
+
 
 });
 

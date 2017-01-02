@@ -22,9 +22,42 @@
                             <a href="/teacher/addClass">Create Class</a>
                         </li>
                     @endif
+
+                    @if(Auth::user()->type === 'student')
+                        <li class="dropdown friend-requests">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @if($friend_requests->count()) <span class="badge">{{$friend_requests->count()}}</span> @endif</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach($friend_requests as $f_request)
+                                    <li class="request">
+                                        <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                            <img src="{{$f_request->fromUser->image_uri}}" alt="">
+                                        </div>
+
+                                        <div class="text col-xs-4 col-sm-7 col-md-7 col-lg-7">
+                                            <a href="/profile/{{$f_request->fromUser->id}}">{{$f_request->fromUser->first_name . ' ' . $f_request->fromUser->last_name}}</a> Sent you friend requests
+                                        </div>
+
+                                        <div class="accept col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                            <button class="btn btn-default btn-sm pull-right accept-request" data-request-id="{{$f_request->id}}">Accept</button>
+                                            <button class="btn btn-danger btn-sm pull-right delete-request" data-request-id="{{$f_request->id}}">Delete</button>
+                                        </div>
+                                    </li>
+                                @endforeach
+
+                                @if(!$friend_requests->count())
+                                    <li class="no-requests">
+                                        You current have no Friend Requests
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                 <li>
                     <a href="/">Home</a>
                 </li>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name .' ' .Auth::user()->last_name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">

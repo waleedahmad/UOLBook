@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Posts extends Model
 {
@@ -26,5 +27,13 @@ class Posts extends Model
 
     public function firstTwoComments(){
         return $this->hasMany('App\Models\Comment', 'post_id', 'id')->orderBy('id', 'DESC')->take(2);
+    }
+
+    public function getLikesCount(){
+        return Like::where('post_id', '=', $this->id)->count();
+    }
+
+    public function isLikedByAuthUser(){
+        return Like::where('user_id','=', Auth::user()->id)->where('post_id', '=', $this->id)->count();
     }
 }

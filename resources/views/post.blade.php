@@ -81,6 +81,13 @@
                     </div>
                 </div>
 
+                <div class="actions">
+                    <span class="post-like @if($post->isLikedByAuthUser()) liked @endif" data-post-id="{{$post->id}}" >
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
+                        <span class="post-like-count">({{$post->getLikesCount()}})</span>
+                    </span>
+                </div>
+
                 <div class="comments">
                     @if(Auth::check())
                         <div class="comment-box">
@@ -97,7 +104,7 @@
                                 <div class="col-xs-12">
                                     <img alt="profile picture" class="dp col-xs-1" src="{{$comment->user->image_uri}}">
                                     <div class="text col-xs-11">
-                                        <a href="/profile/{{$comment->user->id}}}">{{$comment->user->first_name . ' ' . $comment->user->last_name}} </a>
+                                        <a href="/profile/{{$comment->user->id}}">{{$comment->user->first_name . ' ' . $comment->user->last_name}} </a>
                                         {{$comment->comment}}
                                     </div>
                                 </div>

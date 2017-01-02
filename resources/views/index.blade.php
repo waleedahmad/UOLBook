@@ -29,7 +29,22 @@
     </div>
 
     <div class="right-sidebar col-xs-12 col-sm-12 col-md-3 col-lg-3">
-        Sidebar
+        <div class="suggestions">
+            <div class="header">
+                Friend Suggestions
+            </div>
+
+            @foreach($suggestion as $user)
+                <div class="users">
+                    <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <img src="{{$user->image_uri}}" alt="{{$user->name}}">
+                    </div>
+                    <div class="name col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <a href="/profile/{{$user->id}}">{{$user->first_name }} {{$user->last_name}}</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 
 @endsection

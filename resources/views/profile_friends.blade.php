@@ -52,10 +52,7 @@
 
     @if($show_profile)
         <div class="content col-xs-12 col-sm-12 col-md-7 col-lg-7">
-            @if(Auth::user()->id === $user->id)
-                @include('status')
-            @endif
-            @include('posts')
+
         </div>
     @else
         <div class="alert alert-info no-friend-alert" role="alert">{{$user->first_name . ' ' . $user->last_name}} is not in your friends list</div>

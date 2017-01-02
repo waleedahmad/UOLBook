@@ -9,10 +9,6 @@ let $status = $('#new_status'),
     $posts = $(".posts");
 
 
-let $comment = $(".comment-holder"),
-    $comments = $(".comments"),
-    $comment_box = $(".comment-box");
-
 /**
  * Display file icon when Add Photo/Video clicked in status header
  */
@@ -82,7 +78,7 @@ $($status_form).on('submit', function(e){
 });
 
 /**
- * Make an ajax call to create a new text post and on success generate post DOM and append to posts
+ * Make an ajax call to create a new text post and on success generate post DOM and append to .posts
  * @param text
  */
 function createTextPost(text){
@@ -98,13 +94,19 @@ function createTextPost(text){
                 $($post_text).val('');
                 let $postDOM = generateTextPOSTDOM(res.id, text, res.name, res.image_uri, res.user_id, res.time_stamp);
                 $($posts).prepend($postDOM);
-                $('.comment-holder').off('keypress', initComments);
-                $('.comment-holder').on('keypress', initComments);
+                registerCommentEventHandlers();
+                registerPostLikeEventHandlers();
             }
         }
     });
 }
 
+
+/**
+ * Make an ajax call to create a new photo/video post and on success generate post DOM and append to .posts
+ * @param formData
+ * @param text
+ */
 function createFilePost(formData, text){
     $.ajax( {
         url: '/posts/file/create',
@@ -124,33 +126,54 @@ function createFilePost(formData, text){
                 $($file).val("");
                 $($file_name).text('');
 
-                $('.comment-holder').off('keypress');
-                $('.comment-holder').on('keypress', initComments);
+                registerCommentEventHandlers();
+                registerPostLikeEventHandlers();
             }
         }
     });
 }
 
+/**
+ * Validate file format
+ * @param format
+ * @returns {boolean}
+ */
 function fileFormatSupported(format){
     let supported = ['image/jpg', 'image/jpeg', 'image/png', 'video/mp4'];
     return (supported.indexOf(format) != -1);
 }
 
+/**
+ * Return file mime type
+ */
 function getFileMimeType(){
     return $($file)[0].files[0].type;
 
 }
 
+/**
+ * Return file extension
+ * @returns {string}
+ */
 function getFileExtension(){
     return '.'+$($file)[0].files[0].name.replace(/^.*\./, '');
 }
 
+/**
+ * Show bootstrap message modal
+ * @param title
+ * @param message
+ */
 function showMessageModel(title, message){
     $($message_modal).modal('show');
     $($message_modal_title).text(title);
     $($message_modal_body).text(message);
 }
 
+/**
+ * Validate if file exists
+ * @returns {Number|number}
+ */
 function fileInputExist(){
     return $($file)[0].files.length;
 }
@@ -185,6 +208,13 @@ function generateTextPOSTDOM(id, text, name, image_uri, user_id, time_stamp){
                             ${text}
                         </div>
                     </div>
+                </div>
+                
+                <div class="actions">
+                    <span class="post-like" data-post-id="${id}" >
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
+                        <span class="post-like-count">(0)</span>
+                    </span>
                 </div>
                 
                 <div class="comments">
@@ -244,6 +274,13 @@ function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id,
                     </div>
                 </div>
                 
+                <div class="actions">
+                    <span class="post-like" data-post-id="${id}" >
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
+                        <span class="post-like-count">(0)</span>
+                    </span>
+                </div>
+                
                 <div class="comments">
                     <div class="comment-box">
                         <div class="comment-box col-xs-12">
@@ -259,8 +296,7 @@ function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id,
             </div>`;
 }
 
-$($comment).on('keypress', initComments);
-
+$('.comment-holder').on('keypress', initComments);
 
 function initComments(e){
     if(e.which === 13){
@@ -290,6 +326,11 @@ function initComments(e){
     }
 }
 
+function registerCommentEventHandlers(){
+    $('.comment-holder').off('keypress');
+    $('.comment-holder').on('keypress', initComments);
+}
+
 function generateCommentDOM(image_uri, comment, name, user_id){
     return `<div class="comment">
                 <div class="col-xs-12">
@@ -303,3 +344,72 @@ function generateCommentDOM(image_uri, comment, name, user_id){
                 </div>
             </div>`;
 }
+
+$('.post-like').on('click', initPostLikes);
+
+function initPostLikes(e){
+    e.preventDefault();
+    var post_id = $(this).attr('data-post-id'),
+        _this = this;
+
+    $(_this).unbind('click', initPostLikes);
+
+    if($(this).hasClass('liked')){
+        $.ajax({
+            type : 'POST',
+            url : '/likes/unlike',
+            data : {
+                post_id : post_id,
+                _token : token
+            },
+            success : function(res){
+                if(res.unlike === 'true'){
+                    $(_this).on('click', initPostLikes);
+                    $(_this).removeClass('liked');
+                    $(_this).find('.post-like-count').text('('+res.total_likes+')');
+                }
+            }
+        });
+    }else{
+        $.ajax({
+            type : 'POST',
+            url : '/likes/like',
+            data : {
+                post_id : post_id,
+                _token : token
+            },
+            success : function(res){
+                if(res.like === 'true'){
+                    $(_this).on('click', initPostLikes);
+                    $(_this).addClass('liked');
+                    $(_this).find('.post-like-count').text('('+res.total_likes+')');
+                }
+            }
+        });
+    }
+}
+
+function registerPostLikeEventHandlers(){
+    $('.post-like').off('click');
+    $('.post-like').on('click', initPostLikes);
+}
+
+function initInifiteScroll(){
+    $('.posts').jscroll({
+        debug: false,
+        autoTrigger: true,
+        nextSelector: '.pagination li:last a',
+        contentSelector: '.post-wrap, .pagination',
+        callback: function() {
+            $('ul.pagination:visible:first').remove();
+            $('.jscroll-added > *').unwrap();
+            registerCommentEventHandlers();
+            registerPostLikeEventHandlers();
+        },
+
+        loadingHtml: '<img src="http://i.imgur.com/qkKy8.gif" alt="Loading" />',
+    });
+}
+
+initInifiteScroll();
+
