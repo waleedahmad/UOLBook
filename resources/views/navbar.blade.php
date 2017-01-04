@@ -23,7 +23,7 @@
                         </li>
                     @endif
 
-                    @if(Auth::user()->type === 'student')
+                    @if(Auth::user()->type === 'student' && Auth::user()->verified)
                         <li class="dropdown friend-requests">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @if($friend_requests->count()) <span class="badge">{{$friend_requests->count()}}</span> @endif</span>
