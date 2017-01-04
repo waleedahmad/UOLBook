@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\FriendRequests;
+use App\Models\Notification;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 

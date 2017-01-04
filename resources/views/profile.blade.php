@@ -55,7 +55,10 @@
             @if(Auth::user()->id === $user->id)
                 @include('status')
             @endif
-            @include('posts')
+
+            <div @if(Auth::user()->id != $user->id) class="posts-only" @endif>
+                @include('posts')
+            </div>
         </div>
     @else
         <div class="alert alert-info no-friend-alert" role="alert">{{$user->first_name . ' ' . $user->last_name}} is not in your friends list</div>

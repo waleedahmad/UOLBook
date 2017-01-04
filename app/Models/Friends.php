@@ -8,7 +8,7 @@ class Friends extends Model
 {
     protected $table = 'friends';
 
-    public function friend(){
+    public function connection(){
         return $this->hasOne('App\Models\User', 'id', 'friend');
     }
 }

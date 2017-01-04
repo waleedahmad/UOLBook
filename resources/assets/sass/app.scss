@@ -44,6 +44,29 @@ html,body{
     }
 
   }
+
+  .notifications{
+    .badge{
+      vertical-align: top;
+    }
+
+    .dropdown-menu{
+      width: 350px;
+
+      .notification{
+        .img, .text{
+          padding: 5px;
+        }
+        img{
+          width: 100%;
+        }
+      }
+    }
+
+    .no-requests{
+      padding: 20px;
+    }
+  }
 }
 
 

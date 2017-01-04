@@ -19,7 +19,7 @@ class ProfileController extends Controller
 
         $show_profile = $this->profileViewerIsYourFriend($id) || Auth::user()->id === intval($id);
         $request_pending = ($show_profile) ? false : $this->friendRequestPending($id);
-        $friends = $this->getAllFriends();
+        $friends = $this->getAllFriends($id);
 
         return view('profile')
                 ->with('user', $user)
@@ -33,7 +33,7 @@ class ProfileController extends Controller
         $user = User::where('id','=',$id)->first();
         $show_profile = $this->profileViewerIsYourFriend($id) || Auth::user()->id === intval($id);
         $request_pending = ($show_profile) ? false : $this->friendRequestPending($id);
-        $friends = $this->getAllFriends();
+        $friends = $this->getAllFriends($id);
 
         return view('profile_friends')
             ->with('user', $user)
@@ -50,8 +50,8 @@ class ProfileController extends Controller
         return FriendRequests::where('from','=', Auth::user()->id)->where('to', '=', $id)->count();
     }
 
-    public function getAllFriends(){
-        return Friends::where('user','=', Auth::user()->id)->get();
+    public function getAllFriends($id){
+        return Friends::where('user','=', $id)->get();
     }
 
 

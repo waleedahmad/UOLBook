@@ -25,9 +25,6 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin', 'friendReq
     Route::post('/user/friend/request/remove', 'ProfileController@deleteFriendRequest');
     Route::post('/user/friend/request/accept', 'ProfileController@acceptFriendRequest');
 
-
-
-
 });
 
 Route::group(['middleware'   =>  ['auth', 'isNotAdmin']], function(){
