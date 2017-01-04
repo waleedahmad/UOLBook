@@ -54,7 +54,30 @@
                             </ul>
                         </li>
 
+                        <li class="dropdown notifications">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span> @if($notifications->count()) <span class="badge">{{$notifications->count()}}</span> @endif</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach($notifications as $notification)
+                                    <li class="notification">
+                                        <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                            <img src="{{$notification->fromUser->image_uri}}" alt="">
+                                        </div>
 
+                                        <div class="text col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} Sent you friend requests
+                                        </div>
+                                    </li>
+                                @endforeach
+
+                                @if(!$notifications->count())
+                                    <li class="no-requests">
+                                        You current have no Friend Requests
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
                     @endif
                 <li>
                     <a href="/">Home</a>
