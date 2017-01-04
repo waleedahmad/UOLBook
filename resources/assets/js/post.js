@@ -50,10 +50,15 @@ $($file).change(function() {
 /**
  * Handle text and file posts submissions
  */
-$($status_form).on('submit', function(e){
+$($status_form).on('submit', handleStatusSubmit);
+
+function handleStatusSubmit(e){
     e.preventDefault();
     let text = $($post_text).val(),
         post_type = $($status).attr('data-post-type');
+
+    $($status_form).unbind('submit', handleStatusSubmit);
+
 
     if(post_type === 'text'){
         console.log("Text Post");
@@ -70,12 +75,15 @@ $($status_form).on('submit', function(e){
                 console.log("Supported");
                 let formData = new FormData(this);
                 createFilePost(formData, text);
+                $($status_form).on('submit', handleStatusSubmit);
             }else{
                 showMessageModel('File type not supported', 'Sorry we do not support ('+ getFileExtension() +') file type for uploading');
             }
+        }else{
+            showMessageModel('Post is empty', 'This post appears to be blank. Please write something or attach a link or photo to post.');
         }
     }
-});
+}
 
 /**
  * Make an ajax call to create a new text post and on success generate post DOM and append to .posts
