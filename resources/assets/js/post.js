@@ -64,8 +64,10 @@ function handleStatusSubmit(e){
         console.log("Text Post");
         if(text.length > 0){
             createTextPost(text);
+            $($status_form).on('submit', handleStatusSubmit);
         }else{
             showMessageModel('Post is empty', 'This post appears to be blank. Please write something or attach a link or photo to post.');
+            $($status_form).on('submit', handleStatusSubmit);
         }
     }else{
         console.log("File Post");
@@ -78,9 +80,11 @@ function handleStatusSubmit(e){
                 $($status_form).on('submit', handleStatusSubmit);
             }else{
                 showMessageModel('File type not supported', 'Sorry we do not support ('+ getFileExtension() +') file type for uploading');
+                $($status_form).on('submit', handleStatusSubmit);
             }
         }else{
             showMessageModel('Post is empty', 'This post appears to be blank. Please write something or attach a link or photo to post.');
+            $($status_form).on('submit', handleStatusSubmit);
         }
     }
 }
