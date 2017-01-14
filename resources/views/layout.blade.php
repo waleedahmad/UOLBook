@@ -9,6 +9,7 @@
     <title>@yield('title')</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="/assets/libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/libs/toastr/toastr.min.css">
     <link rel="stylesheet" href="/assets/css/app.min.css">
 </head>
 <body>
@@ -33,6 +34,8 @@
 <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/assets/libs/jscroll/jquery.jscroll.min.js"></script>
+<script src="/assets/libs/bootbox.js/bootbox.js"></script>
+<script src="/assets/libs/toastr/toastr.js"></script>
 <script src="/assets/js/app.js"></script>
 </body>
 </html>

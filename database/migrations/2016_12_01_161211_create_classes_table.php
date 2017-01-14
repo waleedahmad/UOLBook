@@ -20,7 +20,7 @@ class CreateClassesTable extends Migration
             $table->string('subject_name');
             $table->string('subject_code');
             $table->integer('subject_semester');
-            $table->foreign('teacher_id')->references('id')->on('users');
+            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');;
             $table->timestamps();
         });
     }

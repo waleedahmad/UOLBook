@@ -122,8 +122,8 @@ class FeedController extends Controller
                     'time_stamp'    =>  $post->created_at->diffForHumans()
                 ]);
             }
-
         }
+
         return response()->json([
             'created'   =>  'false'
         ]);
@@ -209,6 +209,21 @@ class FeedController extends Controller
         }
     }
 
+    public function updateComment(Request $request){
+        if(Comment::where('id','=', $request->id)->update([
+            'comment'   =>  $request->text
+        ])){
+            return response()->json([
+                'updated'   => true
+            ]);
+        }
+    }
+
+    /**
+     * Generate a new like
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function likePost(Request $request){
         $post_id = $request->post_id;
         $user_id = Auth::user()->id;
@@ -236,6 +251,11 @@ class FeedController extends Controller
         }
     }
 
+    /**
+     * Remove like
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function unlikePost(Request $request){
         $post_id = $request->post_id;
         $user_id = Auth::user()->id;
@@ -261,28 +281,137 @@ class FeedController extends Controller
         }
     }
 
+    /**
+     * Delete Post
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deletePost(Request $request){
+        $post = Posts::where('id','=',$request->id)->first();
+
+        $this->deletePostNotifications($post);
+        if($post->type === 'text'){
+            if($post->delete()){
+                return response()->json([
+                    'deleted'   => true
+                ]);
+            }
+        }
+
+        if($post->type === 'photo'){
+            if(Storage::disk('public')->delete($post->photo->image_uri)){
+                if($post->delete()){
+                    return response()->json([
+                        'deleted'   => true
+                    ]);
+                }
+            }
+        }
+
+        if($post->type === 'video'){
+            if(Storage::disk('public')->delete($post->video->video_uri)){
+                if($post->delete()){
+                    return response()->json([
+                        'deleted'   => true
+                    ]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Delete Post Notifications
+     * @param $post
+     */
+    protected function deletePostNotifications($post){
+        Notification::where('type', '=', 'comment')->where('target','=', $post->id)->delete();
+        Notification::where('type', '=', 'like')->where('target','=', $post->id)->delete();
+    }
+
+    /**
+     * Update post text
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function editPost(Request $request){
+        if(Posts::where('id','=', $request->id)->update([
+            'post_text'  =>  $request->text
+        ])){
+            return response()->json([
+                'updated'   => true
+            ]);
+        }
+    }
+
+    public function deleteComment(Request $request){
+        $comment = Comment::where('id','=', $request->id)->first();
+        $this->deleteCommentNotifications($comment);
+
+        if($comment->delete()){
+            return response()->json([
+                'deleted'   => true
+            ]);
+        }
+    }
+
+    public function deleteCommentNotifications($comment){
+        Notification::where('type','=', 'comment')->where('target','=', $comment->id)->delete();
+    }
+
+    /**
+     * Get total post like count
+     * @param $post_id
+     * @return mixed
+     */
     public function getPostLikeCount($post_id){
         return Like::where('post_id', '=', $post_id)->count();
     }
 
+    /**
+     * check if user is owner
+     * @param $post_id
+     * @return mixed
+     */
     public function actionUserIsOwner($post_id){
         return (Posts::where('id', '=' , $post_id)->where('user_id','=', Auth::user()->id)->count());
     }
 
+    /**
+     * Return owner id
+     * @param $post_id
+     * @return mixed
+     */
     public function getContentOwnerId($post_id){
         return Posts::where('id' , '=', $post_id)->first()->user_id;
     }
 
+    /**
+     * Create a new notification
+     * @param $type
+     * @param $from
+     * @param $for
+     * @param $target
+     * @return bool
+     */
     public function createNotification($type, $from, $for, $target){
         $notification = new Notification();
         $notification->type = $type;
         $notification->from = $from;
         $notification->to = $for;
         $notification->target = $target;
+        $notification->read = 0;
 
         return $notification->save();
     }
 
+    /**
+     * Remove notification
+     * @param $type
+     * @param $from
+     * @param $for
+     * @param $target
+     * @return mixed
+     */
     public function removeNotification($type, $from, $for, $target){
         $notification = Notification::where('type', '=', $type)->where('from', '=', $from)->where('to', $for)->where('target','=', $target);
 

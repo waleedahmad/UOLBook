@@ -108,6 +108,8 @@ function createTextPost(text){
                 $($posts).prepend($postDOM);
                 registerCommentEventHandlers();
                 registerPostLikeEventHandlers();
+                registerPostDeleteEventHanlders();
+                registerPostEditEventHandlers();
             }
         }
     });
@@ -140,9 +142,101 @@ function createFilePost(formData, text){
 
                 registerCommentEventHandlers();
                 registerPostLikeEventHandlers();
+                registerPostDeleteEventHanlders();
+                registerPostEditEventHandlers();
             }
         }
     });
+}
+
+$('.delete-post').on('click', initDeletePost);
+
+function initDeletePost(e){
+    e.preventDefault();
+    let id = $(this).attr('data-id'),
+        $post = $('[data-post-id="'+id+'"]').find('.post'),
+        token = $("meta[name=token]").attr('content');
+
+    bootbox.confirm({
+        message: "Are you sure you want to delete this post?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if(result){
+                $.ajax({
+                    type : 'POST',
+                    url : '/posts/delete',
+                    data : {
+                        id : id,
+                        _token : token
+                    },
+                    success : function(res){
+                        if(res.deleted === true){
+                            $($post).parents('.post-wrap').slideUp(function(){
+                                $(this).remove();
+                            });
+                            toastr.success("Post removed!");
+                        }
+                    }
+                })
+
+            }
+        }
+    });
+}
+
+function registerPostDeleteEventHanlders(){
+    $('.delete-post').off('click', initDeletePost);
+    $('.delete-post').on('click', initDeletePost);
+}
+
+$('.edit-post').on('click', initEditPost);
+
+function initEditPost(e){
+    e.preventDefault();
+    let id = $(this).attr('data-id'),
+        token = $("meta[name=token]").attr('content'),
+        $post = $('[data-post-id="'+id+'"]').find('.post'),
+        text = $.trim($($post).find('.text').text());
+
+    bootbox.prompt({
+        title: "Edit Post ",
+        inputType : 'textarea',
+        value : text,
+        callback: function (result) {
+            if(result){
+                if(result.length){
+                    $.ajax({
+                        type : 'POST',
+                        url : '/posts/edit',
+                        data : {
+                            id : id,
+                            text : result,
+                            _token : token
+                        },
+                        success : function(res){
+                            if(res.updated === true){
+                                $($post).find('.text').text(result);
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    });
+}
+
+function registerPostEditEventHandlers(){
+    $('.edit-post').off('click', initEditPost);
+    $('.edit-post').on('click', initEditPost);
 }
 
 /**
@@ -200,6 +294,18 @@ function fileInputExist(){
  */
 function generateTextPOSTDOM(id, text, name, image_uri, user_id, time_stamp){
     return `<div class="post-wrap" data-post-id="${id}">
+
+                <div class="dropdown post-dropdown">
+                    <a href="" class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                        <li><a href="#" class="delete-post" data-id="${id}">Delete post</a></li>
+                    <li><a href="#" class="edit-post" data-id="${id}">Edit post</a></li>
+                    </ul>
+                </div>
+
+
                 <div class="post">
                     <div class="col-xs-1 img-holder">
                         <img alt="profile picture" class="user-img" src="${image_uri}">
@@ -260,6 +366,18 @@ function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id,
     }
 
     return `<div class="post-wrap" data-post-id="${id}">
+
+                <div class="dropdown post-dropdown">
+                    <a href="" class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                        <li><a href="#" class="delete-post" data-id="${id}">Delete post</a></li>
+                    <li><a href="#" class="edit-post" data-id="${id}">Edit post</a></li>
+                    </ul>
+               </div>
+
+
                 <div class="post">
                     <div class="col-xs-1 img-holder">
                         <img alt="profile picture" class="user-img" src="${image_uri}">
@@ -308,55 +426,11 @@ function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id,
             </div>`;
 }
 
-$('.comment-holder').on('keypress', initComments);
 
-function initComments(e){
-    if(e.which === 13){
-        let _this = $(this),
-            comment = $(this).val(),
-            post_id = $(this).attr('data-post-id');
 
-        if(comment.length){
-            $.ajax({
-                type : 'POST',
-                url : '/comment/create',
-                data : {
-                    _token : token,
-                    comment : comment,
-                    post_id : post_id
-                },
-                success: function(res){
-
-                    if(res.created === 'true'){
-                        $(_this).val('');
-                        let $commentDOM = generateCommentDOM(res.image_uri, comment, res.name, res.user_id);
-                        $(_this).parents('.comments').children('.comments-wrapper').prepend($commentDOM);
-                    }
-                }
-            });
-        }
-    }
-}
-
-function registerCommentEventHandlers(){
-    $('.comment-holder').off('keypress');
-    $('.comment-holder').on('keypress', initComments);
-}
-
-function generateCommentDOM(image_uri, comment, name, user_id){
-    return `<div class="comment">
-                <div class="col-xs-12">
-                    <img alt="profile picture" class="dp col-xs-1" src="${image_uri}">
-                    
-                    
-                    <div class="text col-xs-11">
-                        <a href="/profile/${user_id}">${name}</a>
-                        ${comment}
-                    </div>
-                </div>
-            </div>`;
-}
-
+/**
+ * Handle post likes
+ */
 $('.post-like').on('click', initPostLikes);
 
 function initPostLikes(e){
@@ -401,6 +475,9 @@ function initPostLikes(e){
     }
 }
 
+/**
+ * Rebind Post like events
+ */
 function registerPostLikeEventHandlers(){
     $('.post-like').off('click');
     $('.post-like').on('click', initPostLikes);
@@ -417,6 +494,8 @@ function initInifiteScroll(){
             $('.jscroll-added > *').unwrap();
             registerCommentEventHandlers();
             registerPostLikeEventHandlers();
+            registerPostDeleteEventHanlders();
+            registerPostEditEventHandlers();
         },
 
         loadingHtml: '<img src="http://i.imgur.com/qkKy8.gif" alt="Loading" />',

@@ -12,8 +12,13 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin', 'friendReq
 
     Route::post('/posts/text/create', 'FeedController@createTextPost');
     Route::post('/posts/file/create', 'FeedController@createFilePost');
+    Route::post('/posts/delete', 'FeedController@deletePost');
+    Route::post('/posts/edit', 'FeedController@editPost');
 
     Route::post('/comment/create', 'FeedController@createComment');
+    Route::post('/comment/delete', 'FeedController@deleteComment');
+    Route::post('/comment/update', 'FeedController@updateComment');
+
 
     Route::post('/likes/like', 'FeedController@likePost');
     Route::post('/likes/unlike', 'FeedController@unlikePost');
@@ -25,6 +30,8 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified' , 'isAdmin', 'friendReq
     Route::post('/user/friend/request/remove', 'ProfileController@deleteFriendRequest');
     Route::post('/user/friend/request/accept', 'ProfileController@acceptFriendRequest');
 
+    Route::post('/notification/read', 'NotificationController@readNotification');
+
 });
 
 Route::group(['middleware'   =>  ['auth', 'isNotAdmin']], function(){
@@ -34,6 +41,7 @@ Route::group(['middleware'   =>  ['auth', 'isNotAdmin']], function(){
     Route::get('/admin/societies', 'AdminController@getAllSocieties');
     Route::get('/admin/society/requests', 'AdminController@getSocietyRequests');
     Route::post('/admin/approve', 'AdminController@approveUser');
+    Route::post('/admin/disapprove', 'AdminController@disapproveUser');
     Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
 });
 

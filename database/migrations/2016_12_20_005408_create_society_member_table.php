@@ -18,8 +18,8 @@ class CreateSocietyMemberTable extends Migration
             $table->string('role');
             $table->integer('user_id')->unsigned();
             $table->integer('society_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('society_id')->references('id')->on('societies');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('society_id')->references('id')->on('societies')->onDelete('cascade');;
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ class CreateJoinRequestsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('class_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('class_id')->references('id')->on('classes');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
             $table->timestamps();
         });
     }

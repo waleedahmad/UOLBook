@@ -6,70 +6,7 @@ html,body{
   width: 100%;
 }
 
-.navbar{
-
-  .navbar-default{
-    margin: 0px;
-  }
-
-  .friend-requests{
-    .badge{
-      vertical-align: top;
-    }
-
-    .dropdown-menu{
-      width: 350px;
-
-      .request{
-        .img, .accept, .text{
-          padding: 5px;
-        }
-        img{
-          width: 100%;
-        }
-
-        .accept-request,
-        .delete-request{
-          width: 70px;
-        }
-
-        .delete-request{
-          margin-top: 5px;
-        }
-      }
-    }
-
-    .no-requests{
-      padding: 20px;
-    }
-
-  }
-
-  .notifications{
-    .badge{
-      vertical-align: top;
-    }
-
-    .dropdown-menu{
-      width: 350px;
-
-      .notification{
-        .img, .text{
-          padding: 5px;
-        }
-        img{
-          width: 100%;
-        }
-      }
-    }
-
-    .no-requests{
-      padding: 20px;
-    }
-  }
-}
-
-
+@import "imports/navbar";
 
 .auth{
   margin-top: 50px;
@@ -85,12 +22,17 @@ html,body{
   }
 }
 
+.bootbox-input-textarea{
+  resize: none;
+}
+
 .wrapper{
   height: 100%;
   margin-top: 50px;
   @import "imports/feed";
 
   @import "imports/profile";
+  @import "imports/admin";
 }
 
 

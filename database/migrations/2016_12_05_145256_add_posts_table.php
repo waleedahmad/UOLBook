@@ -20,7 +20,7 @@ class AddPostsTable extends Migration
             $table->string('type');
             $table->string('source');
             $table->integer('society_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
             $table->timestamps();
         });
     }

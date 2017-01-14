@@ -18,8 +18,8 @@ class CreateDiscussionRepliesTable extends Migration
             $table->text('reply');
             $table->integer('user_id')->unsigned();
             $table->integer('discussions_id')->unsigned();
-            $table->foreign('discussions_id')->references('id')->on('discussions');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('discussions_id')->references('id')->on('discussions')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
             $table->timestamps();
         });
     }

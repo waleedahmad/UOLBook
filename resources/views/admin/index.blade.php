@@ -8,7 +8,7 @@
    <div class="container-fluid admin-verification">
        @include('admin.sidebar')
 
-       <div class="content col-xs-12 col-sm-9 col-md-9 col-lg-9">
+       <div class="admin-content col-xs-12 col-sm-9 col-md-9 col-lg-9">
            <div class="dropdown">
                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                    @if(Request::path() === 'admin/teachers')
@@ -77,6 +77,7 @@
 
                        <td>
                            <button class="btn btn-default approve-user" data-id="{{$v_request->id}}">Approve</button>
+                           <button class="btn btn-danger disapprove-user" data-id="{{$v_request->id}}">Disapprove</button>
                        </td>
                    </tr>
                @endforeach

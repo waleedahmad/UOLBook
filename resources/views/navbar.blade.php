@@ -60,22 +60,33 @@
                             </a>
                             <ul class="dropdown-menu">
                                 @foreach($notifications as $notification)
-                                    <li class="notification">
+                                    <li class="notification" data-id="{{$notification->id}}">
                                         <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
                                             <img src="{{$notification->fromUser->image_uri}}" alt="">
                                         </div>
 
                                         <div class="text col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                            {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} Sent you friend requests
+                                            <div>
+                                                @if($notification->type === 'like')
+                                                    {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} liked you post
+                                                @elseif($notification->type === 'comment')
+                                                    {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} commented on your post
+                                                @endif
+                                            </div>
+                                            <div>
+                                                {{$notification->created_at->diffForHumans()}}
+                                            </div>
                                         </div>
                                     </li>
                                 @endforeach
 
                                 @if(!$notifications->count())
                                     <li class="no-requests">
-                                        You current have no Friend Requests
+                                        You current have no Notifications
                                     </li>
+
                                 @endif
+                                    <a class="all-notifications" href="/notifications/all">See all notifications</a>
                             </ul>
                         </li>
                     @endif

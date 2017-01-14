@@ -1,0 +1,79 @@
+.navbar{
+
+  .navbar-default{
+    margin: 0px;
+  }
+
+  .friend-requests{
+    .badge{
+      vertical-align: top;
+    }
+
+    .dropdown-menu{
+      width: 350px;
+
+      .request{
+        .img, .accept, .text{
+          padding: 5px;
+        }
+        img{
+          width: 100%;
+        }
+
+        .accept-request,
+        .delete-request{
+          width: 70px;
+        }
+
+        .delete-request{
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .no-requests{
+      padding: 20px;
+    }
+
+  }
+
+  .notifications{
+    .all-notifications{
+      padding: 10px;
+      display:block;
+    }
+
+    .badge{
+      vertical-align: top;
+    }
+
+    .dropdown-menu{
+      height: auto;
+      max-height: 400px;
+      overflow:auto;
+      padding: 0px;
+      width: 350px;
+
+      .notification{
+        cursor:pointer;
+        overflow:hidden;
+        clear:both;
+
+        &:hover{
+          background-color:grey;
+        }
+
+        .img, .text{
+          padding: 5px;
+        }
+        img{
+          width: 100%;
+        }
+      }
+    }
+
+    .no-requests{
+      padding: 10px;
+    }
+  }
+}

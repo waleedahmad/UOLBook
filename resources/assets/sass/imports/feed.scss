@@ -210,7 +210,8 @@
     .post-wrap{
       margin-bottom: 20px;
       position:relative;
-      .dropdown{
+
+      .post-dropdown{
         display: none;
         z-index: 5;
         position:absolute;
@@ -224,7 +225,7 @@
       }
 
       &:hover{
-        .dropdown{
+        .post-dropdown{
           display: block;
         }
       }
@@ -234,8 +235,12 @@
         height: auto;
         position: relative;
         display: block;
-        overflow:auto;
+        overflow:hidden;
         background-color:#f8f8f8;
+        padding-bottom: 20px;
+
+
+
         .comment-box{
           height: 60px;
 
@@ -255,8 +260,32 @@
         }
 
         .comment{
+          height: auto;
+          overflow:auto;
+          clear:both;
+          position:relative;
+          margin-top: 5px;
           .dp, .text{
             padding : 0px;
+          }
+
+          .comment-dropdown{
+            display: none;
+            z-index: 5;
+            position:absolute;
+            right: 20px;
+            top: 5px;
+
+            .dropdown-toggle{
+              color:grey;
+              font-size: 16px;
+            }
+          }
+
+          &:hover{
+            .comment-dropdown{
+              display: block;
+            }
           }
 
           .dp{
@@ -269,6 +298,13 @@
             height: 40px;
             padding: 5px;
             margin-top: 10px;
+          }
+
+          .edit-comment-text {
+            margin-left: 10px;
+            border: 1px solid #DCDCDC;
+            height: 40px;
+            padding: 5px;
           }
         }
 

@@ -20,8 +20,8 @@ class CreateMessagesTable extends Migration
             $table->integer('from')->unsigned();
             $table->integer('to')->unsigned();
             $table->foreign('conversation_id')->references('id')->on('conversations');
-            $table->foreign('from')->references('id')->on('users');
-            $table->foreign('to')->references('id')->on('users');
+            $table->foreign('from')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('to')->references('id')->on('users')->onDelete('cascade');;
             $table->boolean('read');
             $table->timestamps();
         });

@@ -75,4 +75,27 @@ class AdminController extends Controller
             'approved'  =>  false
         ]);
     }
+
+    public function disapproveUser(Request $request){
+        $id = $request->id;
+        $request_file_name = basename(User::where('id','=',$id)->first()->card_uri);
+
+        $user_update = User::where('id','=', $id)->update([
+            'card_uri'  =>  ''
+        ]);
+
+        if($user_update){
+            $v_request = Verification::where('user_id','=',$id);
+
+            if($v_request->delete()){
+
+                if(Storage::disk('public')->delete('requests/'.$request_file_name)){
+                    return response()->json([
+                        'disapproved'  => true
+                    ]);
+                }
+
+            }
+        }
+    }
 }
