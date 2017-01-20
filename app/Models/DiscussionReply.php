@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class DiscussionReply extends Model
 {
     protected $table = 'discussion_replies';
+
+    public function user(){
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
 }

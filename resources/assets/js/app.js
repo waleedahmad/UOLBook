@@ -24,7 +24,7 @@ toastr.options = {
 (function() {
     var dropdownMenu;
 
-    $('.posts').on('show.bs.dropdown', function(e) {
+    $('.posts, .discussion, .replies').on('show.bs.dropdown', function(e) {
 
         dropdownMenu = $(e.target).find('.dropdown-menu');
 
@@ -40,7 +40,7 @@ toastr.options = {
         });
     });
 
-    $('.posts').on('hide.bs.dropdown', function(e) {
+    $('.posts, .discussion, .replies').on('hide.bs.dropdown', function(e) {
         $(e.target).append(dropdownMenu.detach());
         dropdownMenu.hide();
     });

@@ -5,18 +5,18 @@
 @endsection
 
 @section('content')
-   <div class="container-fluid admin-verification">
+   <div class="admin-verification">
        @include('admin.sidebar')
 
        <div class="admin-content col-xs-12 col-sm-9 col-md-9 col-lg-9">
            <div class="dropdown">
                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                    @if(Request::path() === 'admin/teachers')
-                        Filter: Teachers
+                       Filter: Teachers
                    @elseif(Request::path() === 'admin/students')
                        Filter: Students
                    @else
-                        Filter Requests
+                       Filter Requests
                    @endif
                    <span class="caret"></span>
                </button>
@@ -28,42 +28,42 @@
 
            <table class="table requests">
                <thead>
-                    <tr>
-                        <th>
-                            Identity Card
-                        </th>
+               <tr>
+                   <th>
+                       Identity Card
+                   </th>
 
-                        <th>
-                            Email/Username
-                        </th>
+                   <th>
+                       Email/Username
+                   </th>
 
-                        <th>
-                            Request Date
-                        </th>
+                   <th>
+                       Request Date
+                   </th>
 
-                        <th>Type</th>
+                   <th>Type</th>
 
-                        <th>
-                            Action
-                        </th>
-                    </tr>
+                   <th>
+                       Action
+                   </th>
+               </tr>
                </thead>
 
                <tbody>
 
                @foreach($v_requests as $v_request)
                    <tr class="request">
-                        <td>
-                            <a href="/storage{{$v_request->card_uri}}" target="_blank">
-                                <img class="media-object" src="/storage/{{$v_request->card_uri}}" alt="..."  style="width: 50px; height: 50px;">
-                            </a>
-                        </td>
+                       <td>
+                           <a href="/storage{{$v_request->card_uri}}" target="_blank">
+                               <img class="media-object" src="/storage/{{$v_request->card_uri}}" alt="..."  style="width: 50px; height: 50px;">
+                           </a>
+                       </td>
 
                        <td>
                            @if($v_request->type === 'teacher')
-                           {{$v_request->email}}
+                               {{$v_request->email}}
                            @else
-                           {{$v_request->registration_id}}
+                               {{$v_request->registration_id}}
                            @endif
                        </td>
 
@@ -84,8 +84,6 @@
 
                </tbody>
            </table>
-
-
        </div>
    </div>
 @endsection

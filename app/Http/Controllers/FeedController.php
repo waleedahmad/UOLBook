@@ -18,33 +18,16 @@ use Illuminate\Support\Facades\Storage;
 class FeedController extends Controller
 {
     public function index(){
-
-        if(Auth::user()->type === 'teacher'){
-            $classes = Classes::where('teacher_id', '=', Auth::user()->id)->get();
-            return view('teachers.dashboard')->with('classes', $classes)->with('id', NULL);
-        }
-
         $posts = Posts::where('source', '=', 'feed')
                     ->WhereIn('user_id', $this->getFriendsIDs())
                     ->orWhere('user_id', '=', Auth::user()->id)
                     ->orderBy('id', 'DESC')->paginate(5);
 
-        return view('index')->with('posts', $posts)->with('suggestion', $this->getFriendSuggestions());
+        return view('feed.index')->with('posts', $posts);
     }
 
     public function getFriendsIDs(){
         return Friends::where('user','=', Auth::user()->id)->pluck('friend');
-    }
-
-    public function getFriendSuggestions(){
-        $friend_ids = Friends::where('user','=', Auth::user()->id)->pluck('friend');
-        return User::Where('type','=', 'student')
-                    ->Where('verified','=', 1)
-                    ->Where('id','!=', Auth::user()->id)
-                    ->WhereNotIn('id', $friend_ids)
-                    ->inRandomOrder()
-                    ->get()
-                    ->slice(0,3);
     }
 
     /**
@@ -55,7 +38,7 @@ class FeedController extends Controller
     public function viewPost($id){
         $post = Posts::where('id', '=', $id)->first();
 
-        return view('post')->with('post', $post);
+        return view('feed.post')->with('post', $post);
     }
 
     /**

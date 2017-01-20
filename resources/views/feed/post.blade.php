@@ -10,7 +10,9 @@
         <div class="user-box">
             <div class="dp col-xs-3 col-sm-3 col-md-3 col-lg-2">
                 <a href="/profile/{{Auth::user()->id}}">
-                    <img src="{{Auth::user()->image_uri}}" alt="">
+                    <div class="image-holder">
+                        <img src="/storage/{{Auth::user()->image_uri}}" alt="">
+                    </div>
                 </a>
             </div>
 
@@ -40,8 +42,10 @@
                 @endif
 
                 <div class="post" data-post-id="{{$post->id}}">
-                    <div class="col-xs-1 img-holder">
-                        <img alt="profile picture" class="user-img" src="{{$post->user->image_uri}}">
+                    <div class="col-xs-1">
+                        <div class="image-holder">
+                            <img alt="profile picture" class="user-img" src="/storage/{{$post->user->image_uri}}">
+                        </div>
                     </div>
 
                     <div class="col-xs-11 post-content">
@@ -92,7 +96,12 @@
                     @if(Auth::check())
                         <div class="comment-box">
                             <div class="comment-box col-xs-12">
-                                <img alt="profile picture" class="col-xs-1" src="{{Auth::user()->image_uri}}">
+                                <div class="col-xs-1">
+                                    <div class="image-holder">
+                                        <img alt="profile picture"  src="/storage/{{Auth::user()->image_uri}}">
+                                    </div>
+                                </div>
+
                                 <input class="col-xs-11 comment-holder" data-post-id="{{$post->id}}" placeholder="Comment">
                             </div>
                         </div>
@@ -113,7 +122,12 @@
                                 </div>
 
                                 <div class="col-xs-12">
-                                    <img alt="profile picture" class="dp col-xs-1" src="{{$comment->user->image_uri}}">
+                                    <div class="col-xs-1">
+                                        <div class="image-holder">
+                                            <img alt="profile picture"src="/storage/{{$comment->user->image_uri}}">
+                                        </div>
+                                    </div>
+
                                     <div class="text col-xs-11">
                                         <a href="/profile/{{$comment->user->id}}">{{$comment->user->first_name . ' ' . $comment->user->last_name}} </a>
                                         <span class="comment-text">

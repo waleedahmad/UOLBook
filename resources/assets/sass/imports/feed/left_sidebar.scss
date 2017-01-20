@@ -1,0 +1,34 @@
+.left-sidebar{
+  padding: 0px;
+  .user-box{
+    display: block;
+    overflow:hidden;
+    .dp {
+      padding: 0px;
+      .image-holder{
+        overflow:hidden;
+        width: 30px;
+        height: 30px;
+        img{
+          width: 100%;
+        }
+      }
+    }
+
+    .details{
+      .name{
+        text-decoration: none;
+        color:#606060 ;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .links{
+    margin-top: 20px;
+
+    .glyphicon{
+      margin-right: 5px;
+    }
+  }
+}

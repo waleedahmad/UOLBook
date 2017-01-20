@@ -1,10 +1,8 @@
 
 .profile-header {
-  background: url('/default/img/profile_header.png') repeat ;
+  background: url('/storage//default/img/profile_header.png') repeat ;
   padding-top:110px;
   padding-bottom:20px;
-  vertical-align: bottom;
-
   position: relative;
 
   .requests{
@@ -13,37 +11,27 @@
     bottom: 20px;
     right: 20px;
   }
-}
-.profile-header h2 , .profile-header a , .profile-header i {
-  color:#fff !important;
-  text-shadow: 1px 1px 1px #000;
-}
-.profile-header-content {
-  display: table;
 
-}
-.profile-pic {
-  float: none;
-  display: table-cell;
-}
-.profile-pic img {
-  width:120px;
-}
-.profile-about {
-  float: none;
-  display: table-cell;
-  vertical-align: bottom;
-  margin-bottom:20px;
-}
-
-@media (min-width: 768px) {
-  .profile-pic {
-    width:120px;
+  h2 , a , i {
+    color:#fff !important;
+    text-shadow: 1px 1px 1px #000;
   }
-}
-@media (min-width: 992px) {
-  .profile-pic img {
-    width:200px;
+
+  .profile-header-content {
+    .profile-pic {
+      height : 100px;
+      width: 100px;
+      overflow:hidden;
+      img {
+        width:100px;
+      }
+    }
+
+    .profile-about {
+      h2{
+        margin: 0px;
+      }
+    }
   }
 }
 
@@ -51,6 +39,31 @@
   display: block;
   margin: 50px auto;
   width: 600px;
+}
+
+.profile-settings{
+  padding-bottom: 100px;
+  .profile-setting{
+    float: none;
+    margin-top: 30px;
+    padding-bottom: 30px;
+
+    .title{
+      margin-top: 0px;
+      text-align:center;
+      margin-bottom: 30px;
+    }
+
+    .image-holder{
+      width: 150px;
+      height: 150px;
+      overflow:hidden;
+      margin-bottom: 20px;
+      .profile-pic{
+        width: 150px;
+      }
+    }
+  }
 }
 
 .content{

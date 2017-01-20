@@ -7,8 +7,13 @@
 
     <form action="" id="file-upload-form">
         <div class="col-xs-12" id="post_content">
-            <img alt="profile picture" class="col-xs-1" src="{{Auth::user()->image_uri}}">
-            <div class="textarea_wrap"><textarea class="col-xs-11" id="post-text" name="post_text" placeholder="What's on your mind?"></textarea></div>
+            <div class="image-holder col-xs-1">
+                <img alt="profile picture" class="col-xs-1" src="/storage/{{Auth::user()->image_uri}}">
+            </div>
+
+            <div class="textarea_wrap col-xs-11">
+                <textarea  id="post-text" name="post_text" placeholder="What's on your mind?"></textarea>
+            </div>
         </div>
 
         <div class="col-xs-12" id="post_footer">

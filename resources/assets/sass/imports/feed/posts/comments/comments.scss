@@ -1,0 +1,19 @@
+.comments{
+  border: 1px solid #DCDCDC;
+  height: auto;
+  position: relative;
+  display: block;
+  overflow:hidden;
+  background-color:#f8f8f8;
+  padding-bottom: 20px;
+
+
+  @import "comment_box";
+
+  @import "comment";
+
+  .more-comment{
+    margin-left: 15px;
+    margin-bottom: 20px;
+  }
+}

@@ -99,7 +99,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->gender = $request->gender;
         $user->type = $request->usertype;
-        $user->image_uri = ($request->gender == 'male') ? '/default/img/default_img_male.jpg' : '/default/img/default_img_female.jpg';
+        $user->image_uri = ($request->gender == 'male') ? 'default/img/default_img_male.jpg' : 'default/img/default_img_female.jpg';
         $user->card_uri = '';
         $user->registration_id = '';
         $user->verified = 0;
@@ -132,11 +132,18 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
-
+    /**
+     * Show Student verification form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getStudentVerification(){
         return view('verify.student');
     }
 
+    /**
+     * Show Teacher verification form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getTeacherVerification(){
         return view('verify.teacher');
     }

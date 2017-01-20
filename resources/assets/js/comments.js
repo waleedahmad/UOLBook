@@ -166,8 +166,11 @@ function generateCommentDOM(id,image_uri, comment, name, user_id){
 
 
                 <div class="col-xs-12">
-                    <img alt="profile picture" class="dp col-xs-1" src="${image_uri}">
-                    
+                    <div class="col-xs-1">
+                        <div class="image-holder">
+                            <img alt="profile picture" src="/storage/${image_uri}">
+                        </div>
+                    </div>
                     
                     <div class="text col-xs-11">
                         <a href="/profile/${user_id}">${name}</a>

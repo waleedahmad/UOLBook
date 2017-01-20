@@ -7,7 +7,7 @@ use App\Models\Notification;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class FriendRequestsMiddleware
+class NavbarMiddleware
 {
     /**
      * Handle an incoming request.

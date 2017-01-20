@@ -307,8 +307,10 @@ function generateTextPOSTDOM(id, text, name, image_uri, user_id, time_stamp){
 
 
                 <div class="post">
-                    <div class="col-xs-1 img-holder">
-                        <img alt="profile picture" class="user-img" src="${image_uri}">
+                    <div class="col-xs-1">
+                        <div class="image-holder">
+                            <img alt="profile picture" class="user-img" src="/storage/${image_uri}">
+                        </div>
                     </div>
             
                     <div class="col-xs-11 post-content">
@@ -338,7 +340,12 @@ function generateTextPOSTDOM(id, text, name, image_uri, user_id, time_stamp){
                 <div class="comments">
                     <div class="comment-box">
                         <div class="comment-box col-xs-12">
-                            <img alt="profile picture" class="col-xs-1" src="${image_uri}">
+                            <div class="col-xs-1">
+                                <div class="image-holder">
+                                    <img alt="profile picture" src="/storage/${image_uri}">
+                                </div>
+                            </div>
+                            
                             <input class="col-xs-11 comment-holder" data-post-id="${id}" name="post_text" placeholder="Comment">
                         </div>
                     </div>
@@ -379,8 +386,10 @@ function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id,
 
 
                 <div class="post">
-                    <div class="col-xs-1 img-holder">
-                        <img alt="profile picture" class="user-img" src="${image_uri}">
+                    <div class="col-xs-1">
+                        <div class="image-holder">
+                            <img alt="profile picture" class="user-img" src="/storage/${image_uri}">
+                        </div>
                     </div>
     
                     <div class="col-xs-11 post-content">
@@ -414,7 +423,11 @@ function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id,
                 <div class="comments">
                     <div class="comment-box">
                         <div class="comment-box col-xs-12">
-                            <img alt="profile picture" class="col-xs-1" src="${image_uri}">
+                            <div class="col-xs-1">
+                                <div class="image-holder">
+                                    <img alt="profile picture" src="/storage/${image_uri}">
+                                </div>
+                            </div>
                             <input class="col-xs-11 comment-holder" data-post-id="${id}" name="post_text" placeholder="Comment">
                         </div>
                     </div>

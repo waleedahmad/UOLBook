@@ -1,0 +1,149 @@
+#new_status {
+  background-color: #FFF;
+  border: 1px solid #DCDCDC;
+  padding: 0;
+  height: 170px;
+  position:relative;
+
+  #post_header {
+    border-bottom: solid #E8E8E8 1px;
+    margin: 0 2%;
+    padding: 0.65rem 0;
+    width: 95.75%;
+
+    li {
+      display: inline-block;
+    }
+
+    a {
+      font-size: 1.2rem;
+      padding: 1rem 0;
+      text-decoration: none;
+    }
+
+    li+li {
+      border-left: solid #E8E8E8 1px;
+    }
+
+    li:first-child a {
+      padding: 0 1rem 0 0;
+    }
+
+    li:nth-child(2) a {
+      padding: 0 1rem;
+    }
+
+    li:last-child a {
+      padding: 0 0 0 1rem;
+    }
+
+    .glyphicon {
+      margin-right: 0.5rem;
+    }
+  }
+
+  #post_content {
+    margin: 0 2%;
+    padding: 0;
+    width: 95.75%;
+
+
+    .image-holder{
+      margin-top: 10px;
+      height: 50px;
+      width: 50px;
+      padding: 0px;
+      overflow:hidden;
+      img{
+        border: solid #DDD 1px;
+        padding: 0;
+        width: 100%;
+      }
+    }
+
+    .textarea_wrap{
+      margin-top: 10px;
+      height: 70px;
+    }
+
+    .image-holder, .textarea_wrap{
+      display: inline-block;
+    }
+
+    textarea {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      resize: none;
+      height: 100%;
+    }
+  }
+
+  #post_footer {
+    border-top: solid #E8E8E8 1px;
+    line-height: 4rem;
+    padding: 0 2% 0 3%;
+
+    #upload-file{
+      display: none;
+    }
+
+    .navbar-nav {
+      padding: 0;
+
+      li {
+        display: none;
+
+        a {
+          text-decoration: none;
+          display: block;
+          padding: 2rem 1.25rem 2.2rem 1.25rem;
+          span{
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .glyphicon {
+        line-height: 0;
+      }
+    }
+
+    &:not(.btn) .glyphicon {
+      color: #999;
+    }
+
+    div {
+      padding: 0;
+      text-align: right;
+    }
+
+    .btn {
+      border-radius: 2px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      line-height: 2.2rem;
+      margin-top: 0.75rem;
+      padding: 0 0.75rem;
+      vertical-align: middle;
+    }
+
+    .btn-default {
+      color: #666;
+      margin-right: 0.5rem;
+      .glyphicon {
+        color: #666;
+        margin-right: 0.5rem;
+      }
+    }
+
+    .caret {
+      color: #666;
+      margin-left: 0.5rem;
+    }
+    .btn-primary {
+      background-color: #4e69a2;
+      padding: 0 2rem;
+    }
+  }
+}

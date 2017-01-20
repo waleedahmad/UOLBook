@@ -1,0 +1,53 @@
+.comment{
+  overflow:hidden;
+  height: auto;
+  clear:both;
+  position:relative;
+  margin-top: 5px;
+
+  .comment-dropdown{
+    display: none;
+    z-index: 5;
+    position:absolute;
+    right: 20px;
+    top: 5px;
+
+    .dropdown-toggle{
+      color:grey;
+      font-size: 16px;
+    }
+  }
+
+  &:hover{
+    .comment-dropdown{
+      display: block;
+    }
+  }
+
+  .col-xs-1{
+    padding: 0px;
+
+    .image-holder{
+      height: 40px;
+      width: 40px;
+      padding: 0px;
+      overflow:hidden;
+      img{
+        width: 100%;
+      }
+    }
+  }
+
+  .text{
+    overflow:hidden;
+    height:auto;
+    word-wrap: break-word;
+    padding: 5px;
+  }
+
+  .edit-comment-text {
+    border: 1px solid #DCDCDC;
+    height: 40px;
+    padding: 5px;
+  }
+}

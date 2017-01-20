@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div class="auth row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block" style="float: none">
+    <div class="auth row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block">
 
         <form class="form-horizontal" method="post" action="/verify/teacher" enctype="multipart/form-data">
             <div class="form-group">

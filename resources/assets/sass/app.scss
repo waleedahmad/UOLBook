@@ -9,10 +9,7 @@ html,body{
 @import "imports/navbar";
 
 .auth{
-  margin-top: 50px;
-}
-
-.add-class{
+  float: none;
   margin-top: 50px;
 }
 
@@ -29,10 +26,12 @@ html,body{
 .wrapper{
   height: 100%;
   margin-top: 50px;
-  @import "imports/feed";
+  @import "imports/feed/feed";
 
   @import "imports/profile";
-  @import "imports/admin";
+  @import "imports/admin/admin";
+  @import "imports/teachers";
+  @import "imports/classes/classes";
 }
 
 

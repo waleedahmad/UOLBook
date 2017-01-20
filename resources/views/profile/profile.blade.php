@@ -8,14 +8,18 @@
 
     <div class="container-fluid profile-header">
         <div class="container">
+
             <div class="row profile-header-content">
-                <div class="col-md-3 col-sm-3 col-xs-4 profile-pic"><img src="{{$user->image_uri}}" class="img-thumbnail"></div>
-                <div class="col-md-9 col-sm-9 col-xs-8 profile-about">
+                <div class="col-xs-2 profile-pic">
+                    <img src="/storage/{{$user->image_uri}}" class="img-thumbnail">
+                </div>
+                <div class="col-xs-10 profile-about">
                     <h2>{{$user->first_name . ' ' . $user->last_name}}</h2>
                     <p><i class="glyphicons glyphicons-riflescope"></i> <a href="#">{{$user->registration_id}}</a></p>
                 </div>
             </div>
         </div>
+
         @if($show_profile)
             @if(Auth::user()->id != $user->id)
                 <button class="btn btn-default requests remove-friend " data-user-id="{{$user->id}}">Remove Friend</button>
@@ -52,27 +56,16 @@
 
     @if($show_profile)
         <div class="content col-xs-12 col-sm-12 col-md-7 col-lg-7">
-            <div class="profile-friends">
-                @foreach($friends as $friend)
-                    <div class="media friend">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object" src="{{$friend->connection->image_uri}}" alt="{{$friend->connection->first_name}}">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <a href="/profile/{{$friend->connection->id}}"><h4 class="media-heading">{{$friend->connection->first_name . ' '. $friend->connection->last_name}}</h4></a>
-                        </div>
-                    </div>
-                @endforeach
+            @if(Auth::user()->id === $user->id)
+                @include('feed.status')
+            @endif
 
-                @if(!$friends->count())
-                        <div class="alert alert-info" role="alert">You currently have no friends</div>
-                @endif
+            <div @if(Auth::user()->id != $user->id) class="posts-only" @endif>
+                @include('feed.posts')
             </div>
         </div>
     @else
-        <div class="alert alert-info no-friend-alert" role="alert">{{$friend->connection->first_name . ' ' . $friend->connection->last_name}} is not in your friends list</div>
+        <div class="alert alert-info no-friend-alert" role="alert">{{$user->first_name . ' ' . $user->last_name}} is not in your friends list</div>
 
     @endif
 

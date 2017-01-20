@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
+use App\Models\Society;
 use App\Models\User;
 use App\Models\Verification;
 use Illuminate\Http\Request;
@@ -16,22 +18,42 @@ class AdminController extends Controller
         return view('admin.index')->with('v_requests', $requests);
     }
 
+    /**
+     * Show all users
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getUsers(){
-        return view('admin.users');
+        $users = User::all();
+        return view('admin.users')->with('users', $users);
     }
 
-    public function getMessages(){
-        return view('admin.messages');
+    /**
+     * Show all classes
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getAllClasses(){
+        $classes = Classes::all();
+        return view('admin.classes')->with('classes', $classes);
     }
 
     public function getAllSocieties(){
-        return view('admin.societies');
+        $societies = Society::all();
+        return view('admin.societies')->with('societies', $societies);;
     }
 
+    /**
+     * Get Show all society requests
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSocietyRequests(){
         return view('admin.society_requests');
     }
 
+    /**
+     * Show filtered user verification requests
+     * @param $type
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getFilteredRequests($type){
         if($type === 'teachers'){
             $requests = Verification::join('users', 'verification_requests.user_id', '=', 'users.id')
@@ -48,6 +70,11 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Approve user
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function approveUser(Request $request){
         $id = $request->id;
         $old_file_path = basename(User::where('id','=',$id)->first()->card_uri);
@@ -76,6 +103,11 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * Disapprove user
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function disapproveUser(Request $request){
         $id = $request->id;
         $request_file_name = basename(User::where('id','=',$id)->first()->card_uri);

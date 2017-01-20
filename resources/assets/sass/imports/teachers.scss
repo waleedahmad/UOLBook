@@ -1,0 +1,220 @@
+.teacher-sidebar, .teacher-content{
+  margin-top: 30px;
+
+  .section-title{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #DCDCDC;
+    padding: 5px;
+    font-size: 18px;
+  }
+}
+
+.teacher-content{
+  .add-class{
+    margin-top: 30px;
+  }
+}
+
+.teacher-content{
+
+  .nav{
+    margin-bottom: 10px;
+  }
+
+  .dashboard, .join-requests,.class-announcements, .students-list, .class-uploads{
+    overflow:hidden;
+    padding: 20px;
+    min-height: 300px;
+    height: auto;
+    background-color: #FFF;
+    border: 1px solid #DCDCDC;
+
+    margin-bottom: 30px;
+  }
+
+  .join-requests, .students-list{
+    .request, .student{
+      .image-holder{
+        width: 50px;
+        height: 50px;
+        overflow:hidden;
+
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  h3{
+    padding: 10px;
+    border-bottom: 1px solid  #DCDCDC;
+    margin-bottom: 20px;
+  }
+  .upload-form{
+    margin-top: 30px;
+  }
+
+  .uploads{
+    .upload{
+      padding: 10px;
+      border-bottom: 1px solid  #DCDCDC;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      .remove-upload{
+        display: none;
+        cursor: pointer;
+      }
+
+      &:hover{
+        .remove-upload{
+          display: block;
+          color:grey;
+        }
+      }
+    }
+  }
+
+  .announcements{
+
+    .announcement{
+      display:block;
+      position:relative;
+      overflow:hidden;
+
+      .remove-announcement{
+        position:absolute;
+        top: 15px;
+        right: 15px;
+        display: none;
+      }
+
+      &:hover{
+        .remove-announcement {
+          display:block;
+          cursor: pointer;
+          color:grey;
+        }
+      }
+    }
+  }
+
+  .class-discussions{
+    .discussions{
+
+      .discussion{
+        overflow:hidden;
+        display:block;
+        position:relative;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid  #DCDCDC;
+
+        .image-holder{
+          height: 40px;
+          width: 40px;
+          overflow:hidden;
+          img{
+            width: 100%;
+          }
+        }
+
+        .title{
+          word-wrap: break-word;
+          a{
+            text-decoration: none;
+            cursor: pointer;
+            color:#606060;
+          }
+          font-size: 16px;
+          color:#606060;
+        }
+
+        .body{
+          word-wrap: break-word;
+          margin-top: 15px;
+        }
+
+        .credits{
+          text-align:right;
+        }
+
+        .discussion-dropdown{
+          display: none;
+          z-index: 10;
+          position:absolute;
+          right: 5px;
+          top: 5px;
+
+          .dropdown-toggle{
+            color:grey;
+            font-size: 16px;
+          }
+        }
+
+        &:hover{
+          .discussion-dropdown{
+            display: block;
+          }
+        }
+      }
+    }
+
+    .replies{
+      overflow:hidden;
+      height: auto;
+      .reply{
+        position:relative;
+        margin-top: 10px;
+        border-bottom: 1px solid  #DCDCDC;
+        padding-bottom: 10px;
+        height: auto;
+        overflow:hidden;
+        .image-holder{
+          height: 40px;
+          width: 40px;
+          overflow:hidden;
+          img{
+            width: 100%;
+          }
+        }
+
+        .text{
+          word-wrap: break-word;
+        }
+
+        .credits{
+          text-align:right;
+        }
+
+        .reply-dropdown{
+          display: none;
+          z-index: 10;
+          position:absolute;
+          right: 5px;
+          top: 0px;
+
+          .dropdown-toggle{
+            color:grey;
+            font-size: 16px;
+          }
+        }
+
+        &:hover{
+          .reply-dropdown{
+            display: block;
+          }
+        }
+      }
+    }
+
+    .post-reply{
+      margin-top: 10px;
+      textarea{
+        resize: none;
+      }
+    }
+  }
+
+}

@@ -19,7 +19,7 @@
 
                     @if(Auth::user()->type === 'teacher')
                         <li>
-                            <a href="/teacher/addClass">Create Class</a>
+                            <a href="/addClass">Create Class</a>
                         </li>
                     @endif
 
@@ -32,7 +32,9 @@
                                 @foreach($friend_requests as $f_request)
                                     <li class="request">
                                         <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                            <img src="{{$f_request->fromUser->image_uri}}" alt="">
+                                            <div class="image-holder">
+                                                <img src="/storage/{{$f_request->fromUser->image_uri}}" alt="">
+                                            </div>
                                         </div>
 
                                         <div class="text col-xs-4 col-sm-7 col-md-7 col-lg-7">
@@ -62,7 +64,9 @@
                                 @foreach($notifications as $notification)
                                     <li class="notification" data-id="{{$notification->id}}">
                                         <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                            <img src="{{$notification->fromUser->image_uri}}" alt="">
+                                            <div class="image-holder">
+                                                <img src="/storage/{{$notification->fromUser->image_uri}}" alt="">
+                                            </div>
                                         </div>
 
                                         <div class="text col-xs-10 col-sm-10 col-md-10 col-lg-10">

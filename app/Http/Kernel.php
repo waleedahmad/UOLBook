@@ -56,6 +56,10 @@ class Kernel extends HttpKernel
         'isNotVerified' => \App\Http\Middleware\UserIsNotVerified::class,
         'isAdmin'   =>  \App\Http\Middleware\UserIsAdmin::class,
         'isNotAdmin'   =>  \App\Http\Middleware\UserIsNotAdmin::class,
-        'friendRequests'    =>  \App\Http\Middleware\FriendRequestsMiddleware::class
+        'isTeacher' =>  \App\Http\Middleware\UserIsTeacher::class,
+        'isNotTeacher'  =>  \App\Http\Middleware\userIsNotTeacher::class,
+        'navbarMiddleware'    =>  \App\Http\Middleware\NavbarMiddleware::class,
+        'sideBarMiddleware' => \App\Http\Middleware\SidebarMiddleware::class,
+        'classesMiddleware'   =>  \App\Http\Middleware\ClassMiddleware::class,
     ];
 }

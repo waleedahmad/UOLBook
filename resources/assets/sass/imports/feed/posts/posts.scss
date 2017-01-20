@@ -1,0 +1,49 @@
+.posts{
+  height: 100%;
+  margin-top: 30px;
+  padding-bottom: 100px;
+
+  &.no-margin{
+    margin-top: 0px;
+  }
+
+  &.single-post{
+    margin-top: 0px;
+  }
+
+  .post-wrap{
+    margin-bottom: 20px;
+    position:relative;
+
+    .post-dropdown{
+      display: none;
+      z-index: 5;
+      position:absolute;
+      right: 20px;
+      top: 20px;
+
+      .dropdown-toggle{
+        color:grey;
+        font-size: 16px;
+      }
+    }
+
+    &:hover{
+      .post-dropdown{
+        display: block;
+      }
+    }
+
+    @import "post";
+    @import "post_actions";
+    @import "comments/comments";
+  }
+
+  .pagination{
+    display: none;
+  }
+}
+
+.posts-only .posts{
+  margin-top: 0px;
+}

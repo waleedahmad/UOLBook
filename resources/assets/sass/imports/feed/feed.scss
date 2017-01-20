@@ -1,0 +1,13 @@
+.right-sidebar, .left-sidebar, .content{
+  margin-top: 30px;
+}
+
+@import "right_sidebar";
+@import "left_sidebar";
+
+.content{
+  height: 100%;
+
+  @import "posts/status";
+  @import "posts/posts";
+}

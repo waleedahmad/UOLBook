@@ -1,0 +1,54 @@
+.post{
+  height: auto;
+  position: relative;
+  display: block;
+  overflow:auto;
+  background-color: #FFF;
+  border: 1px solid #DCDCDC;
+  border-bottom: 0px;
+  padding: 20px;
+
+  .image-holder{
+    overflow:hidden;
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    img{
+      width: 100%;
+    }
+  }
+
+
+  .post-content{
+    overflow:hidden;
+    .name{
+      a{
+        text-decoration: none;
+        font-size: 16px;
+      }
+    }
+
+    .text{
+      overflow:hidden;
+      color:#606060;
+      word-wrap: break-word;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    .photo img{
+      width: 100%;
+    }
+    .video video{
+      width: 100%;
+    }
+
+    .link{
+      a{
+        color:grey;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+  }
+}

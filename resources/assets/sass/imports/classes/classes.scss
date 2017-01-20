@@ -1,0 +1,30 @@
+.all-classes{
+  margin-top: 10px;
+  padding: 20px;
+
+  .classes, .suggestions{
+    display: block;
+    overflow:hidden;
+    background-color: #FFF;
+    border: 1px solid #DCDCDC;
+    min-height: 200px;
+    height: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+
+    h1{
+      margin: 0px;
+      font-size: 22px;
+      color:grey;
+      border-bottom: 1px solid #DCDCDC;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .class-list{
+      .class{
+
+      }
+    }
+  }
+}

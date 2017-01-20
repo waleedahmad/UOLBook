@@ -85,3 +85,47 @@ $('.disapprove-user').on('click', function(e){
         }
     });
 });
+
+
+$('.delete-class').on('click', function(e){
+    var id = $(this).attr('data-id'),
+        token = $("meta[name=token]").attr('content'),
+        _this = this;
+
+    bootbox.confirm({
+        message: "Are you sure you want to delete this class?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            console.log(result, id);
+            if(result){
+
+                $.ajax({
+                    type : 'POST',
+                    url : '/admin/disapprove',
+                    data : {
+                        id : id,
+                        _token : token
+                    },
+                    success : function(res){
+                        if(res.disapproved === true){
+                            $(_this).parents('.request').slideUp(function(){
+                                $(this).remove();
+                            });
+                            toastr.success("User disapproved!");
+                        }
+                    }
+                })
+
+            }
+        }
+    });
+});
