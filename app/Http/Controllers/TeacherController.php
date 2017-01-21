@@ -281,9 +281,6 @@ class TeacherController extends Controller
         } else {
             return redirect('/class/'.$id.'/discussion/'.$discussion_id.'/edit')->withErrors($validator)->withInput();
         }
-
-
-
     }
 
 

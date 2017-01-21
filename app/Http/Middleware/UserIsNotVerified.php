@@ -16,8 +16,12 @@ class UserIsNotVerified
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->type != 'teacher'){
-            return redirect('/dashboard');
+        if(!Auth::user()->verified){
+            if(Auth::user()->type === 'teacher'){
+                return redirect('/verify/teacher');
+            }else if(Auth::user()->type === 'student'){
+                return redirect('/verify/student');
+            }
         }
         return $next($request);
     }

@@ -18,8 +18,8 @@ class CreateClassAnnouncementsTable extends Migration
             $table->integer('class_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->text('announcement');
-            $table->foreign('class_id')->references('id')->on('classes');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
             $table->timestamps();
         });
     }

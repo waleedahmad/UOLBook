@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['auth', 'isVerified', 'isAdmin', 'isTeacher', 'navbarMiddleware', 'sideBarMiddleware']], function () {
+Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 'navbarMiddleware', 'sideBarMiddleware']], function () {
 
     /**
      * Feed Routes
@@ -51,10 +51,13 @@ Route::group(['middleware' => ['auth', 'isVerified', 'isAdmin', 'isTeacher', 'na
 
     Route::get('/classes/all', 'ClassController@showAllClasses');
     Route::get('/societies/all', 'SocietyController@showAllSocieties');
+    Route::get('/societies/create', 'SocietyController@getSocietyForm');
+    Route::post('/societies/create', 'SocietyController@createSociety');
+    Route::get('/society/{id}', 'SocietyController@getSociety');
 
 });
 
-Route::group(['middleware'  =>  ['auth', 'isVerified', 'isAdmin', 'isNotTeacher']], function(){
+Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'isAdmin', 'isNotTeacher']], function(){
     Route::get('/dashboard', 'TeacherController@getTeacherDashboard');
     Route::get('/addClass', 'TeacherController@showAddClassForm');
     Route::post('/saveClass', 'TeacherController@saveClass');
@@ -69,7 +72,7 @@ Route::group(['middleware'  =>  ['auth', 'isVerified', 'isAdmin', 'isNotTeacher'
     Route::post('/class/announcement/remove', 'TeacherController@removeClassAnnouncement');
 });
 
-Route::group(['middleware'  =>  ['auth', 'isVerified', 'classesMiddleware', 'sideBarMiddleware', 'navbarMiddleware']], function(){
+Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'classesMiddleware', 'sideBarMiddleware', 'navbarMiddleware']], function(){
     Route::get('/class/{id}', 'TeacherController@showClass');
     Route::get('/class/{id}/announcements', 'TeacherController@showClassAnnouncements');
     Route::get('/class/{id}/material', 'TeacherController@showClassUploads');
@@ -105,9 +108,10 @@ Route::group(['middleware' => ['auth', 'isNotAdmin']], function () {
     Route::post('/admin/disapprove', 'AdminController@disapproveUser');
     Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
     Route::delete('/admin/class/delete', 'AdminController@deleteClass');
+    Route::delete('/admin/user/delete', 'AdminController@deleteUser');
 });
 
-Route::group(['middleware' => ['auth', 'isNotVerified']], function () {
+Route::group(['middleware' => ['auth', 'isVerified']], function () {
 
     /**
      * Verification Routes
@@ -118,7 +122,7 @@ Route::group(['middleware' => ['auth', 'isNotVerified']], function () {
     Route::post('/verify/teacher', 'AuthController@verifyTeacher');
 });
 
-Route::group(['middleware' => ['auth', 'isVerified', 'navbarMiddleware']], function () {
+Route::group(['middleware' => ['auth', 'isNotVerified', 'navbarMiddleware']], function () {
     Route::get('/user/settings', 'ProfileController@getProfileSettings');
     Route::post('/user/settings/update', 'ProfileController@updateProfileSettings');
     Route::post('/user/settings/update/password', 'ProfileController@updatePassword');

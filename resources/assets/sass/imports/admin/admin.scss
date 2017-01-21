@@ -4,4 +4,18 @@
   .requests,.users{
     margin-top: 20px;
   }
+
+  .users{
+    .user{
+      .image-holder{
+        height: 50px;
+        width: 50px;
+        overflow:hidden;
+
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
 }

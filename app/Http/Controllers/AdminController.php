@@ -130,4 +130,30 @@ class AdminController extends Controller
             }
         }
     }
+
+    public function deleteClass(Request $request){
+        $id = $request->id;
+
+        $class = Classes::where('id','=', $id);
+        $class->first()->purgeUploads();
+
+        if($class->delete()){
+            return response()->json([
+                'deleted'  => true
+            ]);
+        }
+    }
+
+    public function deleteUser(Request $request){
+        $user_id = $request->user_id;
+
+        $user = User::where('id','=', $user_id)->first();
+        $user->purgeUploads();
+        if($user->delete()){
+            return response()->json([
+                'deleted'  => true
+            ]);
+        }
+
+    }
 }

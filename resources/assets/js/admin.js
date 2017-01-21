@@ -109,18 +109,63 @@ $('.delete-class').on('click', function(e){
             if(result){
 
                 $.ajax({
-                    type : 'POST',
-                    url : '/admin/disapprove',
+                    type : 'DELETE',
+                    url : '/admin/class/delete',
                     data : {
                         id : id,
                         _token : token
                     },
                     success : function(res){
-                        if(res.disapproved === true){
-                            $(_this).parents('.request').slideUp(function(){
+                        if(res.deleted === true){
+                            $(_this).parents('.class').slideUp(function(){
                                 $(this).remove();
                             });
-                            toastr.success("User disapproved!");
+                            toastr.success("Class disapproved!");
+                        }
+                    }
+                })
+
+            }
+        }
+    });
+});
+
+
+$('.delete-user').on('click', function(e){
+    var id = $(this).attr('data-id'),
+        token = $("meta[name=token]").attr('content'),
+        _this = this;
+
+    bootbox.confirm({
+        message: "Are you sure you want to delete this user?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            console.log(result, id);
+            if(result){
+
+                $.ajax({
+                    type : 'DELETE',
+                    url : '/admin/user/delete',
+                    data : {
+                        user_id : id,
+                        _token : token
+                    },
+                    success : function(res){
+                        if(res.deleted === true){
+                            $(_this).parents('.user').slideUp(function(){
+                                $(this).remove();
+                            });
+
+                            toastr.success("User Removed!");
                         }
                     }
                 })

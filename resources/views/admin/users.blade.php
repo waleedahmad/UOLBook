@@ -51,10 +51,12 @@
             <tbody>
 
             @foreach($users as $user)
-                <tr class="request">
+                <tr class="user">
                     <td>
                         <a href="/storage/{{$user->image_uri}}" target="_blank">
-                            <img class="media-object" src="/storage/{{$user->image_uri}}" alt="..."  style="width: 50px; height: 50px;">
+                            <div class="image-holder">
+                                <img src="/storage/{{$user->image_uri}}" alt="..." >
+                            </div>
                         </a>
                     </td>
 

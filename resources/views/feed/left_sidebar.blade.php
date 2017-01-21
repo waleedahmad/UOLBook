@@ -29,6 +29,10 @@
                 <li role="presentation" @if(Request::path() === 'societies/all') class="active" @endif><a href="/societies/all">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"> </span> Societies</a>
                 </li>
+
+                <li role="presentation" @if(Request::path() === 'societies/create') class="active" @endif><a href="/societies/create">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"> </span> Create Society</a>
+                </li>
             </ul>
         </ul>
     </div>

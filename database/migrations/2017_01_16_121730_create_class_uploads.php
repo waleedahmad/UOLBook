@@ -19,8 +19,8 @@ class CreateClassUploads extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('file_uri');
             $table->string('caption');
-            $table->foreign('class_id')->references('id')->on('classes');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
             $table->timestamps();
         });
     }

@@ -21,7 +21,6 @@ class ClassMiddleware
             if($this->teacherIsClassOwner($request->route('id'))){
                 return $next($request);
             }
-            dd("Failed");
             return redirect('/');
         }
 

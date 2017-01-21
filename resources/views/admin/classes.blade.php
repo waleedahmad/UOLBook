@@ -34,7 +34,7 @@
                 <tbody>
 
                 @foreach($classes as $class)
-                    <tr class="request">
+                    <tr class="class">
                         <td>
                             {{$class->instructor->first_name . ' ' . $class->instructor->first_name}}
                         </td>
