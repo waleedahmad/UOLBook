@@ -53,8 +53,16 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
     Route::get('/societies/all', 'SocietyController@showAllSocieties');
     Route::get('/societies/create', 'SocietyController@getSocietyForm');
     Route::post('/societies/create', 'SocietyController@createSociety');
-    Route::get('/society/{id}', 'SocietyController@getSociety');
+    Route::post('/society/request/join', 'SocietyController@joinRequest');
+    Route::post('/society/request/cancel', 'SocietyController@cancelJoinRequests');
+    Route::post('/society/request/accept', 'SocietyController@acceptJoinRequests');
+    Route::post('/society/request/disapprove', 'SocietyController@disApproveJoinRequest');
+    Route::post('/society/member/remove', 'SocietyController@removeUser');
 
+    Route::get('/society/{id}', 'SocietyController@getSociety');
+    Route::get('/society/{id}/settings', 'SocietyController@getSocietySettings');
+    Route::get('/society/{id}/requests', 'SocietyController@getSocietyRequests');
+    Route::get('/society/{id}/members', 'SocietyController@societyMembers');
 });
 
 Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'isAdmin', 'isNotTeacher']], function(){
@@ -104,11 +112,14 @@ Route::group(['middleware' => ['auth', 'isNotAdmin']], function () {
     Route::get('/admin/societies', 'AdminController@getAllSocieties');
     Route::get('/admin/classes', 'AdminController@getAllClasses');
     Route::get('/admin/society/requests', 'AdminController@getSocietyRequests');
+    Route::post('/admin/society/approve', 'AdminController@approveSociety');
+    Route::post('/admin/society/disapprove', 'AdminController@disApproveSociety');
     Route::post('/admin/approve', 'AdminController@approveUser');
     Route::post('/admin/disapprove', 'AdminController@disapproveUser');
     Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
     Route::delete('/admin/class/delete', 'AdminController@deleteClass');
     Route::delete('/admin/user/delete', 'AdminController@deleteUser');
+
 });
 
 Route::group(['middleware' => ['auth', 'isVerified']], function () {

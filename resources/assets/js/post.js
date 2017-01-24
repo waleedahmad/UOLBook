@@ -55,15 +55,16 @@ $($status_form).on('submit', handleStatusSubmit);
 function handleStatusSubmit(e){
     e.preventDefault();
     let text = $($post_text).val(),
-        post_type = $($status).attr('data-post-type');
+        post_type = $($status).attr('data-post-type'),
+        source = $('.post-now').attr('data-source'),
+        source_id = $('.post-now').attr('data-source-id');
 
     $($status_form).unbind('submit', handleStatusSubmit);
-
 
     if(post_type === 'text'){
         console.log("Text Post");
         if(text.length > 0){
-            createTextPost(text);
+            createTextPost(text, source, source_id);
             $($status_form).on('submit', handleStatusSubmit);
         }else{
             showMessageModel('Post is empty', 'This post appears to be blank. Please write something or attach a link or photo to post.');
@@ -76,6 +77,8 @@ function handleStatusSubmit(e){
             if(fileFormatSupported(getFileMimeType())){
                 console.log("Supported");
                 let formData = new FormData(this);
+                formData.append('source', source);
+                formData.append('source_id', source_id);
                 createFilePost(formData, text);
                 $($status_form).on('submit', handleStatusSubmit);
             }else{
@@ -92,13 +95,17 @@ function handleStatusSubmit(e){
 /**
  * Make an ajax call to create a new text post and on success generate post DOM and append to .posts
  * @param text
+ * @param source
+ * @param source_id
  */
-function createTextPost(text){
+function createTextPost(text, source, source_id){
     $.ajax({
         type : 'POST',
         url : '/posts/text/create',
         data : {
             post_text : text,
+            source : source,
+            source_id : source_id,
             _token : token
         },
         success : function(res){

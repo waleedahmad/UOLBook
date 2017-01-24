@@ -36,7 +36,7 @@
                 @foreach($classes as $class)
                     <tr class="class">
                         <td>
-                            {{$class->instructor->first_name . ' ' . $class->instructor->first_name}}
+                            {{$class->instructor->first_name . ' ' . $class->instructor->last_name}}
                         </td>
 
                         <td>

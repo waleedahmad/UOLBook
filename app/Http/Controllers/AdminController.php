@@ -46,7 +46,8 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSocietyRequests(){
-        return view('admin.society_requests');
+        $societies = Society::where('verified', '!=', true)->get();
+        return view('admin.society_requests')->with('societies', $societies);
     }
 
     /**
@@ -155,5 +156,26 @@ class AdminController extends Controller
             ]);
         }
 
+    }
+
+    public function approveSociety(Request $request){
+        $society = Society::where('id','=', $request->id)->first();
+        $society->verified = true;
+
+        if($society->save()){
+            return response()->json([
+                'approved'  =>  true
+            ]);
+        }
+    }
+
+    public function disApproveSociety(Request $request){
+        $society = Society::where('id','=', $request->id)->first();
+
+        if($society->delete()){
+            return response()->json([
+                'disapproved'  =>  true
+            ]);
+        }
     }
 }

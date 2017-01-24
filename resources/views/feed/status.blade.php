@@ -22,7 +22,7 @@
                 <li><a href="#" id="init-file-upload"> <span class="glyphicon glyphicon-camera"> </span> <span id="file-name"></span></a></li>
             </ul>
             <div class="col-xs-5">
-                <button class="btn btn-primary post-now" data-id-type="text">Post</button>
+                <button class="btn btn-primary post-now" data-id-type="text" data-source="{{$source}}" data-source-id="{{$source_id}}">Post</button>
             </div>
         </div>
     </form>

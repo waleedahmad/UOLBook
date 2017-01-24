@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Storage;
 class FeedController extends Controller
 {
     public function index(){
-        $posts = Posts::where('source', '=', 'feed')
-                    ->WhereIn('user_id', $this->getFriendsIDs())
+        $posts = Posts::WhereIn('user_id', $this->getFriendsIDs())
                     ->orWhere('user_id', '=', Auth::user()->id)
+                    ->where('source', '=', 'feed')
                     ->orderBy('id', 'DESC')->paginate(5);
 
         return view('feed.index')->with('posts', $posts);
@@ -53,7 +53,8 @@ class FeedController extends Controller
         $post->post_text = $post_text;
         $post->user_id = Auth::user()->id;
         $post->type = 'text';
-        $post->source = 'feed';
+        $post->source = $request->source;
+        $post->society_id = $request->source_id;
 
         if($post->save()){
             return response()->json([
@@ -89,7 +90,8 @@ class FeedController extends Controller
         $post->post_text = $post_text;
         $post->user_id = Auth::user()->id;
         $post->type = $type;
-        $post->source = 'feed';
+        $post->source = $request->source;
+        $post->society_id = $request->source_id;
 
 
         if($post->save()){

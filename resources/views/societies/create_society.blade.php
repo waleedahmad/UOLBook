@@ -7,15 +7,15 @@
 
 @section('content')
 
-    <div class="container-fluid">
-        @include('feed.left_sidebar')
+    @include('feed.left_sidebar')
 
-        <div class="content teacher-content col-xs-12 col-sm-9 col-md-9 col-lg-9">
-            <div class="section-title">
+    <div class="societies-content col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <div class="societies">
+            <h1 class="section-title">
                 Please fill in following details for your Society.
-            </div>
+            </h1>
 
-            <div class="add-class row col-sm-12 col-xs-12 col-md-8 col-lg-8">
+            <div class="add-society row col-sm-12 col-xs-12 col-md-12 col-lg-12">
                 <form class="form-horizontal" method="post" action="/societies/create" enctype="multipart/form-data">
 
                     <div class="form-group @if($errors->has('society_name')) has-error @endif">
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-group @if($errors->has('display_image')) has-error @endif">
-                        <label for="display_image" class="col-sm-3 control-label">Display Photo</label>
+                        <label for="display_image" class="col-sm-3 control-label">Society Cover</label>
                         <div class="col-sm-9">
                             <input type="file" name="display_image">
                             <p class="help-block">This photo will be displayed on your society page.</p>
@@ -70,4 +70,5 @@
             </div>
         </div>
     </div>
+    @include('feed.right_sidebar')
 @endsection

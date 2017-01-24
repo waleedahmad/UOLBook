@@ -151,7 +151,7 @@ class AuthController extends Controller
     public function verifyStudent(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'registration_no' => 'required|min:10',
+            'registration_no' => 'required|unique:users,registration_id|min:10',
             'id_card' => 'required|file|mimes:jpeg,bmp,png,jpg'
         ]);
 

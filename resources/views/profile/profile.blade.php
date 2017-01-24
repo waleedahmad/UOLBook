@@ -57,7 +57,7 @@
     @if($show_profile)
         <div class="content col-xs-12 col-sm-12 col-md-7 col-lg-7">
             @if(Auth::user()->id === $user->id)
-                @include('feed.status')
+                @include('feed.status', ['source'   =>  'feed', 'source_id' => 0])
             @endif
 
             <div @if(Auth::user()->id != $user->id) class="posts-only" @endif>
