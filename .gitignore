@@ -6,11 +6,3 @@ Homestead.yaml
 .env
 /public/assets
 .sass-cache
-database/migrations/2017_01_23_225145_remove_role_from_society_members.php
-resources/assets/js/society.js
-resources/views/societies/members.blade.php
-resources/views/societies/navbar.blade.php
-resources/views/societies/requests.blade.php
-resources/views/societies/settings.blade.php
-storage/app/public/
-public/
