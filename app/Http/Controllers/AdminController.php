@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+    /**
+     * Verification requests view
+     * @return $this
+     */
     public function getIndex(){
         $requests = Verification::join('users', 'verification_requests.user_id', '=', 'users.id')->get();
         return view('admin.index')->with('v_requests', $requests);
@@ -36,13 +40,17 @@ class AdminController extends Controller
         return view('admin.classes')->with('classes', $classes);
     }
 
+    /**
+     * Show all societies
+     * @return $this
+     */
     public function getAllSocieties(){
         $societies = Society::all();
         return view('admin.societies')->with('societies', $societies);;
     }
 
     /**
-     * Get Show all society requests
+     * Show all society requests
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSocietyRequests(){
@@ -132,6 +140,11 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Delete class
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteClass(Request $request){
         $id = $request->id;
 
@@ -145,6 +158,11 @@ class AdminController extends Controller
         }
     }
 
+    /***
+     * Delete users
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteUser(Request $request){
         $user_id = $request->user_id;
 
@@ -158,6 +176,11 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * Approve society
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function approveSociety(Request $request){
         $society = Society::where('id','=', $request->id)->first();
         $society->verified = true;
@@ -169,6 +192,11 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Dispparove society
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function disApproveSociety(Request $request){
         $society = Society::where('id','=', $request->id)->first();
 

@@ -236,6 +236,11 @@ class TeacherController extends Controller
         }
     }
 
+    /**
+     * Delete discussion
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteDiscussion(Request $request){
         $id = $request->id;
         if(Discussion::where('id', '=', $id)->delete()){
@@ -245,6 +250,12 @@ class TeacherController extends Controller
         }
     }
 
+    /**
+     * Edit discussion
+     * @param $id
+     * @param $d_id
+     * @return \Illuminate\View\View
+     */
     public function editDiscussion($id, $d_id){
         $discussion = Discussion::where('class_id','=',$id)->where('id', '=', $d_id)->first();
         $class = Classes::where('id','=',$id)->first();
@@ -257,6 +268,12 @@ class TeacherController extends Controller
             ->with('d_id', $d_id);
     }
 
+    /**
+     * Update discussion
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function updateDiscussion($id, Request $request){
         $discussion_id = $request->discussion_id;
         $title = $request->discussion_title;
@@ -284,6 +301,11 @@ class TeacherController extends Controller
     }
 
 
+    /**
+     * Post discussion reply
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function postDiscussionReply(Request $request){
         $discussion_id = $request->discussion_id;
         $user_id = Auth::user()->id;
@@ -309,6 +331,11 @@ class TeacherController extends Controller
         }
     }
 
+    /**
+     * Delete discussion reply
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteDiscussionReply(Request $request){
         $id = $request->id;
 
@@ -319,6 +346,11 @@ class TeacherController extends Controller
         }
     }
 
+    /**
+     * Update discussion reply
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateDiscussionReply(Request $request){
         $id = $request->id;
         $text = $request->text;
@@ -333,8 +365,6 @@ class TeacherController extends Controller
             ]);
         }
     }
-
-
 
     /**
      * Upload Course Material
@@ -391,7 +421,6 @@ class TeacherController extends Controller
         }
     }
 
-
     /**
      * Accept Join Requests
      * @param Request $request
@@ -430,8 +459,6 @@ class TeacherController extends Controller
             ]);
         }
     }
-
-
 
     /**
      * Remove Class Students

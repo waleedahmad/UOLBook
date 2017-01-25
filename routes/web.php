@@ -95,7 +95,6 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'classesMiddleware', '
     Route::delete('/class/{id}/discussion/reply/delete', 'TeacherController@deleteDiscussionReply');
     Route::put('/class/{id}/discussion/reply/edit', 'TeacherController@updateDiscussionReply');
 
-
     Route::post('/class/request/join', 'TeacherController@joinRequest');
     Route::post('/class/request/cancel', 'TeacherController@cancelJoinRequest');
     Route::post('/class/leave', 'TeacherController@leaveClass');

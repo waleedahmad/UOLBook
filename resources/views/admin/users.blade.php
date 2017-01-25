@@ -8,23 +8,6 @@
     @include('admin.sidebar')
 
     <div class="admin-content col-xs-12 col-sm-9 col-md-9 col-lg-9">
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                @if(Request::path() === 'admin/users/teachers')
-                    Filter: Teachers
-                @elseif(Request::path() === 'admin/users/students')
-                    Filter: Students
-                @else
-                    Filter Users
-                @endif
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="/admin/users/teachers">Teacher Requests</a></li>
-                <li><a href="/admin/users/students">Student Requests</a></li>
-            </ul>
-        </div>
-
         <table class="table users">
             <thead>
             <tr>

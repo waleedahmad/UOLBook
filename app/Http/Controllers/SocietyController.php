@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Auth;
 
 class SocietyController extends Controller
 {
+    /**
+     * Show societies
+     * @return \Illuminate\View\View
+     */
     public function showAllSocieties()
     {
         $societies = Society::where('user_id', '=', Auth::user()->id)->get();
@@ -27,16 +31,29 @@ class SocietyController extends Controller
             ->with('members', $members);
     }
 
+    /**
+     * User societies
+     * @return mixed
+     */
     public function getUserSocieties()
     {
         return SocietyMember::where('user_id', '=', Auth::user()->id)->pluck('society_id');
     }
 
+    /**
+     * Create society form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSocietyForm()
     {
         return view('societies.create_society');
     }
 
+    /**
+     * Create society
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function createSociety(Request $request)
     {
 
@@ -68,6 +85,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Storage soceity header image and return URI
+     * @param $request
+     * @return string
+     */
     private function storageImageAndReturnImageURI($request)
     {
         if ($request->hasFile('display_image')) {
@@ -83,6 +105,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Show society
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function getSociety($id)
     {
         $society = Society::where('id', '=', $id)->first();
@@ -96,6 +123,11 @@ class SocietyController extends Controller
 
     }
 
+    /**
+     * Show society settings
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function getSocietySettings($id)
     {
         $society = Society::where('id', '=', $id)->first();
@@ -106,6 +138,11 @@ class SocietyController extends Controller
             ->with('requestPending', $this->societyRequestPending($id));;
     }
 
+    /**
+     * Show society requests
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function getSocietyRequests($id)
     {
         $society = Society::where('id', '=', $id)->first();
@@ -118,6 +155,11 @@ class SocietyController extends Controller
             ->with('requests', $requests);
     }
 
+    /**
+     * Show society members
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function societyMembers($id)
     {
         $society = Society::where('id', '=', $id)->first();
@@ -130,21 +172,41 @@ class SocietyController extends Controller
             ->with('members', $members);
     }
 
+    /**
+     * Check if society is verified
+     * @param $id
+     * @return mixed
+     */
     public function societyIsVerified($id)
     {
         return Society::where('id', '=', $id)->first()->verified;
     }
 
+    /**
+     * Check if user is society member
+     * @param $id
+     * @return mixed
+     */
     private function isSocietyMember($id)
     {
         return SocietyMember::where('society_id', '=', $id)->where('user_id', '=', Auth::user()->id)->count();
     }
 
+    /**
+     * Check if user soceity join request is pending
+     * @param $id
+     * @return mixed
+     */
     private function societyRequestPending($id)
     {
         return SocietyRequest::where('user_id', '=', AUth::user()->id)->where('society_id', '=', $id)->count();
     }
 
+    /**
+     * Create join request
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function joinRequest(Request $request)
     {
 
@@ -159,6 +221,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Cancel join request
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cancelJoinRequests(Request $request)
     {
         $society_request = SocietyRequest::where('user_id', '=', Auth::user()->id)->where('society_id', '=', $request->id);
@@ -170,6 +237,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Approve join request
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function acceptJoinRequests(Request $request)
     {
         $soc_request = SocietyRequest::where('id', '=', $request->id)->first();
@@ -185,6 +257,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     *  Disapprove join request
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function disApproveJoinRequest(Request $request)
     {
         $soc_request = SocietyRequest::where('id', '=', $request->id)->first();
@@ -196,6 +273,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Remove society member
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function removeUser(Request $request)
     {
         $soc_request = SocietyMember::where('id', '=', $request->id)->first();

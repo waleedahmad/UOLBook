@@ -304,6 +304,11 @@ class ProfileController extends Controller
         }
     }
 
+    /**
+     * Upload profile picture
+     * @param $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     protected function uploadProfilePic($request){
         $file = $request->file('profile_pic');
         $ext = $file->extension();
@@ -321,6 +326,11 @@ class ProfileController extends Controller
         }
     }
 
+    /**
+     * Delete profile picture
+     * @param $image_uri
+     * @return bool
+     */
     protected function deleteCurrentProfilePic($image_uri){
         $delete = Storage::disk('public')->delete($image_uri);
 
@@ -333,8 +343,12 @@ class ProfileController extends Controller
         return ($delete && $user_update);
     }
 
+    /**
+     * Check if current profile picture is default
+     * @return bool
+     */
     protected function userHaveDefaultProfileImage()
     {
-        return Auth::user()->image_uri === '/default/img/default_img_male.jpg' || Auth::user()->image_uri === '/default/img/default_img_female';
+        return Auth::user()->image_uri === '/default/img/default_img_male.jpg' || Auth::user()->image_uri === '/default/img/default_img_female.jpg';
     }
 }

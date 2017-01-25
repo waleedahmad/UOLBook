@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class ClassController extends Controller
 {
     /**
-     * Show user classes and suggestions
+     * User classes and suggestions
      * @return \Illuminate\View\View
      */
     public function showAllClasses(){
@@ -25,7 +25,7 @@ class ClassController extends Controller
 
 
     /**
-     * Get user classes IDs
+     * User class ids
      * @return mixed
      */
     protected function userClassIDs(){

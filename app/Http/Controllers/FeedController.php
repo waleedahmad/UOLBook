@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Storage;
 
 class FeedController extends Controller
 {
+    /**
+     * News feed
+     * @return $this
+     */
     public function index(){
         $posts = Posts::WhereIn('user_id', $this->getFriendsIDs())
                     ->orWhere('user_id', '=', Auth::user()->id)
@@ -26,12 +30,16 @@ class FeedController extends Controller
         return view('feed.index')->with('posts', $posts);
     }
 
+    /**
+     * User friend ids
+     * @return mixed
+     */
     public function getFriendsIDs(){
         return Friends::where('user','=', Auth::user()->id)->pluck('friend');
     }
 
     /**
-     * Single post view
+     * Post
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -42,7 +50,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Creates a new text post
+     * Create text post
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -72,7 +80,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Create a new upload post
+     * Creata file/video post
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -115,7 +123,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Createa new photo/video record
+     * Create file/video post database record
      * @param $post
      * @param $path
      * @return bool|string
@@ -140,7 +148,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Get uploaded file extension
+     * File upload type
      * @param $ext
      * @return string
      */
@@ -160,7 +168,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Creates a new post comment
+     * Create post comment
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -205,7 +213,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Generate a new like
+     * Post like
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -305,7 +313,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Delete Post Notifications
+     * Delete post notifications
      * @param $post
      */
     protected function deletePostNotifications($post){
@@ -328,6 +336,11 @@ class FeedController extends Controller
         }
     }
 
+    /**
+     * Delete comment
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteComment(Request $request){
         $comment = Comment::where('id','=', $request->id)->first();
         $this->deleteCommentNotifications($comment);
@@ -339,12 +352,16 @@ class FeedController extends Controller
         }
     }
 
+    /**
+     * Delete comment notifications
+     * @param $comment
+     */
     public function deleteCommentNotifications($comment){
         Notification::where('type','=', 'comment')->where('target','=', $comment->id)->delete();
     }
 
     /**
-     * Get total post like count
+     * Like count for post
      * @param $post_id
      * @return mixed
      */
@@ -353,7 +370,7 @@ class FeedController extends Controller
     }
 
     /**
-     * check if user is owner
+     * Check if user is owner
      * @param $post_id
      * @return mixed
      */
@@ -362,7 +379,7 @@ class FeedController extends Controller
     }
 
     /**
-     * Return owner id
+     * Return owner id of post
      * @param $post_id
      * @return mixed
      */

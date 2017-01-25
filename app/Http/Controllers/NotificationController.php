@@ -9,6 +9,12 @@ use App\Http\Requests;
 
 class NotificationController extends Controller
 {
+
+    /**
+     * Read notification
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function readNotification(Request $request){
         $notification = Notification::where('id','=', $request->id)->first();
 

@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="profile-settings">
-        @if(Auth::user()->type === 'student')
+        @if(Auth::user()->type === 'student' || Auth::user()->type === 'teacher')
             <div class="profile-setting row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block">
 
                 <h3 class="title">

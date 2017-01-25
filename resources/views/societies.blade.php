@@ -64,7 +64,7 @@
                 @endforeach
             @else
                 <div class="alert alert-info" role="alert">
-                    You're currently not an admin of any society, please view suggestions or
+                    You're currently not an member of any society, please view suggestions or
                     <a href="/societies/create" class="alert-link">Create Society</a>.
                 </div>
 

@@ -15,7 +15,7 @@ use App\Http\Requests;
 class AuthController extends Controller
 {
     /**
-     * Return login form
+     * Login form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getLogin(){
@@ -23,7 +23,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Return register form
+     * Registration form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getRegister(){
@@ -31,7 +31,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Process login form
+     * Login user
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -58,7 +58,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Process register form
+     * Register user
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -86,7 +86,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Creates a new user
+     * Create new user
      * @param $request
      * @return bool
      */
@@ -112,7 +112,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Authenticates a user
+     * Authenticate user
      * @param $request
      * @return mixed
      */
@@ -124,7 +124,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout as user
+     * Logout user
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function logout(){
@@ -133,7 +133,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Show Student verification form
+     * Student verification form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getStudentVerification(){
@@ -141,13 +141,18 @@ class AuthController extends Controller
     }
 
     /**
-     * Show Teacher verification form
+     * Teacher verification form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getTeacherVerification(){
         return view('verify.teacher');
     }
 
+    /**
+     * Student verification
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function verifyStudent(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -186,6 +191,11 @@ class AuthController extends Controller
         return redirect('/verify/student')->withErrors($validator);
     }
 
+    /**
+     * Teacher verification
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function verifyTeacher(Request $request){
         $validator = Validator::make($request->all(), [
             'id_card' => 'required|file|mimes:jpeg,bmp,png,jpg'
