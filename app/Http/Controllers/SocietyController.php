@@ -16,32 +16,42 @@ use Illuminate\Support\Facades\Auth;
 
 class SocietyController extends Controller
 {
-    public function showAllSocieties(){
-        $societies = Society::where('user_id','=', Auth::user()->id)->get();
-        $suggestions = Society::where('user_id','!=', Auth::user()->id)->get();
+    public function showAllSocieties()
+    {
+        $societies = Society::where('user_id', '=', Auth::user()->id)->get();
+        $members = Society::whereIn('id', $this->getUserSocieties())->get();
+        $suggestions = Society::whereNotIn('id', $this->getUserSocieties())->where('user_id', '!=', Auth::user()->id)->get();
         return view('societies')
             ->with('societies', $societies)
-            ->with('suggestions', $suggestions);
+            ->with('suggestions', $suggestions)
+            ->with('members', $members);
     }
 
-    public function getSocietyForm(){
+    public function getUserSocieties()
+    {
+        return SocietyMember::where('user_id', '=', Auth::user()->id)->pluck('society_id');
+    }
+
+    public function getSocietyForm()
+    {
         return view('societies.create_society');
     }
 
-    public function createSociety(Request $request){
+    public function createSociety(Request $request)
+    {
 
         $rules = [
-            'society_name'  =>  'required',
-            'society_type'  =>  'required'
+            'society_name' => 'required',
+            'society_type' => 'required'
         ];
 
-        if($request->hasFile('display_image')) {
-            $rules['display_image'] =  'required|file|mimes:jpeg,bmp,png,jpg';
+        if ($request->hasFile('display_image')) {
+            $rules['display_image'] = 'required|file|mimes:jpeg,bmp,png,jpg';
         }
 
         $validator = Validator::make($request->all(), $rules);
 
-        if($validator->passes()){
+        if ($validator->passes()) {
             $society = new Society();
             $society->name = $request->society_name;
             $society->type = $request->society_type;
@@ -49,32 +59,33 @@ class SocietyController extends Controller
             $society->image_uri = $this->storageImageAndReturnImageURI($request);
             $society->user_id = Auth::user()->id;
 
-            if($society->save()){
+            if ($society->save()) {
                 return redirect('/societies/all');
             }
 
-        }else{
+        } else {
             return redirect('/societies/create')->withErrors($validator)->withInput();
         }
     }
 
     private function storageImageAndReturnImageURI($request)
     {
-        if($request->hasFile('display_image')){
+        if ($request->hasFile('display_image')) {
             $file = $request->file('display_image');
             $ext = $file->extension();
-            $path = '/society/'.str_random(10).'.'.$ext;
+            $path = '/society/' . str_random(10) . '.' . $ext;
 
-            if(Storage::disk('public')->put($path,  File::get($file))){
+            if (Storage::disk('public')->put($path, File::get($file))) {
                 return $path;
             }
-        }else{
+        } else {
             return '/default/img/society_icon.png';
         }
     }
 
-    public function getSociety($id){
-        $society = Society::where('id','=', $id)->first();
+    public function getSociety($id)
+    {
+        $society = Society::where('id', '=', $id)->first();
         $posts = Posts::where('society_id', '=', $id)->paginate(10);
         return view('societies.feed')
             ->with('society', $society)
@@ -85,8 +96,9 @@ class SocietyController extends Controller
 
     }
 
-    public function getSocietySettings($id){
-        $society = Society::where('id','=', $id)->first();
+    public function getSocietySettings($id)
+    {
+        $society = Society::where('id', '=', $id)->first();
         return view('societies.settings')
             ->with('society', $society)
             ->with('isVerified', $this->societyIsVerified($id))
@@ -94,20 +106,22 @@ class SocietyController extends Controller
             ->with('requestPending', $this->societyRequestPending($id));;
     }
 
-    public function getSocietyRequests($id){
-        $society = Society::where('id','=', $id)->first();
-        $requests = SocietyRequest::where('society_id','=', $id)->get();
+    public function getSocietyRequests($id)
+    {
+        $society = Society::where('id', '=', $id)->first();
+        $requests = SocietyRequest::where('society_id', '=', $id)->get();
         return view('societies.requests')
             ->with('society', $society)
             ->with('isVerified', $this->societyIsVerified($id))
             ->with('isMember', $this->isSocietyMember($id))
             ->with('requestPending', $this->societyRequestPending($id))
-            ->with('requests',$requests);
+            ->with('requests', $requests);
     }
 
-    public function societyMembers($id){
-        $society = Society::where('id','=', $id)->first();
-        $members = SocietyMember::where('society_id','=',$id)->get();
+    public function societyMembers($id)
+    {
+        $society = Society::where('id', '=', $id)->first();
+        $members = SocietyMember::where('society_id', '=', $id)->get();
         return view('societies.members')
             ->with('society', $society)
             ->with('isVerified', $this->societyIsVerified($id))
@@ -116,73 +130,79 @@ class SocietyController extends Controller
             ->with('members', $members);
     }
 
-    public function societyIsVerified($id){
-        return Society::where('id','=', $id)->first()->verified;
+    public function societyIsVerified($id)
+    {
+        return Society::where('id', '=', $id)->first()->verified;
     }
 
     private function isSocietyMember($id)
     {
-        return SocietyMember::where('society_id', '=', $id)->where('user_id','=', Auth::user()->id)->count();
+        return SocietyMember::where('society_id', '=', $id)->where('user_id', '=', Auth::user()->id)->count();
     }
 
     private function societyRequestPending($id)
     {
-        return SocietyRequest::where('user_id','=', AUth::user()->id)->where('society_id','=', $id)->count();
+        return SocietyRequest::where('user_id', '=', AUth::user()->id)->where('society_id', '=', $id)->count();
     }
 
-    public function joinRequest(Request $request){
+    public function joinRequest(Request $request)
+    {
 
-        $society_request =  new SocietyRequest();
+        $society_request = new SocietyRequest();
         $society_request->user_id = Auth::user()->id;
         $society_request->society_id = $request->id;
 
-        if($society_request->save()){
+        if ($society_request->save()) {
             return response()->json([
-                'created'  =>  true
+                'created' => true
             ]);
         }
     }
 
-    public function cancelJoinRequests(Request $request){
+    public function cancelJoinRequests(Request $request)
+    {
         $society_request = SocietyRequest::where('user_id', '=', Auth::user()->id)->where('society_id', '=', $request->id);
 
-        if($society_request->delete()){
+        if ($society_request->delete()) {
             return response()->json([
-                'canceled'  =>  true
+                'canceled' => true
             ]);
         }
     }
 
-    public function acceptJoinRequests(Request $request){
-        $soc_request = SocietyRequest::where('id','=', $request->id)->first();
+    public function acceptJoinRequests(Request $request)
+    {
+        $soc_request = SocietyRequest::where('id', '=', $request->id)->first();
 
         $member = new SocietyMember();
         $member->user_id = $soc_request->user_id;
         $member->society_id = $soc_request->society_id;
 
-        if($member->save() && $soc_request->delete()){
+        if ($member->save() && $soc_request->delete()) {
             return response()->json([
-                'accepted'  =>  true
+                'accepted' => true
             ]);
         }
     }
 
-    public function disApproveJoinRequest(Request $request){
-        $soc_request = SocietyRequest::where('id','=', $request->id)->first();
+    public function disApproveJoinRequest(Request $request)
+    {
+        $soc_request = SocietyRequest::where('id', '=', $request->id)->first();
 
-        if($soc_request->delete()){
+        if ($soc_request->delete()) {
             return response()->json([
-                'disapproved'  =>  true
+                'disapproved' => true
             ]);
         }
     }
 
-    public function removeUser(Request $request){
-        $soc_request = SocietyMember::where('id','=', $request->id)->first();
+    public function removeUser(Request $request)
+    {
+        $soc_request = SocietyMember::where('id', '=', $request->id)->first();
 
-        if($soc_request->delete()){
+        if ($soc_request->delete()) {
             return response()->json([
-                'removed'  =>  true
+                'removed' => true
             ]);
         }
     }
