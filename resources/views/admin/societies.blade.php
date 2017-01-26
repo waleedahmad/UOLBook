@@ -57,7 +57,7 @@
                         </td>
 
                         <td>
-                            <button class="btn btn-danger delete-society" data-id="{{$society->id}}">Delete Society</button>
+                            <button class="btn btn-danger delete-society" data-role="admin" data-id="{{$society->id}}">Delete Society</button>
                         </td>
                     </tr>
                 @endforeach

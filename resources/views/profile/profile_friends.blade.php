@@ -9,8 +9,12 @@
     <div class="container-fluid profile-header">
         <div class="container">
             <div class="row profile-header-content">
-                <div class="col-md-3 col-sm-3 col-xs-4 profile-pic"><img src="/storage/{{$user->image_uri}}" class="img-thumbnail"></div>
-                <div class="col-md-9 col-sm-9 col-xs-8 profile-about">
+                <div class="col-xs-2 profile-pic">
+                    <div class="image-holder">
+                        <img src="/storage/{{$user->image_uri}}">
+                    </div>
+                </div>
+                <div class="col-xs-10 profile-about">
                     <h2>{{$user->first_name . ' ' . $user->last_name}}</h2>
                     <p><i class="glyphicons glyphicons-riflescope"></i> <a href="#">{{$user->registration_id}}</a></p>
                 </div>

@@ -58,6 +58,44 @@
 
                         <li class="dropdown notifications">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @if($notifications->count()) <span class="badge">{{$notifications->count()}}</span> @endif</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach($notifications as $notification)
+                                    <li class="notification" data-id="{{$notification->id}}">
+                                        <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                            <div class="image-holder">
+                                                <img src="/storage/{{$notification->fromUser->image_uri}}" alt="">
+                                            </div>
+                                        </div>
+
+                                        <div class="text col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <div>
+                                                @if($notification->type === 'like')
+                                                    {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} liked you post
+                                                @elseif($notification->type === 'comment')
+                                                    {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} commented on your post
+                                                @endif
+                                            </div>
+                                            <div>
+                                                {{$notification->created_at->diffForHumans()}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+
+                                @if(!$notifications->count())
+                                    <li class="no-requests">
+                                        You current have no Notifications
+                                    </li>
+
+                                @endif
+                                <a class="all-notifications" href="/messages/all">View all messages</a>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown notifications">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-bell" aria-hidden="true"></span> @if($notifications->count()) <span class="badge">{{$notifications->count()}}</span> @endif</span>
                             </a>
                             <ul class="dropdown-menu">

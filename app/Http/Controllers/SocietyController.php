@@ -101,7 +101,7 @@ class SocietyController extends Controller
                 return $path;
             }
         } else {
-            return '/default/img/society_icon.png';
+            return '/default/img/society_header.jpg';
         }
     }
 
@@ -113,7 +113,7 @@ class SocietyController extends Controller
     public function getSociety($id)
     {
         $society = Society::where('id', '=', $id)->first();
-        $posts = Posts::where('society_id', '=', $id)->paginate(10);
+        $posts = Posts::where('society_id', '=', $id)->orderBy('id', 'DESC')->paginate(10);
         return view('societies.feed')
             ->with('society', $society)
             ->with('posts', $posts)
@@ -280,13 +280,124 @@ class SocietyController extends Controller
      */
     public function removeUser(Request $request)
     {
-        $soc_request = SocietyMember::where('id', '=', $request->id)->first();
+        $soc_member = SocietyMember::where('id', '=', $request->id)->first();
 
-        if ($soc_request->delete()) {
+        if ($soc_member->delete()) {
             return response()->json([
                 'removed' => true
             ]);
         }
     }
+
+    /**
+     * Leave society
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function leaveSociety(Request $request){
+        $soc_member = SocietyMember::where('society_id', '=', $request->society_id)->where('user_id','=', Auth::user()->id)->first();
+
+        if($soc_member->delete()){
+            return response()->json([
+                'left' => true
+            ]);
+        }
+    }
+
+    public function updateSocietySettings(Request $request){
+        $id = $request->society_id;
+        $name = $request->society_name;
+        $type = $request->society_type;
+
+        $validator = Validator::make($request->all(), [
+            'society_name'  =>  'required',
+            'society_type'  =>  'required',
+        ]);
+
+        if($validator->passes()){
+            $society = Society::where('id', '=', $id)->first();
+            $society->name = $name;
+            $society->type = $type;
+
+            if($society->save()){
+                $request->session()->flash('message', 'Society settings updated');
+                return redirect('/society/'.$id.'/settings');
+            }
+        }else{
+            return redirect('/society/'.$id.'/settings')->withErrors($validator)->withInput();
+        }
+    }
+
+    public function updateSocietyCover(Request $request){
+        $id = $request->society_id;
+
+        $society = Society::where('id','=', $id)->first();
+
+        $validator = Validator::make($request->all(), [
+            'cover_photo' => 'required|file|mimes:jpeg,bmp,png,jpg'
+        ]);
+
+        if ($validator->passes()) {
+            if ($this->societyHaveDefaultProfileImage($society)) {
+                return $this->uploadProfilePic($request);
+            }else{
+                if($this->deleteCurrentSocietyCover($society)){
+                    return $this->uploadProfilePic($request);
+                }
+            }
+        } else {
+            return redirect('/society/'.$id.'/settings')->withErrors($validator)->withInput();
+        }
+    }
+
+    private function societyHaveDefaultProfileImage($society)
+    {
+        return $society->image_uri === '/default/img/society_header.jpg';
+    }
+
+    private function uploadProfilePic($request)
+    {
+        $file = $request->file('cover_photo');
+        $ext = $file->extension();
+        $path = '/society/'.str_random(10).'.'.$ext;
+
+        if(Storage::disk('public')->put($path,  File::get($file))){
+            $society_update = Society::where('id','=', $request->society_id)->update([
+                'image_uri'  =>  $path
+            ]);
+
+            if($society_update){
+                $request->session()->flash('picture_message', 'Society cover photo updated');
+                return redirect('/society/'.$request->society_id.'/settings');
+            }
+        }
+    }
+
+    private function deleteCurrentSocietyCover($society)
+    {
+        $delete = Storage::disk('public')->delete($society->image_uri);
+
+        $path = '/default/img/society_header.jpg';
+
+        $society_update = Society::where('id','=', $society->id)->update([
+            'image_uri' => $path
+        ]);
+
+        return ($delete && $society_update);
+    }
+
+    public function deleteSociety(Request $request){
+        $society = Society::where('id','=', $request->id)->first();
+        $society->purgeUploads();
+
+        Storage::disk('public')->delete($society->image_uri);
+
+        if($society->delete()){
+            return response()->json([
+                'deleted'   =>  true
+            ]);
+        }
+    }
+
 
 }

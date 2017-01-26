@@ -37,7 +37,7 @@
         @if($isVerified)
             @if(Auth::user()->id === $society->user_id || $isMember)
                 @if($members->count())
-                    <div class="society-requests">
+                    <div class="society-users">
                         <table class="table">
                             <thead>
                             <tr>
@@ -63,7 +63,7 @@
                             <tbody>
 
                             @foreach($members as $member)
-                                <tr class="request">
+                                <tr class="user">
                                     <td>
                                         <div class="image-holder">
                                             <img src="/storage/{{$member->user->image_uri}}" alt="">

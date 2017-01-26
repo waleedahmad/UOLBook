@@ -11,7 +11,9 @@
 
             <div class="row profile-header-content">
                 <div class="col-xs-2 profile-pic">
-                    <img src="/storage/{{$user->image_uri}}" class="img-thumbnail">
+                    <div class="image-holder">
+                        <img src="/storage/{{$user->image_uri}}">
+                    </div>
                 </div>
                 <div class="col-xs-10 profile-about">
                     <h2>{{$user->first_name . ' ' . $user->last_name}}</h2>

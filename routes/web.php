@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
     Route::post('/notification/read', 'NotificationController@readNotification');
 
     /**
-     * Society, Classes Links
+     * Society Routes
      */
 
     Route::get('/classes/all', 'ClassController@showAllClasses');
@@ -58,11 +58,21 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
     Route::post('/society/request/accept', 'SocietyController@acceptJoinRequests');
     Route::post('/society/request/disapprove', 'SocietyController@disApproveJoinRequest');
     Route::post('/society/member/remove', 'SocietyController@removeUser');
+    Route::post('/society/member/leave', 'SocietyController@leaveSociety');
 
     Route::get('/society/{id}', 'SocietyController@getSociety');
     Route::get('/society/{id}/settings', 'SocietyController@getSocietySettings');
+    Route::post('/society/settings/update', 'SocietyController@updateSocietySettings');
+    Route::post('/society/settings/cover/update', 'SocietyController@updateSocietyCover');
+    Route::post('/society/delete', 'SocietyController@deleteSociety');
     Route::get('/society/{id}/requests', 'SocietyController@getSocietyRequests');
     Route::get('/society/{id}/members', 'SocietyController@societyMembers');
+
+    /**
+     * Messages Routes
+     */
+
+    Route::get('//messages/all', 'MessagesController@getMessages');
 });
 
 Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'isAdmin', 'isNotTeacher']], function(){
@@ -118,6 +128,7 @@ Route::group(['middleware' => ['auth', 'isNotAdmin']], function () {
     Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
     Route::delete('/admin/class/delete', 'AdminController@deleteClass');
     Route::delete('/admin/user/delete', 'AdminController@deleteUser');
+    Route::post('/society/delete', 'SocietyController@deleteSociety');
 
 });
 

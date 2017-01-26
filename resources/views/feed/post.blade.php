@@ -53,6 +53,12 @@
                             <a href="/profile/{{$post->user->id}}">
                                 {{$post->user->first_name . ' ' . $post->user->last_name}}
                             </a>
+
+                            @if($post->source === 'society' && !isset($society))
+                                posted in
+
+                                <a href="/society/{{$post->society_id}}">{{$post->societyName()}}</a>
+                            @endif
                         </div>
 
                         <div class="link">

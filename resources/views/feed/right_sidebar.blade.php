@@ -1,11 +1,12 @@
 <div class="right-sidebar col-xs-12 col-sm-12 col-md-3 col-lg-3">
     @if($suggestions->count())
-        @foreach($suggestions as $user)
-            <div class="suggestions">
-                <div class="header">
-                    Friend Suggestions
-                </div>
 
+        <div class="suggestions">
+            <div class="header">
+                Friend Suggestions
+            </div>
+
+            @foreach($suggestions as $user)
                 <div class="users">
                     <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
                         <div class="image-holder">
@@ -16,9 +17,7 @@
                         <a href="/profile/{{$user->id}}">{{$user->first_name }} {{$user->last_name}}</a>
                     </div>
                 </div>
-            </div>
-
-        @endforeach
+            @endforeach
+        </div>
     @endif
-
 </div>

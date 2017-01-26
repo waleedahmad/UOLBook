@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class Posts extends Model
 {
@@ -35,5 +36,9 @@ class Posts extends Model
 
     public function isLikedByAuthUser(){
         return Like::where('user_id','=', Auth::user()->id)->where('post_id', '=', $this->id)->count();
+    }
+
+    public function societyName(){
+        return Society::where('id','=', $this->society_id)->First()->name;
     }
 }

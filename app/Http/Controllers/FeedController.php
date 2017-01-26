@@ -9,6 +9,8 @@ use App\Models\Like;
 use App\Models\Notification;
 use App\Models\Photo;
 use App\Models\Posts;
+use App\Models\Society;
+use App\Models\SocietyMember;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -19,15 +21,19 @@ class FeedController extends Controller
 {
     /**
      * News feed
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(){
-        $posts = Posts::WhereIn('user_id', $this->getFriendsIDs())
-                    ->orWhere('user_id', '=', Auth::user()->id)
-                    ->where('source', '=', 'feed')
-                    ->orderBy('id', 'DESC')->paginate(5);
-
+        $posts = Posts::where('source','=', 'feed')
+                        ->orWhere('user_id','=', Auth::user()->id)
+                        ->WhereIn('user_id', $this->getFriendsIDs())
+                        ->orderBy('id', 'DESC')->paginate(5);
         return view('feed.index')->with('posts', $posts);
+    }
+
+    private function getUserSocietyIDS()
+    {
+        return SocietyMember::where('user_id', '=', Auth::user()->id)->pluck('society_id');
     }
 
     /**
@@ -419,4 +425,6 @@ class FeedController extends Controller
 
         return $notification->delete();
     }
+
+
 }

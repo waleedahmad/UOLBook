@@ -281,3 +281,98 @@ function initRemoveSocietyMember(e){
         }
     });
 }
+
+$('.leave-society').on('click', initLeaveSociety);
+
+function initLeaveSociety(e){
+    let id = $(this).attr('data-id'),
+        _this = $(this);
+
+    $(this).off('click', initLeaveSociety);
+
+    bootbox.confirm({
+        message: "Are you sure you want to leave this society?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+
+            $(_this).on('click', initLeaveSociety);
+            if(result){
+                $.ajax({
+                    type : 'POST',
+                    url : '/society/member/leave',
+                    data : {
+                        society_id : id,
+                        _token : token
+                    },
+                    success : function(res){
+                        if(res.left){
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
+$('.delete-society').on('click', initDeleteSociety);
+
+function initDeleteSociety(e){
+    let id = $(this).attr('data-id'),
+        role = $(this).attr('data-role'),
+        _this = $(this);
+
+    $(this).off('click', initDeleteSociety);
+
+    bootbox.confirm({
+        message: "Are you sure you want to delete this society?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+
+            $(_this).on('click', initDeleteSociety);
+            if(result){
+                $.ajax({
+                    type : 'POST',
+                    url : '/society/delete',
+                    data : {
+                        id : id,
+                        _token : token
+                    },
+                    success : function(res){
+                        if(role === 'admin'){
+                            if(res.deleted){
+                                $(_this).parents('.society').slideUp(function(e){
+                                    $(this).remove();
+                                });
+                            }
+                        }
+
+                        if(role === 'user'){
+                            if(res.deleted){
+                                window.location = '/societies/all';
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    });
+}

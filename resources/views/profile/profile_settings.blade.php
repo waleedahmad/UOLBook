@@ -7,44 +7,42 @@
 
 @section('content')
     <div class="profile-settings">
-        @if(Auth::user()->type === 'student' || Auth::user()->type === 'teacher')
-            <div class="profile-setting row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block">
+        <div class="profile-setting row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block">
 
-                <h3 class="title">
-                    Profile Picture
-                </h3>
+            <h3 class="title">
+                Profile Picture
+            </h3>
 
-                <form class="form-horizontal" method="post" action="/user/settings/update/picture" enctype="multipart/form-data">
-                    <div class="form-group @if($errors->has('profile_pic')) has-error @endif">
-                        <label for="registration_no" class="col-sm-3 control-label">Profile Photo</label>
-                        <div class="col-sm-9">
+            <form class="form-horizontal" method="post" action="/user/settings/update/picture" enctype="multipart/form-data">
+                <div class="form-group @if($errors->has('profile_pic')) has-error @endif">
+                    <label for="registration_no" class="col-sm-3 control-label">Profile Photo</label>
+                    <div class="col-sm-9">
 
-                            <div class="image-holder">
-                                <img class="profile-pic" src="/storage/{{Auth::user()->image_uri}}" >
-                            </div>
-
-                            <input type="file" name="profile_pic">
-                            <p class="help-block">This photo will be displayed on your profile.</p>
-
-                            @if($errors->has('profile_pic'))
-                                {{$errors->first('profile_pic')}}
-                            @endif
+                        <div class="image-holder">
+                            <img class="profile-pic" src="/storage/{{Auth::user()->image_uri}}" >
                         </div>
+
+                        <input type="file" name="profile_pic">
+                        <p class="help-block">This photo will be displayed on your profile.</p>
+
+                        @if($errors->has('profile_pic'))
+                            {{$errors->first('profile_pic')}}
+                        @endif
                     </div>
+                </div>
 
 
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
-                            @if(Session::has('picture_message'))
-                                <div class="alert alert-info" role="alert">{{Session::get('picture_message')}}</div>
-                            @endif
-                            <button type="submit" class="btn btn-default">Upload Photo</button>
-                        </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        @if(Session::has('picture_message'))
+                            <div class="alert alert-info" role="alert">{{Session::get('picture_message')}}</div>
+                        @endif
+                        <button type="submit" class="btn btn-default">Upload Photo</button>
                     </div>
-                    {{csrf_field()}}
-                </form>
-            </div>
-        @endif
+                </div>
+                {{csrf_field()}}
+            </form>
+        </div>
 
         <div class="profile-setting row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block" id="profile">
             <h3 class="title">

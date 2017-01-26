@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     /**
      * Verification requests view
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getIndex(){
         $requests = Verification::join('users', 'verification_requests.user_id', '=', 'users.id')->get();
@@ -42,7 +42,7 @@ class AdminController extends Controller
 
     /**
      * Show all societies
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAllSocieties(){
         $societies = Society::all();

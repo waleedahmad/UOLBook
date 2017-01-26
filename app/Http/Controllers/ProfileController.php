@@ -334,7 +334,7 @@ class ProfileController extends Controller
     protected function deleteCurrentProfilePic($image_uri){
         $delete = Storage::disk('public')->delete($image_uri);
 
-        $path = (Auth::user()->gender === 'male') ? '/default/img/default_img_male.jpg' : '/default/img/default_img_female';
+        $path = (Auth::user()->gender === 'male') ? 'default/img/default_img_male.jpg' : 'default/img/default_img_female';
 
         $user_update = User::where('id','=', Auth::user()->id)->update([
             'image_uri' => $path
@@ -349,6 +349,6 @@ class ProfileController extends Controller
      */
     protected function userHaveDefaultProfileImage()
     {
-        return Auth::user()->image_uri === '/default/img/default_img_male.jpg' || Auth::user()->image_uri === '/default/img/default_img_female.jpg';
+        return Auth::user()->image_uri === 'default/img/default_img_male.jpg' || Auth::user()->image_uri === 'default/img/default_img_female.jpg';
     }
 }

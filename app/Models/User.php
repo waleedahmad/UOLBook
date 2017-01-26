@@ -28,13 +28,21 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Purge users uploads
+     */
     public function purgeUploads(){
         $uploads = FileUploads::where('user_id','=', $this->id)->get();
+        $societies = Society::where('user_id','=', $this->id)->get();
 
         $posts = Posts::where('user_id', '=', $this->id)->get();
 
         foreach($uploads as $upload){
             Storage::disk('public')->delete($upload->file_uri);
+        }
+
+        foreach($societies as $society){
+            Storage::disk('public')->delete($society->image_uri);
         }
 
         foreach($posts as $post){

@@ -130,16 +130,22 @@
   }
 
 
-  .society-requests{
-    .request{
-      .image-holder{
-        width:50px;
-        height: 50px;
-        overflow:hidden;
-        img{
-          width: 100%;
-        }
+  .society-requests .request, .society-users .user{
+    .image-holder{
+      width:50px;
+      height: 50px;
+      overflow:hidden;
+      img{
+        width: 100%;
       }
+    }
+  }
+
+  .society-settings{
+    h3{
+      margin-bottom: 10px;
+      border-bottom: 1px solid #DCDCDC;
+      padding-bottom: 10px;
     }
   }
 }
