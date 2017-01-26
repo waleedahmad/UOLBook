@@ -128,7 +128,7 @@ Route::group(['middleware' => ['auth', 'isNotAdmin']], function () {
     Route::get('/admin/{type}', 'AdminController@getFilteredRequests');
     Route::delete('/admin/class/delete', 'AdminController@deleteClass');
     Route::delete('/admin/user/delete', 'AdminController@deleteUser');
-    Route::post('/society/delete', 'SocietyController@deleteSociety');
+    Route::post('/admin/society/delete', 'SocietyController@deleteSociety');
 
 });
 

@@ -331,6 +331,8 @@ function initDeleteSociety(e){
         role = $(this).attr('data-role'),
         _this = $(this);
 
+    let url = (role === 'admin') ? '/admin/society/delete' : '/society/delete';
+
     $(this).off('click', initDeleteSociety);
 
     bootbox.confirm({
@@ -351,7 +353,7 @@ function initDeleteSociety(e){
             if(result){
                 $.ajax({
                     type : 'POST',
-                    url : '/society/delete',
+                    url : url,
                     data : {
                         id : id,
                         _token : token

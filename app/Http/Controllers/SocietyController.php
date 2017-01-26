@@ -390,7 +390,9 @@ class SocietyController extends Controller
         $society = Society::where('id','=', $request->id)->first();
         $society->purgeUploads();
 
-        Storage::disk('public')->delete($society->image_uri);
+        if(!$this->societyHaveDefaultProfileImage($society)){
+            Storage::disk('public')->delete($society->image_uri);
+        }
 
         if($society->delete()){
             return response()->json([
@@ -398,6 +400,7 @@ class SocietyController extends Controller
             ]);
         }
     }
+
 
 
 }
