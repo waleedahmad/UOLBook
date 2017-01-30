@@ -25,8 +25,8 @@ class FeedController extends Controller
      */
     public function index(){
         $posts = Posts::where('source','=', 'feed')
-                        ->orWhere('user_id','=', Auth::user()->id)
-                        ->WhereIn('user_id', $this->getFriendsIDs())
+                        ->Where('user_id','=', Auth::user()->id)
+                        ->orWhereIn('user_id', $this->getFriendsIDs())
                         ->orderBy('id', 'DESC')->paginate(5);
         return view('feed.index')->with('posts', $posts);
     }
