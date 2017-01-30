@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="/assets/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/libs/toastr/toastr.min.css">
+    <link href="/assets/libs/jquery-ui/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/assets/css/app.min.css">
+
 </head>
 <body>
 @include('navbar')
@@ -32,6 +34,7 @@
     </div>
 </div>
 <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="/assets/libs/jquery-ui/jquery-ui.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/assets/libs/jscroll/jquery.jscroll.min.js"></script>
 <script src="/assets/libs/bootbox.js/bootbox.js"></script>

@@ -2,7 +2,7 @@ html,body{
   margin: 0px;
   padding: 0px;
   font-family: 'Source Sans Pro', sans-serif;
-  height: auto;
+  height: 100%;
   width: 100%;
 }
 
@@ -24,7 +24,6 @@ html,body{
 }
 
 .wrapper{
-
   height: 100%;
   margin-top: 50px;
   @import "imports/feed/feed";
@@ -34,6 +33,9 @@ html,body{
   @import "imports/teachers";
   @import "imports/classes/classes";
   @import "imports/societies/society";
+  @import "imports/messages";
 }
+
+@import "imports/messages_autocomplete";
 
 

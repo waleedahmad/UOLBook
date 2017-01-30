@@ -1,0 +1,44 @@
+.ui-menu-item{
+  padding: 0px;
+  margin: 0px;
+}
+.ui-menu .ui-menu-item{
+  display:block;
+  height: 70px;
+
+  &:hover{
+    background-color:grey;
+  }
+
+
+  &:not(:last-child){
+    border-bottom: 1px solid #DCDCDC;
+  }
+
+  .col-xs-1, .col-xs-11{
+    height: 100%;
+    border: 0px;
+    margin: 0px;
+    padding: 10px;
+  }
+
+  .col-xs-11{
+    padding-top: 19px;
+    letter-spacing:0px;
+  }
+
+  .img-holder{
+    width: 50px;
+    height: 50px;
+    overflow:hidden;
+
+    img{
+      width : 100%;
+    }
+  }
+
+
+
+
+
+}

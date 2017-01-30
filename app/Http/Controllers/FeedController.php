@@ -31,11 +31,6 @@ class FeedController extends Controller
         return view('feed.index')->with('posts', $posts);
     }
 
-    private function getUserSocietyIDS()
-    {
-        return SocietyMember::where('user_id', '=', Auth::user()->id)->pluck('society_id');
-    }
-
     /**
      * User friend ids
      * @return mixed

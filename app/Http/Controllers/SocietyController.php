@@ -304,6 +304,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Update society settings
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function updateSocietySettings(Request $request){
         $id = $request->society_id;
         $name = $request->society_name;
@@ -328,6 +333,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Update society cover
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function updateSocietyCover(Request $request){
         $id = $request->society_id;
 
@@ -339,10 +349,10 @@ class SocietyController extends Controller
 
         if ($validator->passes()) {
             if ($this->societyHaveDefaultProfileImage($society)) {
-                return $this->uploadProfilePic($request);
+                return $this->uploadProfileCover($request);
             }else{
                 if($this->deleteCurrentSocietyCover($society)){
-                    return $this->uploadProfilePic($request);
+                    return $this->uploadProfileCover($request);
                 }
             }
         } else {
@@ -350,12 +360,22 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Check if society cover is default
+     * @param $society
+     * @return bool
+     */
     private function societyHaveDefaultProfileImage($society)
     {
         return $society->image_uri === '/default/img/society_header.jpg';
     }
 
-    private function uploadProfilePic($request)
+    /**
+     * Upload profile cover
+     * @param $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    private function uploadProfileCover($request)
     {
         $file = $request->file('cover_photo');
         $ext = $file->extension();
@@ -373,6 +393,11 @@ class SocietyController extends Controller
         }
     }
 
+    /**
+     * Delete profile cover
+     * @param $society
+     * @return bool
+     */
     private function deleteCurrentSocietyCover($society)
     {
         $delete = Storage::disk('public')->delete($society->image_uri);
@@ -386,6 +411,11 @@ class SocietyController extends Controller
         return ($delete && $society_update);
     }
 
+    /**
+     * Delete society
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteSociety(Request $request){
         $society = Society::where('id','=', $request->id)->first();
         $society->purgeUploads();

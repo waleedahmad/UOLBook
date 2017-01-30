@@ -72,7 +72,10 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
      * Messages Routes
      */
 
-    Route::get('//messages/all', 'MessagesController@getMessages');
+    Route::get('/messages/all', 'MessagesController@getMessages');
+    Route::get('/messages/conversation', 'MessagesController@getOrCreateConversation');
+    Route::get('/user/friends', 'MessagesController@getUserFriends');
+    Route::get('/messages/{id}', 'MessagesController@renderConversation');
 });
 
 Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'isAdmin', 'isNotTeacher']], function(){

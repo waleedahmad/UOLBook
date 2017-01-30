@@ -58,7 +58,7 @@
 
                         <li class="dropdown notifications">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @if($notifications->count()) <span class="badge">{{$notifications->count()}}</span> @endif</span>
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> @if($notifications->count()) <span class="badge">{{$notifications->count()}}</span> @endif</span>
                             </a>
                             <ul class="dropdown-menu">
                                 @foreach($notifications as $notification)
