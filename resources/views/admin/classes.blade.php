@@ -7,8 +7,9 @@
 @section('content')
     <div class="admin-verification">
         @include('admin.sidebar')
-        @if($classes->count())
-            <div class="admin-content col-xs-12 col-sm-9 col-md-9 col-lg-9">
+        <div class="admin-content col-xs-12 col-sm-9 col-md-9 col-lg-9">
+
+            @if($classes->count())
                 <table class="table classes">
                     <thead>
                     <tr>
@@ -60,9 +61,11 @@
 
                     </tbody>
                 </table>
-            </div>
-        @else
-            <div class="alert alert-info" role="alert">No classes found.</div>
-        @endif
+            @else
+                <div class="alert alert-info" role="alert">No classes found.</div>
+            @endif
+
+        </div>
+
     </div>
 @endsection
