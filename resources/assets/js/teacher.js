@@ -193,6 +193,9 @@ function initDeleteStudent(e){
     });
 }
 
+/**
+ * Remove file upload
+ */
 $('.remove-upload').on('click', initRemoveFileUpload);
 
 function initRemoveFileUpload(e){
@@ -237,6 +240,9 @@ function initRemoveFileUpload(e){
     });
 }
 
+/**
+ * Remove announcement
+ */
 $('.remove-announcement').on('click', initRemoveAnnouncement);
 
 function initRemoveAnnouncement(e){

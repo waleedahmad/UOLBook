@@ -1,3 +1,6 @@
+/**
+ * Make an ajax call to read unread notification
+ */
 $('.notification').on('click', function(e){
     e.preventDefault();
 

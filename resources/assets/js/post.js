@@ -16,7 +16,6 @@ $($status).find('#file-post').on('click', function(e){
     e.preventDefault();
     $($post_footer).find("li").css({"display" : "inline-block"});
     $($status).attr('data-post-type', 'file');
-
 });
 
 /**
@@ -156,6 +155,9 @@ function createFilePost(formData, text){
     });
 }
 
+/**
+ * Delete post
+ */
 $('.delete-post').on('click', initDeletePost);
 
 function initDeletePost(e){
@@ -200,11 +202,17 @@ function initDeletePost(e){
     });
 }
 
+/**
+ * Register delete post event handlers
+ */
 function registerPostDeleteEventHanlders(){
     $('.delete-post').off('click', initDeletePost);
     $('.delete-post').on('click', initDeletePost);
 }
 
+/**
+ * Edit post
+ */
 $('.edit-post').on('click', initEditPost);
 
 function initEditPost(e){
@@ -241,6 +249,9 @@ function initEditPost(e){
     });
 }
 
+/**
+ * Register edit post event handlers
+ */
 function registerPostEditEventHandlers(){
     $('.edit-post').off('click', initEditPost);
     $('.edit-post').on('click', initEditPost);
@@ -364,6 +375,18 @@ function generateTextPOSTDOM(id, text, name, image_uri, user_id, time_stamp){
             </div>`;
 }
 
+/**
+ * Generate file post DOM
+ * @param id
+ * @param text
+ * @param name
+ * @param image_uri
+ * @param type
+ * @param file_uri
+ * @param user_id
+ * @param time_stamp
+ * @returns {string}
+ */
 function generateFilePOSTDOM(id, text, name, image_uri, type, file_uri, user_id, time_stamp){
     let media;
 

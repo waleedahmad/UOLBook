@@ -37,15 +37,21 @@
     }
 
     .no-requests{
-      padding: 20px;
+      text-align:center;
+      padding: 10px;
+      display:block;
     }
 
   }
 
   .notifications{
     .all-notifications{
+      text-align:center;
       padding: 10px;
       display:block;
+      background-color:#f6f7f9;
+      text-decoration: none;
+      color:black;
     }
 
     .badge{
@@ -83,8 +89,72 @@
       }
     }
 
-    .no-requests{
+    .no-notifications{
+      text-align:center;
       padding: 10px;
+      display:block;
+    }
+  }
+
+  .conversations{
+
+    a{
+      display:block;
+      text-decoration: none;
+      color:black;
+      border-bottom: 1px solid #DCDCDC;
+    }
+    .all-conversations{
+      text-align:center;
+      padding: 10px;
+      display:block;
+      background-color:#f6f7f9;
+    }
+
+    .badge{
+      vertical-align: top;
+    }
+
+    .dropdown-menu{
+      height: auto;
+      max-height: 400px;
+      overflow:auto;
+      padding: 0px;
+      width: 350px;
+
+      .conversation{
+        cursor:pointer;
+        overflow:hidden;
+        clear:both;
+
+        &:hover{
+          background-color:#f3f3f3;
+        }
+
+        &.unread{
+          font-weight:bold;
+          background-color:#dfdfdf;
+        }
+
+        .img, .text{
+          padding: 5px;
+        }
+
+        .image-holder{
+          overflow:hidden;
+          width: 50px;
+          height: 50px;
+          img{
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .no-conversations{
+      text-align:center;
+      padding: 10px;
+      display:block;
     }
   }
 }

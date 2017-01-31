@@ -1,3 +1,6 @@
+/**
+ * Approve users
+ */
 $('.approve-user').on('click', function(e){
     var id = $(this).attr('data-id'),
         token = $("meta[name=token]").attr('content'),
@@ -43,6 +46,9 @@ $('.approve-user').on('click', function(e){
 
 });
 
+/**
+ * Disapprove users
+ */
 $('.disapprove-user').on('click', function(e){
     var id = $(this).attr('data-id'),
         token = $("meta[name=token]").attr('content'),
@@ -86,7 +92,9 @@ $('.disapprove-user').on('click', function(e){
     });
 });
 
-
+/**
+ * Delete class
+ */
 $('.delete-class').on('click', function(e){
     var id = $(this).attr('data-id'),
         token = $("meta[name=token]").attr('content'),
@@ -130,6 +138,9 @@ $('.delete-class').on('click', function(e){
     });
 });
 
+/**
+ * Delete users
+ */
 
 $('.delete-user').on('click', function(e){
     var id = $(this).attr('data-id'),

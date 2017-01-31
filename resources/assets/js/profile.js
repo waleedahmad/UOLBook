@@ -1,5 +1,7 @@
+/**
+ * Add friend
+ */
 $('.add-friend').on('click', initAddFriend);
-
 
 function initAddFriend(e){
     var user_id = $(this).attr('data-user-id'),
@@ -22,6 +24,9 @@ function initAddFriend(e){
     })
 }
 
+/**
+ * Remove friend request
+ */
 $('.remove-request').on('click', initRemoveRequest);
 
 
@@ -46,6 +51,9 @@ function initRemoveRequest(e){
     });
 }
 
+/**
+ * Remove friend
+ */
 $('.remove-friend').on('click', function(e){
     e.preventDefault();
 
@@ -67,6 +75,9 @@ $('.remove-friend').on('click', function(e){
     });
 });
 
+/**
+ * Accept friend request
+ */
 $('.accept-request').on('click', function(e){
     e.stopPropagation();
     var request_id = $(this).attr('data-request-id'),
@@ -87,6 +98,9 @@ $('.accept-request').on('click', function(e){
     });
 });
 
+/**
+ * Delete request
+ */
 $('.delete-request').on('click', function(e){
     e.stopPropagation();
     var request_id = $(this).attr('data-request-id'),

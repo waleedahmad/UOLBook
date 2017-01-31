@@ -1,7 +1,6 @@
 
 
 .messages-sidebar,.messages{
-  margin-top: 30px;
   height: 100%;
 
   .title{
@@ -25,15 +24,120 @@
 }
 
 .messages-sidebar{
+  padding: 0px;
+  overflow:hidden;
   .title{
     padding-top : 10px;
+
+    a{
+      text-decoration: none;
+      color:grey;
+
+      .glyphicon-chevron-left{
+        font-size: 16px;
+      }
+
+      &:hover{
+        color:black;
+      }
+    }
+  }
+
+  .conversations{
+
+    a{
+      text-decoration: none;
+    }
+    .message-row{
+      display:block;
+      position:relative;
+      border-bottom: 1px solid #DCDCDC;
+
+
+      cursor: pointer;
+      height: 70px;
+
+      .col-xs-2,.col-xs-10{
+        padding: 10px;
+        color:black;
+      }
+
+      .col-xs-10{
+        padding-left: 20px;
+
+        .name{
+          color:black;
+        }
+
+        .message{
+          color:grey;
+        }
+      }
+
+      .image-holder{
+        height: 50px;
+        width: 50px;
+        overflow:hidden;
+        img{
+          width: 100%;
+        }
+      }
+
+      &.active{
+        background-color:#f3f3f3;
+      }
+
+      &.unread{
+        font-weight:bold;
+        background-color:#dfdfdf;
+      }
+
+      &:hover{
+        background-color:#f3f3f3;
+      }
+
+      .glyphicon-trash{
+        position:absolute;
+        top: 30px;
+        right: 10px;
+        display: none;
+
+        &:hover{
+          color:red;
+        }
+      }
+
+      &:hover{
+        &>.glyphicon-trash{
+          display: block;
+        }
+      }
+    }
+
+
   }
 }
 
 .messages{
+  height: 85%;
+  overflow:auto;
 
-  .title #friends{
-    display: none;
+  .messages-content{
+    border: 1px solid #DCDCDC;
+    height: 100%;
+  }
+
+  .title{
+    padding-bottom: 0px;
+
+    #friends{
+      display: none;
+      height: 100%;
+      width: 100%;
+      padding: 10px;
+      outline:none;
+      border: 0px;
+    }
   }
 
   .current-user{
@@ -41,9 +145,45 @@
     text-align:center;
   }
 
+  .thread{
+    padding: 10px;
+    display:block;
+    height: 82%;
+    overflow-y:auto;
+    .your-message{
+      float:left;
+      background-color:#f1f0f0;
+      padding:5px;
+      border-radius: 5px;
+      max-width: 75%;
+      clear:both;
+      margin-top: 10px;
+    }
+
+    .their-message{
+      float:right;
+      background-color:#0084ff;
+      padding:5px;
+      border-radius: 5px;
+      max-width: 75%;
+      clear:both;
+      margin-top: 10px;
+    }
+  }
+
   .sender{
     width: 100%;
-    position:absolute;
-    bottom: 50px;
+    position:relative;
+    bottom: 0px;
+    margin:0px auto;
+
+    #chat-message{
+      padding: 10px;
+      outline:none;
+      width: 100%;
+      resize: none;
+      border: 0px;
+      border-top: 1px solid #DCDCDC;
+    }
   }
 }

@@ -1,3 +1,6 @@
+/**
+ * Approve society
+ */
 $('.approve-society').on('click', initApproveSociety);
 
 function initApproveSociety(e){
@@ -44,6 +47,9 @@ function initApproveSociety(e){
     });
 }
 
+/**
+ * Disapprove society
+ */
 $('.disapprove-society').on('click', initDisapproveSociety);
 
 function initDisapproveSociety(e){
@@ -238,6 +244,9 @@ function initDisapproveSocietyJoinRequests(e){
     });
 }
 
+/**
+ * Remove society members
+ */
 $('.remove-soc-member').on('click', initRemoveSocietyMember);
 
 function initRemoveSocietyMember(e){
@@ -282,6 +291,9 @@ function initRemoveSocietyMember(e){
     });
 }
 
+/**
+ * Leave society
+ */
 $('.leave-society').on('click', initLeaveSociety);
 
 function initLeaveSociety(e){
@@ -324,6 +336,9 @@ function initLeaveSociety(e){
     });
 }
 
+/**
+ * Delete society
+ */
 $('.delete-society').on('click', initDeleteSociety);
 
 function initDeleteSociety(e){

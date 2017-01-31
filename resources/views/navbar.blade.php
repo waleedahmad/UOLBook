@@ -50,47 +50,48 @@
 
                                 @if(!$friend_requests->count())
                                     <li class="no-requests">
-                                        You current have no Friend Requests
+                                        You currently have no Friend Requests
                                     </li>
                                 @endif
                             </ul>
                         </li>
 
-                        <li class="dropdown notifications">
+                        <li class="dropdown conversations">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> @if($notifications->count()) <span class="badge">{{$notifications->count()}}</span> @endif</span>
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> @if(isset($con_count)) @if($con_count)<span class="badge">{{$con_count}}</span>@endif @endif</span>
                             </a>
                             <ul class="dropdown-menu">
-                                @foreach($notifications as $notification)
-                                    <li class="notification" data-id="{{$notification->id}}">
-                                        <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                            <div class="image-holder">
-                                                <img src="/storage/{{$notification->fromUser->image_uri}}" alt="">
+                                @foreach($conversations as $conversation)
+                                    <a href="/message/{{$conversation->id}}">
+                                        <li class="conversation @if(Request::path() === 'message/'.$conversation->id) active @endif @if(!$conversation->read) unread @endif">
+                                            <div class="img col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                <div class="image-holder">
+                                                    <img src="/storage/{{$conversation->friend->image_uri}}" alt="">
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="text col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                            <div>
-                                                @if($notification->type === 'like')
-                                                    {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} liked you post
-                                                @elseif($notification->type === 'comment')
-                                                    {{$notification->fromUser->first_name . ' ' . $notification->fromUser->last_name}} commented on your post
-                                                @endif
+                                            <div class="text col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                                <div>
+                                                    {{$conversation->friend->first_name}} {{$conversation->friend->last_name}}
+                                                </div>
+                                                <div>
+                                                    {{substr($conversation->getFirstMessage[0]->message, 0, 20)}}
+                                                </div>
+                                                <div style="font-size: 10px;">
+                                                    {{$conversation->updated_at->diffForHumans()}}
+                                                </div>
                                             </div>
-                                            <div>
-                                                {{$notification->created_at->diffForHumans()}}
-                                            </div>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    </a>
                                 @endforeach
 
-                                @if(!$notifications->count())
-                                    <li class="no-requests">
-                                        You current have no Notifications
+                                @if(!$conversations->count())
+                                    <li class="no-conversations">
+                                        You currently have no Conversations
                                     </li>
 
                                 @endif
-                                <a class="all-notifications" href="/messages/all">View all messages</a>
+                                <a class="all-conversations" href="/messages/all">View all messages</a>
                             </ul>
                         </li>
 
@@ -123,8 +124,8 @@
                                 @endforeach
 
                                 @if(!$notifications->count())
-                                    <li class="no-requests">
-                                        You current have no Notifications
+                                    <li class="no-notifications">
+                                        You currently have no Notifications
                                     </li>
 
                                 @endif

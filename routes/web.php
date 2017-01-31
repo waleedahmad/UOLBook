@@ -73,9 +73,13 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
      */
 
     Route::get('/messages/all', 'MessagesController@getMessages');
-    Route::get('/messages/conversation', 'MessagesController@getOrCreateConversation');
+    Route::get('/messages/conversation/exist', 'MessagesController@checkConversation');
+    Route::get('/messages/conversation/create', 'MessagesController@createConversation');
+    Route::delete('/messages/conversation/', 'MessagesController@deleteConversation');
+    Route::get('/message/new/{id}', 'MessagesController@newConversation');
+    Route::post('/message/new', 'MessagesController@newMessage');
     Route::get('/user/friends', 'MessagesController@getUserFriends');
-    Route::get('/messages/{id}', 'MessagesController@renderConversation');
+    Route::get('/message/{id}', 'MessagesController@renderConversation');
 });
 
 Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'isAdmin', 'isNotTeacher']], function(){

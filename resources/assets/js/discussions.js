@@ -1,3 +1,6 @@
+/**
+ * Delete discussions
+ */
 $('.delete-discussion').on('click', initDeleteDiscussion);
 
 function initDeleteDiscussion(e){
@@ -51,6 +54,9 @@ function initDeleteDiscussion(e){
     });
 }
 
+/**
+ * Delete reply
+ */
 $('.delete-reply').on('click', initDeleteDiscussionReply);
 
 function initDeleteDiscussionReply(e){
@@ -95,7 +101,9 @@ function initDeleteDiscussionReply(e){
     });
 }
 
-
+/**
+ * Edit reply
+ */
 $('.edit-reply').on('click', initEditReply);
 
 function initEditReply(e){

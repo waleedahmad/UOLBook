@@ -33,6 +33,9 @@ function initComments(e){
     }
 }
 
+/**
+ * Delete comment
+ */
 $('.delete-comment').on('click', initDeleteComment);
 
 function initDeleteComment(e){
@@ -78,6 +81,9 @@ function initDeleteComment(e){
     });
 }
 
+/**
+ * Edit comment
+ */
 $('.edit-comment').on('click', initEditComment);
 
 function initEditComment(e) {
@@ -94,6 +100,9 @@ function initEditComment(e) {
     registerCommentEditEventHanlders();
 }
 
+/**
+ * Update comment
+ */
 $('.edit-comment-text').keyup(editComment);
 
 function editComment(e){
@@ -146,11 +155,23 @@ function registerCommentEventHandlers(){
 
 }
 
+/**
+ * Register comment edit event handlers
+ */
 function registerCommentEditEventHanlders(){
     $('.edit-comment-text').off('keyup', editComment);
     $('.edit-comment-text').keyup(editComment);
 }
 
+/**
+ * Generate comment DOM
+ * @param id
+ * @param image_uri
+ * @param comment
+ * @param name
+ * @param user_id
+ * @returns {string}
+ */
 function generateCommentDOM(id,image_uri, comment, name, user_id){
     return `<div class="comment" data-comment-id="${id}">
                 
@@ -182,6 +203,12 @@ function generateCommentDOM(id,image_uri, comment, name, user_id){
             </div>`;
 }
 
+/**
+ * Generate edit comment DOM
+ * @param id
+ * @param comment
+ * @returns {string}
+ */
 function generateEditCommentDOM(id, comment){
     return `<input class="col-xs-11 edit-comment-text" data-comment-id="${id}" value="${comment}" placeholder="Comment">`;
 }
