@@ -155,6 +155,8 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'navbarMiddleware']], fu
     Route::post('/user/settings/update', 'ProfileController@updateProfileSettings');
     Route::post('/user/settings/update/password', 'ProfileController@updatePassword');
     Route::post('/user/settings/update/picture', 'ProfileController@updatePicture');
+    Route::post('/user/settings/update/cover', 'ProfileController@updateCover');
+
 });
 
 

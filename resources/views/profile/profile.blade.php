@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="container-fluid profile-header">
+    <div class="container-fluid profile-header" style="background-image : url('/storage/{{$user->cover_uri}}')">
         <div class="container">
 
             <div class="row profile-header-content">

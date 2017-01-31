@@ -98,12 +98,6 @@
 
   .conversations{
 
-    a{
-      display:block;
-      text-decoration: none;
-      color:black;
-      border-bottom: 1px solid #DCDCDC;
-    }
     .all-conversations{
       text-align:center;
       padding: 10px;
@@ -121,6 +115,13 @@
       overflow:auto;
       padding: 0px;
       width: 350px;
+
+      a{
+        display:block;
+        text-decoration: none;
+        color:black;
+        border-bottom: 1px solid #DCDCDC;
+      }
 
       .conversation{
         cursor:pointer;

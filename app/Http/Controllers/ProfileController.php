@@ -351,4 +351,75 @@ class ProfileController extends Controller
     {
         return Auth::user()->image_uri === 'default/img/default_img_male.jpg' || Auth::user()->image_uri === 'default/img/default_img_female.jpg';
     }
+
+    /**
+     * Update profile cover
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function updateCover(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'profile_cover' => 'required|file|mimes:jpeg,bmp,png,jpg'
+        ]);
+
+        if ($validator->passes()) {
+            if ($this->userHaveDefaultProfileCover()) {
+                return $this->uploadProfileCover($request);
+            }else{
+                if($this->deleteCurrentProfileCover(Auth::user()->cover_uri)){
+                    return $this->uploadProfileCover($request);
+                }
+            }
+        } else {
+            return redirect('/user/settings')->withErrors($validator)->withInput();
+        }
+    }
+
+    /**
+     * Upload profile picture
+     * @param $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function uploadProfileCover($request){
+        $file = $request->file('profile_cover');
+        $ext = $file->extension();
+        $path = '/profile_cover/'.str_random(10).'.'.$ext;
+
+        if(Storage::disk('public')->put($path,  File::get($file))){
+            $user_update = User::where('id','=', Auth::user()->id)->update([
+                'cover_uri'  =>  $path
+            ]);
+
+            if($user_update){
+                return redirect('/profile/'.Auth::user()->id);
+            }
+        }
+    }
+
+    /**
+     * Delete profile cover
+     * @param $cover_uri
+     * @return bool
+     */
+    protected function deleteCurrentProfileCover($cover_uri){
+        $delete = Storage::disk('public')->delete($cover_uri);
+
+        $path = 'default/img/profile_header.jpg';
+
+        $user_update = User::where('id','=', Auth::user()->id)->update([
+            'cover_uri' => $path
+        ]);
+
+        return ($delete && $user_update);
+    }
+
+    /**
+     * Check if current profile cover is default
+     * @return bool
+     */
+    protected function userHaveDefaultProfileCover()
+    {
+        return Auth::user()->cover_uri === 'default/img/profile_header.jpg';
+    }
 }

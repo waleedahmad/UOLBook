@@ -100,6 +100,7 @@ class AuthController extends Controller
         $user->gender = $request->gender;
         $user->type = $request->usertype;
         $user->image_uri = ($request->gender == 'male') ? 'default/img/default_img_male.jpg' : 'default/img/default_img_female.jpg';
+        $user->cover_uri = 'default/img/profile_header.jpg';
         $user->card_uri = '';
         $user->registration_id = '';
         $user->verified = 0;
