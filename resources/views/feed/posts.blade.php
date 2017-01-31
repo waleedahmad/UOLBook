@@ -83,15 +83,19 @@
                         @foreach($post->firstTwoComments as $comment)
                             <div class="comment" data-comment-id="{{$comment->id}}">
 
-                                <div class="dropdown comment-dropdown">
-                                    <a href="" class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                        <li><a href="#" class="delete-comment" data-id="{{$comment->id}}">Delete comment</a></li>
-                                        <li><a href="#" class="edit-comment" data-id="{{$comment->id}}">Edit comment</a></li>
-                                    </ul>
-                                </div>
+                                @if(Auth::check())
+                                    @if(Auth::user()->id == $comment->user_id)
+                                        <div class="dropdown comment-dropdown">
+                                            <a href="" class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                <li><a href="#" class="delete-comment" data-id="{{$comment->id}}">Delete comment</a></li>
+                                                <li><a href="#" class="edit-comment" data-id="{{$comment->id}}">Edit comment</a></li>
+                                            </ul>
+                                        </div>
+                                    @endif
+                                @endif
 
                                 <div class="col-xs-12">
 

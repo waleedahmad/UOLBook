@@ -132,11 +132,11 @@ class MessagesController extends Controller
      * @param $to
      * @return mixed
      */
-    public function createConversationBridgeAndReturnID($from, $to){
+    public function createConversationBridgeAndReturnID($from, $to, $read){
         $conversation = new Conversation();
         $conversation->from = $from;
         $conversation->to = $to;
-        $conversation->read = false;
+        $conversation->read = $read;
 
         if($conversation->save()){
             return $conversation->id;
@@ -172,8 +172,8 @@ class MessagesController extends Controller
         $user = $request->user_id;
         $message = $request->message;
 
-        $first = ($this->conversationExist(Auth::user()->id,$user)) ? $this->getConversationID(Auth::user()->id,$user) : $this->createConversationBridgeAndReturnID(Auth::user()->id,$user);
-        $second = ($this->conversationExist($user, Auth::user()->id)) ? $this->getConversationID($user, Auth::user()->id) : $this->createConversationBridgeAndReturnID($user, Auth::user()->id);
+        $first = ($this->conversationExist(Auth::user()->id,$user)) ? $this->getConversationID(Auth::user()->id,$user) : $this->createConversationBridgeAndReturnID(Auth::user()->id,$user, true);
+        $second = ($this->conversationExist($user, Auth::user()->id)) ? $this->getConversationID($user, Auth::user()->id) : $this->createConversationBridgeAndReturnID($user, Auth::user()->id, false);
 
 
         $new_message = $this->createMessage($first, Auth::user()->id, $user, $message);
@@ -198,7 +198,7 @@ class MessagesController extends Controller
         $con_id = $request->con_id;
         $user = $request->user_id;
 
-        $con2_id = ($this->conversationExist($user, Auth::user()->id)) ? $this->getConversationID($user, Auth::user()->id) : $this->createConversationBridgeAndReturnID($user, Auth::user()->id);
+        $con2_id = ($this->conversationExist($user, Auth::user()->id)) ? $this->getConversationID($user, Auth::user()->id) : $this->createConversationBridgeAndReturnID($user, Auth::user()->id, false);
 
         $new_message = $this->createMessage($con_id, Auth::user()->id, $user, $message);
         $new_message2 =  $this->createMessage($con2_id, Auth::user()->id, $user, $message);

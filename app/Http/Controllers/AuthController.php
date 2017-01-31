@@ -152,7 +152,7 @@ class AuthController extends Controller
     /**
      * Student verification
      * @param Request $request
-     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function verifyStudent(Request $request)
     {
@@ -173,14 +173,11 @@ class AuthController extends Controller
                 if($this->uploadFile($path, $file)){
                     $verify_request = new Verification();
                     $verify_request->user_id = Auth::user()->id;
-                    $verify_request->type = 'user';
+                    $verify_request->type = 'student';
+                    $verify_request->registration_no = $request->registration_no;
+                    $verify_request->card_uri = $path;
 
-                    $user_update = User::where('id','=', Auth::user()->id)->update([
-                        'registration_id'   => $request->registration_no,
-                        'card_uri'  =>  $path
-                    ]);
-
-                    if($verify_request->save() && $user_update){
+                    if($verify_request->save()){
                         $request->session()->flash('message','Verification Request Submitted');
                         return redirect('/verify/student');
                     }
@@ -195,7 +192,7 @@ class AuthController extends Controller
     /**
      * Teacher verification
      * @param Request $request
-     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function verifyTeacher(Request $request){
         $validator = Validator::make($request->all(), [
@@ -213,14 +210,11 @@ class AuthController extends Controller
                 if($this->uploadFile($path, $file)){
                     $verify_request = new Verification();
                     $verify_request->user_id = Auth::user()->id;
-                    $verify_request->type = 'user';
+                    $verify_request->type = 'teacher';
+                    $verify_request->card_uri = $path;
+                    $verify_request->registration_no = '';
 
-                    $user_update = User::where('id','=', Auth::user()->id)->update([
-                        'registration_id'   => '',
-                        'card_uri'  =>  $path
-                    ]);
-
-                    if($verify_request->save() && $user_update){
+                    if($verify_request->save()){
                         $request->session()->flash('message','Verification Request Submitted');
                         return redirect('/verify/teacher');
                     }

@@ -18,7 +18,7 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getIndex(){
-        $requests = Verification::join('users', 'verification_requests.user_id', '=', 'users.id')->get();
+        $requests = Verification::all();
         return view('admin.index')->with('v_requests', $requests);
     }
 
@@ -86,16 +86,21 @@ class AdminController extends Controller
      */
     public function approveUser(Request $request){
         $id = $request->id;
-        $old_file_path = basename(User::where('id','=',$id)->first()->card_uri);
+        $v_request = Verification::where('id','=',$id)->first();
+        $old_file_path = basename($v_request->card_uri);
 
-        $user_update = User::where('id','=', $id)->update([
+        $options = [
             'verified'  =>  1,
             'card_uri'  =>  '/id_card/'.$old_file_path
-        ]);
+        ];
+
+        if($v_request->type === 'student'){
+            $options['registration_id'] = $v_request->registration_no;
+        }
+
+        $user_update = User::where('id','=', $v_request->user_id)->update($options);
 
         if($user_update){
-            $v_request = Verification::where('user_id','=',$id);
-
             if($v_request->delete()){
 
                 if(Storage::disk('public')->move('requests/'.$old_file_path,  'id_card/'.$old_file_path)){
@@ -119,24 +124,16 @@ class AdminController extends Controller
      */
     public function disapproveUser(Request $request){
         $id = $request->id;
-        $request_file_name = basename(User::where('id','=',$id)->first()->card_uri);
+        $v_request = Verification::where('id','=',$id)->first();
+        $request_file_name = basename($v_request->card_uri);
 
-        $user_update = User::where('id','=', $id)->update([
-            'card_uri'  =>  ''
-        ]);
-
-        if($user_update){
-            $v_request = Verification::where('user_id','=',$id);
-
-            if($v_request->delete()){
-
-                if(Storage::disk('public')->delete('requests/'.$request_file_name)){
-                    return response()->json([
-                        'disapproved'  => true
-                    ]);
-                }
-
+        if($v_request->delete()){
+            if(Storage::disk('public')->delete('requests/'.$request_file_name)){
+                return response()->json([
+                    'disapproved'  => true
+                ]);
             }
+
         }
     }
 

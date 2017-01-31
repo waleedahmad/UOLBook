@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
@@ -59,11 +60,20 @@ class User extends Authenticatable
             Storage::disk('public')->delete($this->image_uri);
         }
 
+        if(!$this->hasDefaultProfileCover($this->cover_uri)){
+            Storage::disk('public')->delete($this->cover_uri);
+        }
+
         Storage::disk('public')->delete($this->card_uri);
     }
 
     private function hasDefaultProfilePic($image_uri)
     {
         return ($image_uri === 'default_img_male.jpg' || $image_uri === 'default_img_female.jpg' );
+    }
+
+    protected function hasDefaultProfileCover($cover_uri)
+    {
+        return $cover_uri === 'default/img/profile_header.jpg';
     }
 }

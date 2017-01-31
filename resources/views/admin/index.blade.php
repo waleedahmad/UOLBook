@@ -64,7 +64,7 @@
                                @if($v_request->type === 'teacher')
                                    {{$v_request->email}}
                                @else
-                                   {{$v_request->registration_id}}
+                                   {{$v_request->registration_no}}
                                @endif
                            </td>
 
