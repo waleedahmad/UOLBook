@@ -46,12 +46,6 @@
                     <span class="badge">{{$friends->count()}}</span>
                 </li>
 
-
-                <li class="list-group-item">
-                    <a href="/user/{{$user->id}}/societies">
-                        Societies
-                    </a>
-                </li>
             </ul>
         </div>
     @endif

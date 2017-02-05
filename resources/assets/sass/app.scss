@@ -10,7 +10,7 @@ html,body{
 
 .auth{
   float: none;
-  margin-top: 50px;
+  padding-top: 80px;
 }
 
 #message-modal{
@@ -26,7 +26,7 @@ html,body{
 .wrapper{
   padding: 0px;
   height: 100%;
-  margin-top: 50px;
+  padding-top: 50px;
   @import "imports/feed/feed";
 
   @import "imports/profile";

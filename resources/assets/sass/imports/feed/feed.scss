@@ -6,7 +6,7 @@
 @import "left_sidebar";
 
 .content{
-  height: 100%;
+  height: auto;
 
   @import "posts/status";
   @import "posts/posts";

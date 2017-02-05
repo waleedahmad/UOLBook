@@ -1,6 +1,7 @@
 
 
 .messages-sidebar,.messages{
+  padding-top: 50px;
   height: 100%;
 
   .title{
@@ -24,7 +25,6 @@
 }
 
 .messages-sidebar{
-  padding: 0px;
   overflow:hidden;
   .title{
     padding-top : 10px;
@@ -113,18 +113,15 @@
         }
       }
     }
-
-
   }
 }
 
 .messages{
-  height: 85%;
-  overflow:auto;
+  height: 100%;
 
   .messages-content{
     border: 1px solid #DCDCDC;
-    height: 100%;
+    height: 90%;
   }
 
   .title{

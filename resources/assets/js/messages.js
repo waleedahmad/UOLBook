@@ -2,12 +2,6 @@ if($(".messages").length){
     $("#chat-message[data-type='message']").focus();
     $("#chat-message[data-type='new_message']").focus();
 
-    if($(".messages").length){
-        $('.navbar').removeClass("navbar-fixed-top");
-        $('.wrapper').css({
-            'margin-top' : 0
-        });
-    }
 
     if($('.thread').length){
         $('.thread').scrollTop($('.thread')[0].scrollHeight);
@@ -40,12 +34,6 @@ if($(".messages").length){
                 }
             });
 
-            if($(".messages").length){
-                $('.navbar').removeClass("navbar-fixed-top");
-                $('.wrapper').css({
-                    'margin-top' : 0
-                });
-            }
             $project.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 
                 var $li = $('<li>'),

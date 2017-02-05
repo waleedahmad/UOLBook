@@ -8,7 +8,7 @@
 
     @include('messages.sidebar')
 
-    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 messages">
+    <div class="messages col-xs-12 col-sm-12 col-md-9 col-lg-9 messages">
         <div class="messages-content">
             <div class="title">
                 <input id="friends" placeholder="Type friends name">
