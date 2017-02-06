@@ -31,6 +31,17 @@ class FeedController extends Controller
         return view('feed.index')->with('posts', $posts);
     }
 
+    public function search(Request $request){
+        $s_query = $request->q;
+        $query = '%'.strtolower($request->q).'%';
+        $users = User::where( 'first_name', 'like', $query )
+                        ->orWhere('last_name', 'like', $query)
+                        ->orWhere('email', 'like', $query)
+                        ->where('type', '=', 'student')->get();
+
+        return view('feed.search')->with('query', $s_query)->with('users', $users);
+    }
+
     /**
      * User friend ids
      * @return mixed

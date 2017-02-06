@@ -22,8 +22,8 @@
                         <span class="glyphicon glyphicon-picture" aria-hidden="true"> </span> News Feed</a>
                 </li>
 
-                <li role="presentation" @if(Request::path() === 'classes/all') class="active" @endif><a href="/classes/all">
-                        <span class="glyphicon glyphicon-book" aria-hidden="true"> </span> Classes</a>
+                <li role="presentation" @if(Request::path() === 'teachers/all') class="active" @endif><a href="/teachers/all">
+                        <span class="glyphicon glyphicon-book" aria-hidden="true"> </span> Teachers</a>
                 </li>
 
                 <li role="presentation" @if(Request::path() === 'societies/all') class="active" @endif><a href="/societies/all">

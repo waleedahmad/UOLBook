@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordMail;
+use App\Models\PasswordResets;
 use App\Models\User;
 use App\Models\Verification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 use App\Http\Requests;
@@ -68,6 +71,7 @@ class AuthController extends Controller
             'lastName'  =>  'required',
             'email' =>  'required|email|unique:users',
             'password'  =>  'required|min:6',
+            'confirm_password'  =>  'required|same:password',
             'gender'    =>  'required',
             'usertype'  =>  'required'
         ]);
@@ -257,5 +261,160 @@ class AuthController extends Controller
             return true;
         }
         return false;
+    }
+
+    /**
+     * Show password recovery form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getRecoveryForm(){
+        return view('auth.recovery');
+    }
+
+    /**
+     * Recover password
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function recoverPassword(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+        ]);
+
+        if($validator->passes()){
+            $email = $request->email;
+
+            if($this->emailExist($email)){
+                if($this->recoverRequestExist($email)){
+                    if($this->sendRecoveryEmail($this->getUser($email), $this->getResetToken($email))){
+                        $request->session()->flash('message', 'Please check your email for recovery link');
+                        return redirect('/recover/password');
+                    }else{
+                        return "L";
+                    }
+                }else{
+                    $token =  str_random(10);
+                    $reset = new PasswordResets();
+                    $reset->email = $email;
+                    $reset->token = $token;
+                    if($reset->save()){
+
+                        if($this->sendRecoveryEmail($this->getUser($email), $token)){
+                            $request->session()->flash('message', 'Please check your email for recovery link');
+                            return redirect('/recover/password');
+                        }else{
+
+                        }
+                    }
+                }
+            }else{
+                $request->session()->flash('message', 'Email doesn\'t exist');
+                return redirect('/recover/password');
+            }
+        }else{
+            return redirect('/recover/password')->withErrors($validator)->withInput();
+        }
+    }
+
+    /**
+     * Check if password reset request already exist
+     * @param $email
+     * @return mixed
+     */
+    public function recoverRequestExist($email){
+        return PasswordResets::where('email','=', $email)->count();
+    }
+
+    /**
+     * Check if user email exist
+     * @param $email
+     * @return mixed
+     */
+    public function emailExist($email){
+        return User::where('email','=',$email)->count();
+    }
+
+    /**
+     * Get user
+     * @param $email
+     * @return mixed
+     */
+    public function getUser($email){
+        return User::where('email','=', $email)->first();
+    }
+
+    /**
+     * Get user password reset token
+     * @param $email
+     * @return mixed
+     */
+    public function getResetToken($email){
+        return PasswordResets::where('email','=', $email)->first()->token;
+    }
+
+    /**
+     * Send recovery email
+     * @param $user
+     * @param $token
+     * @return bool
+     */
+    public function sendRecoveryEmail($user, $token){
+        Mail::to($user)->send(new ResetPasswordMail($user, $token));
+
+        if (Mail::failures()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Show reset password form
+     * @param Request $request
+     * @param $token
+     * @param $email
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function resetPasswordForm(Request $request, $token, $email){
+        $reset = PasswordResets::where('email', $email)->where('token', $token);
+
+        if($reset->count()){
+            $reset = $reset->first();
+            return view('auth.reset')->with('reset')->with('reset', $reset);
+        }else {
+            $request->session()->flash('message', 'Invalid reset password link');
+            return redirect('/recover/password');
+        }
+    }
+
+    /**
+     * Reset user password
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function resetPassword(Request $request){
+        $email = $request->email;
+        $token = $request->token;
+
+        $validator = Validator::make($request->all(), [
+            'password' =>  'required|min:5',
+            'confirm_password'  =>  'required|same:password'
+        ]);
+
+        if($validator->passes()){
+            $reset = PasswordResets::where('email', $email)->where('token', $token);
+
+            if(User::where('email','=', $email)->update([
+                'password'  =>  bcrypt($request->password)
+            ])){
+                if($reset->delete()){
+                    $request->session()->flash('message', 'Password reset successfull');
+                    return redirect('/login');
+                }
+            }
+
+        }else{
+            return redirect('/reset/password/'.$token.'/'.$email)->withErrors($validator);
+        }
     }
 }

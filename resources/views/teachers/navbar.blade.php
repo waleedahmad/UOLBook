@@ -16,8 +16,12 @@
         <li role="presentation" @if(Request::path() === 'class/'.$class->id.'/announcements' ) class="active" @endif><a href="/class/{{$class->id}}/announcements">Announcements</a></li>
         <li role="presentation" @if(Request::path() === 'class/'.$class->id.'/material' ) class="active" @endif><a href="/class/{{$class->id}}/material">Course Material</a></li>
         @if(Auth::user()->type === 'teacher')
-            <li role="presentation" @if(Request::path() === 'class/'.$class->id.'/requests' ) class="active" @endif><a href="/class/{{$class->id}}/requests">Requests</a></li>
-            <li role="presentation" @if(Request::path() === 'class/'.$class->id.'/students' ) class="active" @endif><a href="/class/{{$class->id}}/students">Students</a></li>
+            <li role="presentation" @if(Request::path() === 'class/'.$class->id.'/requests' ) class="active" @endif><a href="/class/{{$class->id}}/requests">
+                    <span class="badge pull-right">{{\App\Models\ClassJoin::where('class_id','=', $class->id)->count()}}</span>  Requests  </a>
+            </li>
+            <li role="presentation" @if(Request::path() === 'class/'.$class->id.'/students' ) class="active" @endif><a href="/class/{{$class->id}}/students">
+                    <span class="badge pull-right">{{\App\Models\Student::where('class_id','=', $class->id)->count()}}</span> Students   </a>
+            </li>
         @endif
     </ul>
 @endif

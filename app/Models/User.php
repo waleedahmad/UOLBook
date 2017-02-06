@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Student;
 
 class User extends Authenticatable
 {
@@ -65,6 +66,18 @@ class User extends Authenticatable
         }
 
         Storage::disk('public')->delete($this->card_uri);
+    }
+
+    public function enrolledClasses(){
+        return $this->hasMany('App\Models\Classes', 'teacher_id', 'id')->whereIn('id', $this->getClassIDs());
+    }
+
+    public function otherClasses(){
+        return $this->hasMany('App\Models\Classes', 'teacher_id', 'id')->whereNotIn('id', $this->getClassIDs());
+    }
+
+    protected function getClassIDs(){
+        return Student::where('user_id', '=', Auth::user()->id)->pluck('class_id')->toArray();
     }
 
     private function hasDefaultProfilePic($image_uri)

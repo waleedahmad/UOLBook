@@ -48,6 +48,16 @@
                 </div>
             </div>
 
+            <div class="form-group @if($errors->has('confirm_password')) has-error @endif">
+                <label for="confirm_password" class="col-sm-3 control-label">Confirm Password</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
+                    @if($errors->has('confirm_password'))
+                        {{$errors->first('confirm_password')}}
+                    @endif
+                </div>
+            </div>
+
             <div class="form-group @if($errors->has('gender')) has-error @endif">
                 <label for="gender" class="col-sm-3 control-label">Gender</label>
                 <div class="col-sm-9">

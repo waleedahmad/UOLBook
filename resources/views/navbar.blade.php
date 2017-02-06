@@ -14,6 +14,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
+
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
 
@@ -154,6 +155,17 @@
                     <li><a href="/login">Login</a></li>
                 @endif
             </ul>
+
+            @if(Auth::checK())
+                @if(Auth::user()->type === 'student' && Auth::user()->verified)
+                    <form class="navbar-form navbar-right" action="/search" method="get">
+                        <div class="form-group">
+                            <input type="text" id="search" class="form-control" name="q" placeholder="Search...">
+                        </div>
+                    </form>
+                @endif
+            @endif
+
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

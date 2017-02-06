@@ -27,4 +27,79 @@
       }
     }
   }
+
+  .info{
+    display: block;
+    overflow:hidden;
+    background-color: #FFF;
+    border: 1px solid #DCDCDC;
+    height: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+    .teacher-info{
+      .image{
+        padding: 0px;
+
+        .image-holder{
+          height: 100px;
+          width: 100px;
+          overflow:hidden;
+
+          img{
+            width: 100%;
+          }
+        }
+      }
+
+      .name{
+        font-size: 26px;
+      }
+    }
+  }
+}
+
+.all-teachers{
+  margin-top: 10px;
+  padding: 20px;
+
+  .teachers{
+    display: block;
+    overflow:hidden;
+    background-color: #FFF;
+    border: 1px solid #DCDCDC;
+    min-height: 200px;
+    height: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+
+    h1{
+      margin: 0px;
+      font-size: 22px;
+      color:grey;
+      border-bottom: 1px solid #DCDCDC;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .teacher{
+      margin-bottom: 10px;
+      .image{
+        padding: 0px;
+      }
+
+      .image-holder{
+        height: 50px;
+        width: 50px;
+        overflow:hidden;
+        img{
+          width: 100%;
+        }
+      }
+
+
+      a{
+        text-decoration: none;
+      }
+    }
+  }
 }

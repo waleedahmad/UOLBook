@@ -2,12 +2,12 @@
 
 
 @section('title')
-    Login - UOLBook
+    Recover Password - UOLBook
 @endsection
 
 @section('content')
     <div class="auth row col-sm-12 col-xs-12 col-md-5 col-lg-5 center-block" style="float: none">
-        <form class="form-horizontal" method="post" action="/login">
+        <form class="form-horizontal" method="post" action="/recover/password">
 
             <div class="form-group @if($errors->has('email')) has-error @endif">
                 <label for="email" class="col-sm-2 control-label">Email</label>
@@ -19,32 +19,15 @@
                 </div>
             </div>
 
-            <div class="form-group @if($errors->has('password')) has-error @endif">
-                <label for="password" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" name="password" placeholder="Password">
-                    @if($errors->has('password'))
-                        {{$errors->first('password')}}
-                    @endif
-                </div>
-            </div>
-
-            <div class="form-group @if($errors->has('password')) has-error @endif">
-                <label for="password" class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                    <a class="btn-link" href="/recover/password">Forgot Password</a>
-                </div>
-            </div>
 
             {{csrf_field()}}
 
             <div class="form-group">
-
                 <div class="col-sm-offset-2 col-sm-10">
                     @if(Session::has('message'))
                         <div class="alert alert-info" role="alert">{{Session::get('message')}}</div>
                     @endif
-                    <button type="submit" class="btn btn-default">Sign in</button>
+                    <button type="submit" class="btn btn-default">Recover Password</button>
                 </div>
             </div>
         </form>

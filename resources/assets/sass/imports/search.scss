@@ -1,0 +1,43 @@
+.search{
+  display: block;
+  overflow:hidden;
+  background-color: #FFF;
+  border: 1px solid #DCDCDC;
+  min-height: 200px;
+  height: 100%;
+  padding: 20px;
+  margin-bottom: 30px;
+
+  h1{
+    margin: 0px;
+    font-size: 22px;
+    color:grey;
+    border-bottom: 1px solid #DCDCDC;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .result{
+    margin-bottom: 10px;
+    .image{
+      padding: 0px;
+
+      .image-holder{
+        height: 100px;
+        width: 100px;
+        overflow:hidden;
+        img{
+          width: 100%;
+        }
+      }
+    }
+
+    .name{
+      a{
+        display:block;
+        color:grey;
+        text-decoration: none;
+      }
+    }
+  }
+}

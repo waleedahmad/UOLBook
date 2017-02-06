@@ -44,38 +44,40 @@
             </form>
         </div>
 
-        <div class="profile-setting row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block">
+        @if(Auth::user()->type === 'student')
+            <div class="profile-setting row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block">
 
-            <h3 class="title">
-                Profile Cover
-            </h3>
+                <h3 class="title">
+                    Profile Cover
+                </h3>
 
-            <form class="form-horizontal" method="post" action="/user/settings/update/cover" enctype="multipart/form-data">
-                <div class="form-group @if($errors->has('profile_cover')) has-error @endif">
-                    <label for="profile_cover" class="col-sm-3 control-label">Profile Cover</label>
-                    <div class="col-sm-9">
+                <form class="form-horizontal" method="post" action="/user/settings/update/cover" enctype="multipart/form-data">
+                    <div class="form-group @if($errors->has('profile_cover')) has-error @endif">
+                        <label for="profile_cover" class="col-sm-3 control-label">Profile Cover</label>
+                        <div class="col-sm-9">
 
-                        <input type="file" name="profile_cover">
-                        <p class="help-block">This photo will be displayed as your profile cover.</p>
+                            <input type="file" name="profile_cover">
+                            <p class="help-block">This photo will be displayed as your profile cover.</p>
 
-                        @if($errors->has('profile_cover'))
-                            {{$errors->first('profile_cover')}}
-                        @endif
+                            @if($errors->has('profile_cover'))
+                                {{$errors->first('profile_cover')}}
+                            @endif
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        @if(Session::has('picture_message'))
-                            <div class="alert alert-info" role="alert">{{Session::get('picture_message')}}</div>
-                        @endif
-                        <button type="submit" class="btn btn-default">Upload Cover</button>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            @if(Session::has('picture_message'))
+                                <div class="alert alert-info" role="alert">{{Session::get('picture_message')}}</div>
+                            @endif
+                            <button type="submit" class="btn btn-default">Upload Cover</button>
+                        </div>
                     </div>
-                </div>
-                {{csrf_field()}}
-            </form>
-        </div>
+                    {{csrf_field()}}
+                </form>
+            </div>
+        @endif
 
         <div class="profile-setting row col-sm-12 col-xs-12 col-md-6 col-lg-6 center-block" id="profile">
             <h3 class="title">

@@ -6,6 +6,7 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
      * Feed Routes
      */
     Route::get('/', 'FeedController@index');
+    Route::get('/search', 'FeedController@search');
     Route::get('/post/{id}', 'FeedController@viewPost');
 
     /**
@@ -50,6 +51,8 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
      */
 
     Route::get('/classes/all', 'ClassController@showAllClasses');
+    Route::get('/teacher/{id}/classes', 'ClassController@getTeacherClasses');
+    Route::get('/teachers/all', 'ClassController@showAllTeachers');
     Route::get('/societies/all', 'SocietyController@showAllSocieties');
     Route::get('/societies/create', 'SocietyController@getSocietyForm');
     Route::post('/societies/create', 'SocietyController@createSociety');
@@ -171,6 +174,11 @@ Route::group(['middleware' => ['guest']], function () {
 
     Route::post('/login', 'AuthController@postLogin');
     Route::post('/register', 'AuthController@postRegister');
+
+    Route::get('/recover/password', 'AuthController@getRecoveryForm');
+    Route::post('/recover/password', 'AuthController@recoverPassword');
+    Route::get('/reset/password/{token}/{email}', 'AuthController@resetPasswordForm');
+    Route::post('/reset/password', 'AuthController@resetPassword');
 });
 
 Route::get('/logout', 'AuthController@logout');

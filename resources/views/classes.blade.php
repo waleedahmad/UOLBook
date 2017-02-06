@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Classes - UOLBook
+    {{$teacher->first_name}} {{ $teacher->last_name }} / Classes - UOLBook
 @endsection
 
 @section('content')
@@ -9,39 +9,51 @@
     @include('feed.left_sidebar')
 
     <div class="all-classes col-xs-12 col-sm-12 col-md-7 col-lg-7">
+
+        <div class="info">
+            <div class="teacher-info">
+                <div class="col-xs-2 image">
+                    <div class="image-holder">
+                        <img src="/storage/{{$teacher->image_uri}}" alt="">
+                    </div>
+                </div>
+
+                <div class="col-xs-10">
+                    <div class="name">
+                        {{$teacher->first_name}} {{ $teacher->last_name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="classes">
             <h1>
-                Your Classes
+                Your Enrolled Courses
             </h1>
-            @if($classes->count())
+
+            @if($teacher->enrolledClasses->count())
                 <table class="table">
                     <thead>
                     <tr>
                         <th>
-                            Instructor
+                            Course
                         </th>
 
                         <th>
-                            Subject Name
-                        </th>
-
-                        <th>
-                            Subject Code
+                            Course Code
                         </th>
 
                         <th>Semester</th>
+
+                        <th></th>
 
                     </tr>
                     </thead>
 
                     <tbody>
 
-                    @foreach($classes as $class)
+                    @foreach($teacher->enrolledClasses as $class)
                         <tr class="request">
-                            <td>
-                                {{$class->instructor->first_name . ' ' . $class->instructor->last_name}}
-                            </td>
-
                             <td>
                                 {{$class->subject_name}}
                             </td>
@@ -64,45 +76,40 @@
                 </table>
             @else
                 <div class="alert alert-info" role="alert">
-                    You're not currently not a student of any class, please view suggestion and request instructor to become a student of any class.
+                    You're not currently enrolled in any class of {{$teacher->first_name}} {{ $teacher->last_name }}
                 </div>
-
             @endif
+
         </div>
 
-        <div class="suggestions">
+        <div class="classes">
             <h1>
-                Class Suggestions
+                Other Courses
             </h1>
-            @if($suggestions->count())
+
+            @if($teacher->otherClasses->count())
                 <table class="table">
                     <thead>
                     <tr>
                         <th>
-                            Instructor
+                            Course
                         </th>
 
                         <th>
-                            Subject Name
-                        </th>
-
-                        <th>
-                            Subject Code
+                            Course Code
                         </th>
 
                         <th>Semester</th>
+
+                        <th></th>
 
                     </tr>
                     </thead>
 
                     <tbody>
 
-                    @foreach($suggestions as $class)
+                    @foreach($teacher->otherClasses as $class)
                         <tr class="request">
-                            <td>
-                                {{$class->instructor->first_name . ' ' . $class->instructor->last_name}}
-                            </td>
-
                             <td>
                                 {{$class->subject_name}}
                             </td>
@@ -125,10 +132,11 @@
                 </table>
             @else
                 <div class="alert alert-info" role="alert">
-                    No suggestions available at this moment!
+                    {{$teacher->first_name}} {{ $teacher->last_name }} is not currently teacher any other courses.
                 </div>
             @endif
         </div>
+
     </div>
 
     @include('feed.right_sidebar')

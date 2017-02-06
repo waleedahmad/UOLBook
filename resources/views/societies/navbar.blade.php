@@ -5,12 +5,16 @@
         </li>
 
         <li>
-            <a href="/society/{{$society->id}}/members" @if(Request::path() === 'society/'.$society->id.'/members') class="active" @endif>Members</a>
+            <a href="/society/{{$society->id}}/members" @if(Request::path() === 'society/'.$society->id.'/members') class="active" @endif>
+                Members  ({{\App\Models\SocietyMember::where('society_id','=', $society->id)->count()}})
+            </a>
         </li>
 
         @if(Auth::user()->id === $society->user_id)
             <li>
-                <a href="/society/{{$society->id}}/requests" @if(Request::path() === 'society/'.$society->id.'/requests') class="active" @endif>Requests</a>
+                <a href="/society/{{$society->id}}/requests" @if(Request::path() === 'society/'.$society->id.'/requests') class="active" @endif>
+                    Requests  ({{\App\Models\SocietyRequest::where('society_id','=', $society->id)->count()}})
+                </a>
             </li>
 
             <li>
