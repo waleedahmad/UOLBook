@@ -6,6 +6,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
@@ -27,5 +28,10 @@ class NotificationController extends Controller
                 ]);
             }
         }
+    }
+
+    public function getNotifications(){
+        $notifications = Notification::where('to','=', Auth::user()->id)->orderBy('created_at','DESC')->get();
+        return view('notifications')->with('notifications', $notifications);
     }
 }

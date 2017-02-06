@@ -9,6 +9,8 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
     Route::get('/search', 'FeedController@search');
     Route::get('/post/{id}', 'FeedController@viewPost');
 
+    Route::get('/notifications/all', 'NotificationController@getNotifications');
+
     /**
      * Post CRUD Routes
      */

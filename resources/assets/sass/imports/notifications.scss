@@ -1,0 +1,53 @@
+.notification-content{
+  padding-top: 30px;
+
+  .notifications{
+    display: block;
+    overflow:hidden;
+    background-color: #FFF;
+    border: 1px solid #DCDCDC;
+    min-height: 200px;
+    height: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+
+    h1{
+      margin: 0px;
+      font-size: 22px;
+      color:grey;
+      border-bottom: 1px solid #DCDCDC;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .notification{
+      display:block;
+      cursor:pointer;
+      overflow:hidden;
+      clear:both;
+
+      &:hover{
+        background-color:#DCDCDC;
+      }
+
+      .img, .text{
+        padding: 5px;
+      }
+
+      .image-holder{
+        overflow:hidden;
+        width: 50px;
+        height: 50px;
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .no-notifications{
+    text-align:center;
+    padding: 10px;
+    display:block;
+  }
+}
