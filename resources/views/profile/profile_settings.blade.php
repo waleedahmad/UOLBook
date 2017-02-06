@@ -159,6 +159,17 @@
                     </div>
                 </div>
 
+                <div class="form-group @if($errors->has('confirm_password')) has-error @endif">
+                    <label for="password" class="col-sm-3 control-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
+                        @if($errors->has('confirm_password'))
+                            {{$errors->first('confirm_password')}}
+                        @endif
+                    </div>
+                </div>
+
+
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">

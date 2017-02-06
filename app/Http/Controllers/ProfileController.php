@@ -250,6 +250,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
             'password' => 'required',
+            'confirm_password'  =>  'required|same:password'
         ]);
 
         if ($validator->passes()) {
