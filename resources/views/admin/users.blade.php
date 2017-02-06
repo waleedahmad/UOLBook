@@ -26,6 +26,10 @@
                 <th>Type</th>
 
                 <th>
+                    Verified
+                </th>
+
+                <th>
                     Action
                 </th>
             </tr>
@@ -47,7 +51,11 @@
                         @if($user->type === 'teacher' || $user->type === 'admin')
                             {{$user->email}}
                         @else
-                            {{$user->registration_id}}
+                            @if($user->registration_id)
+                                {{$user->registration_id}}
+                            @else
+                                {{$user->email}}
+                            @endif
                         @endif
                     </td>
 
@@ -57,6 +65,14 @@
 
                     <td>
                         {{$user->type}}
+                    </td>
+
+                    <td>
+                        @if($user->verified)
+                            Yes
+                        @else
+                            No
+                        @endif
                     </td>
 
                     <td>
