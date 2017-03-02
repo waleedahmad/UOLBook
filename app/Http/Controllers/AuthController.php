@@ -67,8 +67,8 @@ class AuthController extends Controller
      */
     public function postRegister(Request $request){
         $validator = Validator::make($request->all(), [
-            'firstName' =>  'required',
-            'lastName'  =>  'required',
+            'firstName' =>  'required|alpha_spaces|min:3|max:30',
+            'lastName'  =>  'required|alpha_spaces|min:3|max:30',
             'email' =>  'required|email|unique:users',
             'password'  =>  'required|min:6',
             'confirm_password'  =>  'required|same:password',
@@ -161,7 +161,7 @@ class AuthController extends Controller
     public function verifyStudent(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'registration_no' => 'required|unique:users,registration_id|min:10',
+            'registration_no' => 'required|unique:users,registration_id|min:11|max:11|roll_no',
             'id_card' => 'required|file|mimes:jpeg,bmp,png,jpg'
         ]);
 
@@ -190,7 +190,7 @@ class AuthController extends Controller
             }
 
         }
-        return redirect('/verify/student')->withErrors($validator);
+        return redirect('/verify/student')->withErrors($validator)->withInput();
     }
 
     /**

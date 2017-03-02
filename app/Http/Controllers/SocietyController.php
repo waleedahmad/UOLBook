@@ -58,7 +58,7 @@ class SocietyController extends Controller
     {
 
         $rules = [
-            'society_name' => 'required',
+            'society_name' => 'required|alpha_spaces|min:3',
             'society_type' => 'required'
         ];
 

@@ -12,7 +12,7 @@
             <div class="form-group @if($errors->has('email')) has-error @endif">
                 <label for="email" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Email" value="{{old('email')}}">
                     @if($errors->has('email'))
                         {{$errors->first('email')}}
                     @endif

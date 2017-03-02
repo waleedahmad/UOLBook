@@ -17,7 +17,7 @@
             <div class="form-group @if($errors->has('registration_no')) has-error @endif">
                 <label for="registration_no" class="col-sm-3 control-label">Registration No # </label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="registration_no" placeholder="Registration No #">
+                    <input type="text" class="form-control" name="registration_no" placeholder="Registration No #" value="{{old('registration_no')}}">
                     @if($errors->has('registration_no'))
                         {{$errors->first('registration_no')}}
                     @endif

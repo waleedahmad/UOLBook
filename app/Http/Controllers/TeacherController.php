@@ -135,8 +135,8 @@ class TeacherController extends Controller
      */
     public function  saveClass(Request $request){
         $validator = Validator::make($request->all(), [
-            'subject_code'  =>  'required',
-            'subject_name'  =>  'required',
+            'subject_code'  =>  'required|min:6|max:6|subject_code',
+            'subject_name'  =>  'required|min:2|max:30|alpha_spaces',
             'subject_semester'  => 'required'
         ]);
 
@@ -156,7 +156,7 @@ class TeacherController extends Controller
                 return redirect('/class/'.$class->id);
             }
         }else{
-            return redirect('/teacher/addClass')->withErrors($validator);
+            return redirect('/addClass')->withErrors($validator)->withInput();
         }
     }
 

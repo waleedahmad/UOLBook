@@ -127,7 +127,7 @@
                             <form action="/class/{{$class->id}}/discussion/reply" method="POST">
                                 <div class="form-group @if($errors->has('reply')) has-error @endif">
                                     <label for="exampleInputEmail1"><h4>Reply to discussion</h4></label>
-                                    <textarea type="text" class="form-control" name="reply" placeholder="Reply to discussion"></textarea>
+                                    <textarea type="text" class="form-control" name="reply" placeholder="Reply to discussion">{{old('discussion_title')}}</textarea>
                                     @if($errors->has('reply'))
                                         {{$errors->first('reply')}}
                                     @endif

@@ -52,7 +52,7 @@
                                 <div class="form-group @if($errors->has('discussion_title')) has-error @endif">
                                     <label for="discussion_title" class="col-sm-3 control-label">Discussion Title</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="discussion_title" placeholder="Discussion Title">
+                                        <input type="text" class="form-control" name="discussion_title" placeholder="Discussion Title" value="{{old('discussion_title')}}">
                                         @if($errors->has('discussion_title'))
                                             {{$errors->first('discussion_title')}}
                                         @endif
@@ -62,7 +62,7 @@
                                 <div class="form-group @if($errors->has('discussion')) has-error @endif">
                                     <label for="discussion" class="col-sm-3 control-label">Discussion</label>
                                     <div class="col-sm-9">
-                                        <textarea type="text" class="form-control" name="discussion" placeholder="Discussion"></textarea>
+                                        <textarea type="text" class="form-control" name="discussion" placeholder="Discussion">{{old('discussion')}}</textarea>
                                         @if($errors->has('discussion'))
                                             {{$errors->first('discussion')}}
                                         @endif

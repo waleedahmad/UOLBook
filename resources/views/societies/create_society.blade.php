@@ -21,7 +21,7 @@
                     <div class="form-group @if($errors->has('society_name')) has-error @endif">
                         <label for="society_name" class="col-sm-3 control-label">Society Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="society_name" placeholder="Society Name">
+                            <input type="text" class="form-control" name="society_name" placeholder="Society Name" value="{{old('society_name')}}">
                             @if($errors->has('society_name'))
                                 {{$errors->first('society_name')}}
                             @endif

@@ -220,8 +220,8 @@ class ProfileController extends Controller
     public function updateProfileSettings(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'firstName' => 'required',
-            'lastName' => 'required',
+            'firstName' =>  'required|alpha_spaces|min:3|max:30',
+            'lastName'  =>  'required|alpha_spaces|min:3|max:30',
             'gender' => 'required'
         ]);
 

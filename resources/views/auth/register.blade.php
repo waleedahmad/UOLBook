@@ -11,7 +11,7 @@
             <div class="form-group @if($errors->has('firstName')) has-error @endif">
                 <label for="firstName" class="col-sm-3 control-label">First Name</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="firstName" placeholder="First Name">
+                    <input type="text" class="form-control" name="firstName" placeholder="First Name" value="{{old('firstName')}}">
                     @if($errors->has('firstName'))
                         {{$errors->first('firstName')}}
                     @endif
@@ -21,7 +21,7 @@
             <div class="form-group @if($errors->has('lastName')) has-error @endif">
                 <label for="lastName" class="col-sm-3 control-label">Last Name</label>
                 <div class="col-sm-9 pull-right">
-                    <input type="text" class="form-control" name="lastName" placeholder="Last Name">
+                    <input type="text" class="form-control" name="lastName" placeholder="Last Name" value="{{old('lastName')}}">
                     @if($errors->has('lastName'))
                         {{$errors->first('lastName')}}
                     @endif
@@ -31,7 +31,7 @@
             <div class="form-group @if($errors->has('email')) has-error @endif">
                 <label for="email" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-9">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Email" value="{{old('email')}}">
                     @if($errors->has('email'))
                         {{$errors->first('email')}}
                     @endif

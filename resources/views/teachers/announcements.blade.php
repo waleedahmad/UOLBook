@@ -34,7 +34,7 @@
                             <div class="form-group @if($errors->has('announcement_title')) has-error @endif">
                                 <label for="announcement_title" class="col-sm-3 control-label">Announcement Title</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="announcement_title" placeholder="Announcement Title">
+                                    <input type="text" class="form-control" name="announcement_title" placeholder="Announcement Title" value="{{old('announcement_title')}}">
                                     @if($errors->has('announcement_title'))
                                         {{$errors->first('announcement_title')}}
                                     @endif
@@ -44,7 +44,7 @@
                             <div class="form-group @if($errors->has('announcement')) has-error @endif">
                                 <label for="announcement" class="col-sm-3 control-label">Announcement</label>
                                 <div class="col-sm-9">
-                                    <textarea type="text" class="form-control" name="announcement" placeholder="Announcement"></textarea>
+                                    <textarea type="text" class="form-control" name="announcement" placeholder="Announcement">{{old('announcement')}}</textarea>
                                     @if($errors->has('announcement'))
                                         {{$errors->first('announcement')}}
                                     @endif
