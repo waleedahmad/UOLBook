@@ -18,42 +18,29 @@
             <div class="add-class row col-sm-12 col-xs-12 col-md-8 col-lg-8">
                 <form class="form-horizontal" method="post" action="/saveClass">
 
-                    <div class="form-group @if($errors->has('subject_name')) has-error @endif">
-                        <label for="email" class="col-sm-3 control-label">Subject Name</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="subject_name" placeholder="Subject Name" value="{{old('subject_name')}}">
-                            @if($errors->has('subject_name'))
-                                {{$errors->first('subject_name')}}
-                            @endif
-                        </div>
-                    </div>
-
                     <div class="form-group @if($errors->has('subject_code')) has-error @endif">
-                        <label for="email" class="col-sm-3 control-label">Subject Code</label>
+                        <label for="email" class="col-sm-3 control-label">Semester</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="subject_code" placeholder="Subject Code" value="{{old('subject_code')}}">
+                            <select class="form-control" name="subject_code" id="subject-name">
+                                <option value="">Select Course</option>
+                                @foreach($courses as $course)
+                                    <option value="{{$course->id}}">{{$course->name}} - {{$course->code}}</option>
+                                @endforeach
+                            </select>
                             @if($errors->has('subject_code'))
                                 {{$errors->first('subject_code')}}
                             @endif
                         </div>
                     </div>
 
-                    <div class="form-group @if($errors->has('subject_semester')) has-error @endif">
-                        <label for="email" class="col-sm-3 control-label">Semester</label>
+                    <div class="form-group @if($errors->has('subject_section')) has-error @endif">
+                        <label for="email" class="col-sm-3 control-label">Section</label>
                         <div class="col-sm-8">
-                            <select class="form-control" name="subject_semester">
-                                <option value="">Select Semester</option>
-                                <option value="1">1st Semester</option>
-                                <option value="2">2nd Semester</option>
-                                <option value="3">3rd Semester</option>
-                                <option value="4">4th Semester</option>
-                                <option value="5">5th Semester</option>
-                                <option value="6">6th Semester</option>
-                                <option value="7">7th Semester</option>
-                                <option value="8">8th Semester</option>
+                            <select class="form-control" name="subject_section" id="subject-sections" disabled>
+                                <option value="">Select Section</option>
                             </select>
-                            @if($errors->has('subject_semester'))
-                                {{$errors->first('subject_semester')}}
+                            @if($errors->has('subject_section'))
+                                {{$errors->first('subject_section')}}
                             @endif
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 @if(isset($class))
     <div class="section-title">
-        {{$class->subject_code}} / {{$class->subject_name}} / {{$class->subject_semester}}th semester / {{$class->instructor->first_name . ' '. $class->instructor->last_name}}
+        {{$class->course->code}} / {{$class->course->name}} / {{$class->instructor->first_name . ' '. $class->instructor->last_name}} / Section ({{$class->section}})
     </div>
 @else
     @if(Auth::user()->type === 'teacher')

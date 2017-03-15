@@ -2,7 +2,7 @@
 
 @section('title')
     @if(isset($class))
-        Students - {{$class->subject_code}} / {{$class->subject_name}} / {{$class->subject_semester}}th semester / {{$class->instructor->first_name . ' '. $class->instructor->last_name}}
+        Students - {{$class->course->code}} / {{$class->course->name}}  / {{$class->instructor->first_name . ' '. $class->instructor->last_name}}
     @else
         {{Auth::user()->first_name . ' ' . Auth::user()->last_name }} - Teachers Dashboard
     @endif

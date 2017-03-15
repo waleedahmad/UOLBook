@@ -19,6 +19,9 @@ class Classes extends Model
         foreach($uploads as $upload){
             Storage::disk('public')->delete($upload->file_uri);
         }
+    }
 
+    public function course(){
+        return $this->hasOne('App\Models\Course', 'id', 'course_id');
     }
 }

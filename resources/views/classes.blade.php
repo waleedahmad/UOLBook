@@ -55,15 +55,11 @@
                     @foreach($teacher->enrolledClasses as $class)
                         <tr class="request">
                             <td>
-                                {{$class->subject_name}}
+                                {{$class->course->name}}
                             </td>
 
                             <td>
-                                {{$class->subject_code}}
-                            </td>
-
-                            <td>
-                                {{$class->subject_semester}} Semester
+                                {{$class->course->code}}
                             </td>
 
                             <td>
@@ -82,7 +78,7 @@
 
         </div>
 
-        <div class="classes">
+        {{--<div class="classes">
             <h1>
                 Other Courses
             </h1>
@@ -99,7 +95,7 @@
                             Course Code
                         </th>
 
-                        <th>Semester</th>
+                        <th>Section</th>
 
                         <th></th>
 
@@ -111,20 +107,21 @@
                     @foreach($teacher->otherClasses as $class)
                         <tr class="request">
                             <td>
-                                {{$class->subject_name}}
+                                {{$class->course->name}}
                             </td>
 
                             <td>
-                                {{$class->subject_code}}
+                                {{$class->course->code}}
                             </td>
 
                             <td>
-                                {{$class->subject_semester}} Semester
+                                {{$class->section}}
                             </td>
 
                             <td>
                                 <a href="/class/{{$class->id}}">view</a>
                             </td>
+
                         </tr>
                     @endforeach
 
@@ -135,7 +132,7 @@
                     {{$teacher->first_name}} {{ $teacher->last_name }} is not currently teacher any other courses.
                 </div>
             @endif
-        </div>
+        </div>--}}
 
     </div>
 

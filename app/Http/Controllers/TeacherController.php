@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassAnnouncements;
 use App\Models\Classes;
 use App\Models\ClassJoin;
+use App\Models\Course;
 use App\Models\Discussion;
 use App\Models\DiscussionReply;
 use App\Models\FileUploads;
@@ -42,7 +43,8 @@ class TeacherController extends Controller
      */
     public function showAddClassForm(){
         $classes = Classes::where('teacher_id', '=', Auth::user()->id)->get();
-        return view('teachers.add_class')->with('classes', $classes);
+        $courses = Course::all();
+        return view('teachers.add_class')->with('classes', $classes)->with('courses', $courses);
     }
 
     /**
@@ -135,22 +137,18 @@ class TeacherController extends Controller
      */
     public function  saveClass(Request $request){
         $validator = Validator::make($request->all(), [
-            'subject_code'  =>  'required|min:6|max:6|subject_code',
-            'subject_name'  =>  'required|min:2|max:30|alpha_spaces',
-            'subject_semester'  => 'required'
+            'subject_code'  =>  'required',
+            'subject_section'  =>  'required',
         ]);
 
         if($validator->passes()){
-            $subject_name = $request->subject_name;
-            $subject_code = $request->subject_code;
-            $subject_semester = $request->subject_semester;
 
             $class = new Classes();
 
-            $class->subject_name = $subject_name;
-            $class->subject_code = $subject_code;
-            $class->subject_semester = $subject_semester;
+            $class->course_id = $request->subject_code;
+            $class->section = $request->subject_section;
             $class->teacher_id = Auth::user()->id;
+            $class->secret = $this->generateClassSecret();
 
             if($class->save()){
                 return redirect('/class/'.$class->id);
@@ -158,6 +156,72 @@ class TeacherController extends Controller
         }else{
             return redirect('/addClass')->withErrors($validator)->withInput();
         }
+    }
+
+    public function generateClassSecret(){
+        $secret = strtolower(str_random(10));
+        if(!Classes::where('secret','=', $secret)->count()){
+            return $secret;
+        }else{
+            return $this->generateClassSecret();
+        }
+    }
+
+    public function getCourseSections(Request $request){
+        $id = $request->id;
+        $taken = Classes::where('course_id', '=', $id)->pluck('section')->toArray();
+        $all_sections = $this->getAvailableSections();
+        $avail_sections = $this->getUniqueSections($taken, $all_sections);
+        return response()->json([
+            'sections'  =>  $avail_sections
+        ]);
+    }
+
+    public function getAvailableSections(){
+        return [
+            'A', 'B', 'C', 'D'
+        ];
+    }
+
+    public function getUniqueSections($taken, $all){
+        $sections = [];
+
+        foreach($all as $sec){
+            if(!in_array($sec, $taken)){
+                array_push($sections, $sec);
+            }
+        }
+        return $sections;
+    }
+
+    public function findCourse(Request $request){
+        $classes = Classes::where('secret', '=', $request->code);
+        if($classes->count()){
+            return response()->json([
+                'found' =>  true,
+                'class_id'  => $classes->first()->id
+            ]);
+        }else{
+            return response()->json([
+                'found' =>  false,
+                'class_id'  => 0
+            ]);
+        }
+    }
+
+    public function getStudentCourseCount(){
+        $c_count = Student::where('user_id','=', Auth::user()->id)->count();
+        $j_count = ClassJoin::where('user_id','=', Auth::user()->id)->count();
+
+        if($c_count + $j_count < 6){
+            return response()->json([
+                'allowed'   => true
+            ]);
+        }
+
+        return response()->json([
+            'allowed'   => false
+        ]);
     }
 
     /**

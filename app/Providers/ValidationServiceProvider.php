@@ -21,12 +21,12 @@ class ValidationServiceProvider extends ServiceProvider
 
         Validator::extend('roll_no', function($attribute, $value)
         {
-            return substr( $value, 0, 3 ) === "BCS" || substr( $value, 0, 3 ) === "bcs";
+            return substr( $value, 0, 2 ) === "BCS" || substr( $value, 0, 2 ) === "bcs" && is_int(substr( $value, 3, 10 ));
         });
 
         Validator::extend('subject_code', function($attribute, $value)
         {
-            return substr( $value, 0, 2 ) === "CS" || substr( $value, 0, 2 ) === "cs";
+            return substr( $value, 0, 1 ) === "CS" || substr( $value, 0, 1 ) === "cs";
         });
     }
 

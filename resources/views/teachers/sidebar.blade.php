@@ -17,7 +17,7 @@
                     class="active"
                 @endif
             >
-                <a href="/class/{{$class->id}}">{{$class->subject_name}} ({{$class->subject_code}})</a>
+                <a href="/class/{{$class->id}}">{{$class->course->name}} - ({{$class->section}}) ({{$class->course->code}})</a>
             </li>
         @endforeach
     </ul>

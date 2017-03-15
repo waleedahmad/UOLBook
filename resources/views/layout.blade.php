@@ -9,6 +9,7 @@
     <title>@yield('title')</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="/assets/libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/libs/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="/assets/libs/toastr/toastr.min.css">
     <link href="/assets/libs/jquery-ui/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/assets/css/app.min.css">
@@ -39,6 +40,7 @@
 <script src="/assets/libs/jscroll/jquery.jscroll.min.js"></script>
 <script src="/assets/libs/bootbox.js/bootbox.js"></script>
 <script src="/assets/libs/toastr/toastr.js"></script>
+<script src="/assets/libs/select2/dist/js/select2.min.js"></script>
 <script src="/assets/js/app.js"></script>
 </body>
 </html>

@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
 
 Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'isAdmin', 'isNotTeacher']], function(){
     Route::get('/dashboard', 'TeacherController@getTeacherDashboard');
+    Route::get('/course/sections', 'TeacherController@getCourseSections');
     Route::get('/addClass', 'TeacherController@showAddClassForm');
     Route::post('/saveClass', 'TeacherController@saveClass');
     Route::get('/class/{id}/requests', 'TeacherController@showJoinRequests');
@@ -120,6 +121,8 @@ Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'classesMiddleware', '
     Route::post('/class/request/join', 'TeacherController@joinRequest');
     Route::post('/class/request/cancel', 'TeacherController@cancelJoinRequest');
     Route::post('/class/leave', 'TeacherController@leaveClass');
+    Route::post('/course/find', 'TeacherController@findCourse');
+    Route::get('/course/count', 'TeacherController@getStudentCourseCount');
 
 });
 
