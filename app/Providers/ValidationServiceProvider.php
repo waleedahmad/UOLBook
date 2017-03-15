@@ -21,7 +21,7 @@ class ValidationServiceProvider extends ServiceProvider
 
         Validator::extend('roll_no', function($attribute, $value)
         {
-            return substr( $value, 0, 2 ) === "BCS" || substr( $value, 0, 2 ) === "bcs" && is_int(substr( $value, 3, 10 ));
+            return (substr( $value, 0, 3 ) === "BCS" || substr( $value, 0 , 3 ) === "bcs") && is_numeric(substr( $value, 3, 11 ));
         });
 
         Validator::extend('subject_code', function($attribute, $value)
