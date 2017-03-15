@@ -43,8 +43,6 @@
                             Course Code
                         </th>
 
-                        <th>Semester</th>
-
                         <th></th>
 
                     </tr>

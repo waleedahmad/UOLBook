@@ -29,6 +29,11 @@ class TeacherController extends Controller
         return view('teachers.dashboard')->with('classes', $classes);
     }
 
+    public function getClassKeys(){
+        $classes = Classes::where('teacher_id', '=', Auth::user()->id)->get();
+        return view('teachers.secrets')->with('classes', $classes);
+    }
+
     /**
      * Get All Teacher Classes
      * @return mixed

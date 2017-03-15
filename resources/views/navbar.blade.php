@@ -22,6 +22,10 @@
                         <li>
                             <a href="/addClass">Create Class</a>
                         </li>
+
+                        <li>
+                            <a href="/keys">Class Keys</a>
+                        </li>
                     @endif
 
                     @if(Auth::user()->type === 'student' && Auth::user()->verified)

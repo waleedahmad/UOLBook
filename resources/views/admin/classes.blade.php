@@ -25,7 +25,7 @@
                             Subject Code
                         </th>
 
-                        <th>Semester</th>
+                        <th>Section</th>
 
                         <th>
                             Action
@@ -42,15 +42,15 @@
                             </td>
 
                             <td>
-                                {{$class->subject_name}}
+                                {{$class->course->name}}
                             </td>
 
                             <td>
-                                {{$class->subject_code}}
+                                {{$class->course->code}}
                             </td>
 
                             <td>
-                                {{$class->subject_semester}} Semester
+                                {{$class->section}}
                             </td>
 
                             <td>

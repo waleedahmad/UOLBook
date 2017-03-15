@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth', 'isNotVerified', 'isAdmin', 'isTeacher', 
 
 Route::group(['middleware'  =>  ['auth', 'isNotVerified', 'isAdmin', 'isNotTeacher']], function(){
     Route::get('/dashboard', 'TeacherController@getTeacherDashboard');
+    Route::get('/keys', 'TeacherController@getClassKeys');
     Route::get('/course/sections', 'TeacherController@getCourseSections');
     Route::get('/addClass', 'TeacherController@showAddClassForm');
     Route::post('/saveClass', 'TeacherController@saveClass');
