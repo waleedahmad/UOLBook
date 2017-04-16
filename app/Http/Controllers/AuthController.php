@@ -125,7 +125,7 @@ class AuthController extends Controller
         return Auth::attempt([
             'email' =>  $request->email,
             'password'  =>  $request->password
-        ]);
+        ], true);
     }
 
     /**
